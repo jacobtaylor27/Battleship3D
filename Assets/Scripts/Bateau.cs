@@ -20,11 +20,10 @@ public class Bateau
         }
     }
 
-
     public Bateau(int longueur)
     {
         Direction = Vector3.left;
-        Origine = Vector3.zero; // trouver la position de départ
+        Origine = Vector3.zero; // trouver la position de départ du bateau
         Longueur = longueur;
         cptTouchés = 0;
         ÉtatInitial = ÉtatBateau.Actif;
