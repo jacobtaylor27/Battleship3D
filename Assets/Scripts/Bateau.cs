@@ -27,5 +27,6 @@ public class Bateau
         Longueur = longueur;
         cptTouchés = 0;
         ÉtatInitial = ÉtatBateau.Actif;
+        // bonjour tout le monde
     }
 }
