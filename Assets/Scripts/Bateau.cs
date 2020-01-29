@@ -28,4 +28,4 @@ public class Bateau
         cptTouchés = 0;
         ÉtatInitial = ÉtatPaneau.Vide;
     }
-}
+}//test (jb)
