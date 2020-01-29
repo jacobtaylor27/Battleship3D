@@ -20,12 +20,6 @@ public class Bateau
         }
     }
 
-    public Bateau(ÉtatBateau état)
-    {
-        Direction = Vector3.left;
-
-    }
-
 
     public Bateau(int longueur)
     {
