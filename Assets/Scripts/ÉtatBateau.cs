@@ -1,0 +1,4 @@
+﻿enum ÉtatBateau
+{
+    Détruit, Actif
+};
