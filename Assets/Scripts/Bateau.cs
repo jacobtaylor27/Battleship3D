@@ -8,7 +8,7 @@ public class Bateau
     int cptTouchés;
     Vector3 Direction { get; set; }
     Vector3 Origine { get; set; }
-    ÉtatPaneau ÉtatInitial { get; set; }
+    ÉtatOccupation ÉtatInitial { get; set; }
 
     public int Longueur
     {
@@ -26,6 +26,6 @@ public class Bateau
         Origine = Vector3.zero; // trouver la position de départ du bateau
         Longueur = longueur;
         cptTouchés = 0;
-        ÉtatInitial = ÉtatPaneau.Vide;
+        ÉtatInitial = ÉtatOccupation.Vide;
     }
 }//test (jb)

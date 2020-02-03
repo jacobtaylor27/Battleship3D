@@ -17,7 +17,7 @@ public class GrilleBateau
         {
             for (int j = 0; j < dimensions; j++)
             {
-                Bateaux[i, j] = (int)ÉtatPaneau.Détruit;
+                Bateaux[i, j] = (int)ÉtatOccupation.Vide;
             }
         }
     }
