@@ -6,7 +6,7 @@ public class Bateau
 {
     int longueur;
     int cptTouchés;
-    Vector3 Direction { get; set; }
+    public Vector3 Direction { get; set; }
     Vector3 Origine { get; set; }
     ÉtatOccupation ÉtatInitial { get; set; }
 
