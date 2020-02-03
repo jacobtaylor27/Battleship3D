@@ -5,9 +5,13 @@ using UnityEngine;
 public class Bateau
 {
     int longueur;
-    int cptTouchés;
+
+    public int cptTouchés { get; set; }
+
     Vector3 Direction { get; set; }
+    
     Vector3 Origine { get; set; }
+    
     ÉtatOccupation ÉtatInitial { get; set; }
 
     public int Longueur
@@ -28,4 +32,4 @@ public class Bateau
         cptTouchés = 0;
         ÉtatInitial = ÉtatOccupation.Vide;
     }
-}//test (jb)
+}
