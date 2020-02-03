@@ -1,11 +1,7 @@
-﻿public enum ÉtatPaneau
+﻿public enum ÉtatOccupation
 {
     Vide,
-    Battleship,
-    Cruiser,
-    Destroyer,
-    Submarine,
-    Carrier,
-    Hit,
-    Miss
+    Occupé,
+    Touché,
+    Manqué
 };
