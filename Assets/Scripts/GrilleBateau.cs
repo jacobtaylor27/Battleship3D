@@ -10,7 +10,7 @@ public class GrilleBateau
 {
     const int dimensions = 10;
     int[,] Bateaux = new int[dimensions, dimensions];
-    //Coordonnées?
+    List<Bateau> BateauxPlacés { get; set; }
 
     public GrilleBateau()
     {

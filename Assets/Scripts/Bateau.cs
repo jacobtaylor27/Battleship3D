@@ -39,4 +39,6 @@ public class Bateau
         CptTouchés = 0;
         EstDétruit = false;
     }
+
+
 }
