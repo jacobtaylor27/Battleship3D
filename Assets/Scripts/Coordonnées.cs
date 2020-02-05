@@ -39,5 +39,9 @@ public class Coordonnées
             return coord.X == X && coord.Y == Y;
         }
     }
+    public override int GetHashCode()
+    {
+        return X ^ Y;
+    }
 
 }
