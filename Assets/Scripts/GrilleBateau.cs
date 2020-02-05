@@ -10,6 +10,7 @@ public class GrilleBateau
 {
     const int dimensions = 10;
     int[,] Bateaux = new int[dimensions, dimensions];
+    //Coordonnées?
 
     public GrilleBateau()
     {
@@ -24,19 +25,25 @@ public class GrilleBateau
 
     public void AjouterBateau(Bateau bat)
     {
-        int positionX;
-        int positionY;
+        Coordonnées coordOrigine = new Coordonnées();
+
 
         //Prendre position du bateau dans grille et y placer l'origine
-        ConvertirPositionToCoordonnées();
+        ConvertirPositionToCoordonnées(bat.Origine);
         //Changer état pour ÉtatBateau.Actif à l'origine
-        Bateaux[positionX,positionY] = (int)ÉtatOccupation.Occupé;
+        Bateaux[coordOrigine.X,coordOrigine.Y] = (int)ÉtatOccupation.Occupé;
         //Changer état à ÉtatActif pour toutes les cases selon bat.Direction à partir de l'origine jusqu'a longueur
         for(int i = 1; i < bat.Longueur; i++)
         {
             //S'assurer que bateau respecte les dimensions
-            Bateaux[positionX + i * (int)bat.Direction.x, positionY + i * (int)bat.Direction.y] = (int)ÉtatOccupation.Occupé;
+            Bateaux[coordOrigine.X + i * (int)bat.Direction.x, coordOrigine.Y + i * (int)bat.Direction.y] = (int)ÉtatOccupation.Occupé;
         }
+    }
+
+    public Coordonnées ConvertirPositionToCoordonnées(Vector3 origine)
+    {
+        int posX, posY;
+        return new Coordonnées(posX, posY);
     }
 
 }
