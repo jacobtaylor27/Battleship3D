@@ -11,6 +11,8 @@ public class Bateau
     
     public Vector3 Origine { get; set; }
 
+    public bool EstDétruit { get; set; }
+
     public int Longueur
     {
         get { return longueur; }
@@ -21,11 +23,20 @@ public class Bateau
         }
     }
 
+    public Bateau()
+    {
+        Direction = Vector3.left;
+        Origine = Vector3.zero;
+        Longueur = 2;
+        CptTouchés = 0;
+        EstDétruit = false;
+    }
     public Bateau(int longueur)
     {
         Direction = Vector3.left;
-        Origine = Vector3.zero; // trouver la position de départ du bateau
+        Origine = Vector3.zero; // trouver la position de départ du bateau (centre de la grille)
         Longueur = longueur;
         CptTouchés = 0;
+        EstDétruit = false;
     }
 }

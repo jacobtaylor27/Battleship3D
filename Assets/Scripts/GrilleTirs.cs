@@ -19,12 +19,12 @@ public class GrilleTirs
         }
     }
 
-    public void AjouterTir()
+    public void AjouterTir(Coordonnées caseVisée)
     {
-
+        VérifierRésultatTir()
     }
 
-    public ÉtatOccupation VérifierRésultatTir(Coordonnées coord, GrilleBateau grille)
+    private ÉtatOccupation VérifierRésultatTir(Coordonnées coord, GrilleBateau grille)
     {
         ÉtatOccupation occupÀAjouter;
         //Vérifier à coord x dans grille si il y a un bateau
