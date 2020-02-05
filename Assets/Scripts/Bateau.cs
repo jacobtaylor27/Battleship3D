@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bateau
 {
     int longueur;
-
+    int limites { get; set; }
     int cptTouchés;
     public Vector3 Direction { get; set; }
 
