@@ -5,12 +5,9 @@ using UnityEngine;
 public class Bateau
 {
     int longueur;
-    int cptTouchés;
     public Vector3 Direction { get; set; }
 
-    public int cptTouchés { get; set; }
-
-    public Vector3 Direction { get; set; }
+    public int CptTouchés { get; set; }
     
     public Vector3 Origine { get; set; }
 
@@ -29,6 +26,6 @@ public class Bateau
         Direction = Vector3.left;
         Origine = Vector3.zero; // trouver la position de départ du bateau
         Longueur = longueur;
-        cptTouchés = 0;
+        CptTouchés = 0;
     }
 }
