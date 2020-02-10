@@ -36,8 +36,22 @@ public class Bot
 
     public void PlacerBateaux()
     {
+        int positionXMaximale;
+        int positionYMaximale;
+
         foreach (Bateau b in Arsenal)
         {
+            if (b.Direction == Vector3.left)
+                positionXMaximale = b.Longueur;
+
+            else if (b.Direction == Vector3.down)
+                positionYMaximale = 10 - b.Longueur;
+
+            else if (b.Direction == Vector3.right)
+                positionXMaximale = 10 - b.Longueur;
+
+            else if (b.Direction == Vector3.up)
+                positionYMaximale = b.Longueur;
 
         }
     }
@@ -51,7 +65,7 @@ public class Bot
         }
         else
         {
-            ProchainTir.X = Random.Range()
+
         }
     }
     public void Tirer()
