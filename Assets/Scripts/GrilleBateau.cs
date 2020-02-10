@@ -8,7 +8,9 @@ using System.IO;
 
 public class GrilleBateau
 {
-    const int dimensions = 10;
+    public GameObject grille;
+    private Vector2 dimensionsGrillePhysique = new Vector2(10,10);//grandeur de la grille physiquement
+    const int dimensions = 10;//nombre de cases
     ÉtatOccupation[,] Bateaux = new ÉtatOccupation[dimensions, dimensions];
     List<Bateau> BateauxPlacés { get; set; }
 
@@ -57,10 +59,11 @@ public class GrilleBateau
 
     public Coordonnées ConvertirPositionToCoordonnées(Vector3 origine)
     {
-        //on doit calculer les donnés de la grille physiquement dans unity
-        //son origine, ses dimentions(longeur,largeur)
-        //ensuite on pourra calculer la position dans la grille avec un coordonné de unity.
-        int posX, posY;
+        Vector2 grandeurCases = new Vector2(dimensionsGrillePhysique.x / dimensions, dimensionsGrillePhysique.y / dimensions);
+        float X = Math.Abs(origine.x - grille.transform.position.x);
+        float Y = Math.Abs(origine.y - grille.transform.position.y);
+        int posX = (int)(X / grandeurCases.x);
+        int posY = (int)(Y / grandeurCases.y);
 
         return new Coordonnées(posX, posY);
     }
