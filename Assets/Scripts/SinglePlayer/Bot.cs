@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bot
 {
-    List<Bateau> Arsenal = new List<Bateau>();
     GrilleTirs GrilleDeTirs = new GrilleTirs(); // modele pour ce que le bot touche et ne touche pas
     GrilleBateau GrilleDeBateaux = new GrilleBateau();
     Coordonnées DernierTir = new Coordonnées();
@@ -12,7 +11,7 @@ public class Bot
 
     public void GénérerDirectionAléatoire()
     {
-        foreach (Bateau b in Arsenal)
+        foreach (Bateau b in GrilleDeBateaux.BateauxPlacés)
         {
             var dir = Random.Range(0, 4);
 
@@ -39,7 +38,7 @@ public class Bot
         int positionXMaximale;
         int positionYMaximale;
 
-        foreach (Bateau b in Arsenal)
+        foreach (Bateau b in GrilleDeBateaux.BateauxPlacés)
         {
             if (b.Direction == Vector3.left)
                 positionXMaximale = b.Longueur;
@@ -53,21 +52,27 @@ public class Bot
             else if (b.Direction == Vector3.up)
                 positionYMaximale = b.Longueur;
 
+            DéterminerPositionAléatoirement();
         }
     }
 
-    public void DéterminerProchainTir()
+    public void DéterminerPositionAléatoirement()
     {
-        if (GrilleDeTirs[DernierTir.X, DernierTir.Y] == /*pas touché*/ )
-        {
-            ProchainTir.X = Random.Range(0, 11);
-            ProchainTir.Y = Random.Range(0, 11);
-        }
-        else
-        {
 
-        }
     }
+
+    //public void DéterminerProchainTir()
+    //{
+    //    if (GrilleDeTirs[DernierTir.X, DernierTir.Y] == /*pas touché*/ )
+    //    {
+    //        ProchainTir.X = Random.Range(0, 11);
+    //        ProchainTir.Y = Random.Range(0, 11);
+    //    }
+    //    else
+    //    {
+
+    //    }
+    //}
     public void Tirer()
     {
         DéterminerProchainTir();

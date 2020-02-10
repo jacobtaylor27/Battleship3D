@@ -8,10 +8,16 @@ public class Bateau
     public Vector3 Direction { get; set; }
 
     public int CptTouchés { get; set; }
-    
+
     public Vector3 Origine { get; set; }
 
-    public bool EstDétruit { get; set; }
+    public bool EstDétruit
+    {
+        get
+        {
+            return CptTouchés >= Longueur;
+        }
+    }
 
     public int Longueur
     {
@@ -29,7 +35,6 @@ public class Bateau
         Origine = Vector3.zero;
         Longueur = 2;
         CptTouchés = 0;
-        EstDétruit = false;
     }
     public Bateau(int longueur)
     {
