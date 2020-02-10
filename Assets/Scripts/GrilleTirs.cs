@@ -5,11 +5,11 @@ using UnityEngine;
 public class GrilleTirs
 {
     const int dimensions = 10;
-    private int[,] infoTirs = new int[dimensions, dimensions];
+    private ÉtatOccupation[,] infoTirs = new ÉtatOccupation[dimensions, dimensions];
     //Coordonnées?
 
     //Propriété indexée
-    public int this[int index1,int index2]
+    public ÉtatOccupation this[int index1,int index2]
     {
         get { return infoTirs[index1, index2]; }
         private set { infoTirs[index1, index2] = value; }
