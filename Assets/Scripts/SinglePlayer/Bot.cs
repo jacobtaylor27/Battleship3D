@@ -7,15 +7,8 @@ public class Bot
     List<Bateau> Arsenal = new List<Bateau>();
     GrilleTirs GrilleDeTirs = new GrilleTirs(); // modele pour ce que le bot touche et ne touche pas
     GrilleBateau GrilleDeBateaux = new GrilleBateau();
-
-    public void RemplirArsenal()
-    {
-        Arsenal.Add(new Bateau());
-        Arsenal.Add(new Bateau(3));
-        Arsenal.Add(new Bateau(3));
-        Arsenal.Add(new Bateau(4));
-        Arsenal.Add(new Bateau(5));
-    }
+    Coordonnées DernierTir = new Coordonnées();
+    Coordonnées ProchainTir = new Coordonnées();
 
     public void GénérerDirectionAléatoire()
     {
@@ -49,8 +42,21 @@ public class Bot
         }
     }
 
+    public void DéterminerProchainTir()
+    {
+        if (GrilleDeTirs[DernierTir.X, DernierTir.Y] == /*pas touché*/ )
+        {
+            ProchainTir.X = Random.Range(0, 11);
+            ProchainTir.Y = Random.Range(0, 11);
+        }
+        else
+        {
+            ProchainTir.X = Random.Range()
+        }
+    }
     public void Tirer()
     {
+        DéterminerProchainTir();
 
     }
 }
