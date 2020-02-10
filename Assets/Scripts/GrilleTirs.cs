@@ -5,8 +5,15 @@ using UnityEngine;
 public class GrilleTirs
 {
     const int dimensions = 10;
-    int[,] InfoTirs = new int[dimensions, dimensions];
+    private int[,] infoTirs = new int[dimensions, dimensions];
     //Coordonnées?
+
+    //Propriété indexée
+    public int this[int index1,int index2]
+    {
+        get { return infoTirs[index1, index2]; }
+        private set { infoTirs[index1, index2] = value; }
+    }
 
     public GrilleTirs()
     {
@@ -14,7 +21,7 @@ public class GrilleTirs
         {
             for (int j = 0; j < dimensions; j++)
             {
-                InfoTirs[i, j] = (int)ÉtatOccupation.Vide;
+                infoTirs[i, j] = (int)ÉtatOccupation.Vide;
             }
         }
     }
@@ -22,6 +29,7 @@ public class GrilleTirs
     public void AjouterTir(Coordonnées caseVisée, GrilleBateau grille)
     {
         VérifierRésultatTir(caseVisée,grille);
+
     }
 
     private ÉtatOccupation VérifierRésultatTir(Coordonnées caseVisée, GrilleBateau grille)
