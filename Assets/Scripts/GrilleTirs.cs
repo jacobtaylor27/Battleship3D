@@ -34,10 +34,15 @@ public class GrilleTirs
 
     private ÉtatOccupation VérifierRésultatTir(Coordonnées caseVisée, GrilleBateau grille)
     {
-        ÉtatOccupation occupÀAjouter;
+        ÉtatOccupation occupÀAjouter = grille[caseVisée.X, caseVisée.Y];
+
         //Vérifier à coord x dans grille si il y a un bateau
         //Si oui État == touché else == manqué
-
+        if (occupÀAjouter == ÉtatOccupation.Occupé)
+            occupÀAjouter = ÉtatOccupation.Touché;
+        else if (occupÀAjouter == ÉtatOccupation.Vide)
+            occupÀAjouter = ÉtatOccupation.Manqué;
+        
         return occupÀAjouter;
     }
 
