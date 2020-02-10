@@ -1,3 +1,4 @@
 Pour les bateaux physiques:
 -Avoir x colliders cubiques pour un bateau de taille x
 -Colliders s'alignent avec la grille
+-Collider doit suivre le cast/souris
