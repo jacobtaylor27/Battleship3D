@@ -57,7 +57,11 @@ public class GrilleBateau
 
     public Coordonnées ConvertirPositionToCoordonnées(Vector3 origine)
     {
+        //on doit calculer les donnés de la grille physiquement dans unity
+        //son origine, ses dimentions(longeur,largeur)
+        //ensuite on pourra calculer la position dans la grille avec un coordonné de unity.
         int posX, posY;
+
         return new Coordonnées(posX, posY);
     }
 
