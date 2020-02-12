@@ -8,13 +8,13 @@ public class Coordonnées
     public int X
     {
         get;
-        private set;
+        set;
     }
 
     public int Y
     {
         get;
-        private set;
+        set;
     }
 
     public Coordonnées()
