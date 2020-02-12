@@ -6,7 +6,7 @@ public class Bot
 {
     GrilleTirs GrilleDeTirs = new GrilleTirs(); // modele pour ce que le bot touche et ne touche pas
     GrilleBateau GrilleDeBateaux = new GrilleBateau();
-    List<Coordonnées> DernierTirs = new List<Coordonnées> ();
+    List<Coordonnées> DernierTirs = new List<Coordonnées>();
     
 
     public void GénérerDirectionAléatoire()
@@ -87,19 +87,25 @@ public class Bot
 
     public Coordonnées DéterminerProchainTir()
     {
+        bool b=false;
         Coordonnées ProchainTir = new Coordonnées();
-        Coordonnées DernierTir = DernierTirs[DernierTirs.Count];
-        if (DernierTirs.Count==0||GrilleDeTirs[DernierTir.X, DernierTir.Y] == ÉtatOccupation.Manqué )
+        //Coordonnées DernierTir = DernierTirs[DernierTirs.Count];
+        for (int i = 0; i < DernierTirs.Count||b==true; i--)
+        {
+            if (GrilleDeTirs[DernierTirs[DernierTirs.Count-i].X, DernierTirs[DernierTirs.Count - i].Y] != ÉtatOccupation.Manqué)
+            {
+                b = true;
+            }
+        }
+        if (!b)
         {
             ProchainTir.X = Random.Range(0, 11);
             ProchainTir.Y = Random.Range(0, 11);
         }
-        else if(GrilleDeTirs[DernierTir.X, DernierTir.Y] == ÉtatOccupation.Touché)
+        else 
         {
-            if(DernierTirs[DernierTirs.Count - 1]==null||GrilleDeTirs[DernierTirs[DernierTirs.Count-1].X, DernierTirs[DernierTirs.Count-1].Y] == ÉtatOccupation.Manqué)
-            {
-                ProchainTir4Possibilité(DernierTir);
-            }
+
+            
         }
         return ProchainTir;
     }
@@ -107,6 +113,8 @@ public class Bot
     {
         Coordonnées tir = DéterminerProchainTir();
         DernierTirs.Add(tir);
-
+        if (DernierTirs.Count >= 5)
+            DernierTirs.RemoveAt(0);
+        
     }
 }
