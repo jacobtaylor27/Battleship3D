@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
+using System;
 public class Bot
 {
+    private Predicate<ÉtatOccupation> p = EstTouché;
     GrilleTirs GrilleDeTirs = new GrilleTirs(); // modele pour ce que le bot touche et ne touche pas
     GrilleBateau GrilleDeBateaux = new GrilleBateau();
     List<Coordonnées> DernierTirs = new List<Coordonnées>();
+    List<ÉtatOccupation> ÉtatDerniersTirs = new List<ÉtatOccupation>(); //utilisé l'état de la grille de tir au coordonnées des derniers tirs
 
 
     public void GénérerDirectionAléatoire()
     {
         foreach (Bateau b in GrilleDeBateaux.BateauxPlacés)
         {
-            var dir = Random.Range(0, 4);
+            var dir = UnityEngine.Random.Range(0, 4);
 
             switch (dir)
             {
@@ -108,37 +111,11 @@ public class Bot
     {
 
     }
-    public Coordonnées ProchainTir4Possibilité(Coordonnées DernierTir)//s'il y a une case seule de touché
-    {
-        Coordonnées aReturn = new Coordonnées();
-        var RNG = Random.Range(0, 4);
-        switch (RNG)
-        {
-            case 1:
-                aReturn.X = DernierTir.X + 1;
-                aReturn.Y = DernierTir.Y;
-                break;
-            case 2:
-                aReturn.X = DernierTir.X - 1;
-                aReturn.Y = DernierTir.Y;
-                break;
-            case 3:
-                aReturn.X = DernierTir.X;
-                aReturn.Y = DernierTir.Y + 1;
-                break;
-            case 4:
-                aReturn.X = DernierTir.X;
-                aReturn.Y = DernierTir.Y - 1;
-                break;
-        }
-        return aReturn;
-    }
-
-    public Coordonnées DéterminerProchainTir()
+    private Coordonnées DéterminerProchainTir()
     {
         bool b = false;
         Coordonnées ProchainTir = new Coordonnées();
-        //Coordonnées DernierTir = DernierTirs[DernierTirs.Count];
+        Coordonnées DernierTir = DernierTirs[DernierTirs.Count];
         for (int i = 0; i < DernierTirs.Count || b == true; i--)
         {
             if (GrilleDeTirs[DernierTirs[DernierTirs.Count - i].X, DernierTirs[DernierTirs.Count - i].Y] != ÉtatOccupation.Manqué)
@@ -148,13 +125,146 @@ public class Bot
         }
         if (!b)
         {
-            ProchainTir.X = Random.Range(0, 11);
-            ProchainTir.Y = Random.Range(0, 11);
+            ProchainTir.X = UnityEngine.Random.Range(0, 11);
+            ProchainTir.Y = UnityEngine.Random.Range(0, 11);
         }
         else
         {
+            int f = ÉtatDerniersTirs.FindIndex(p);//la première touche
+            int l = ÉtatDerniersTirs.FindLastIndex(p);//la dernière touche
+            int nt = ÉtatDerniersTirs.FindAll(p).Count();//le nombre de touche
 
+            if (nt == 1 && l == nt)//si seul le dernier tir est une touche on tir en bas
+            {
+                if (DernierTirs[l].Y != 9/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X;
+                    ProchainTir.Y = DernierTir.Y + 1;
+                }
+                else if (DernierTir.X !=0/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X-1;
+                    ProchainTir.Y = DernierTir.Y;
+                }
+                else
+                {
+                    ProchainTir.X = DernierTir.X;
+                    ProchainTir.Y = DernierTir.Y-1;
+                }
 
+            }
+            else if (nt == 1 && l == nt-1)//ensuite a gauche
+            {
+                if (DernierTirs[l].X != 0/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X - 1;
+                    ProchainTir.Y = DernierTir.Y;
+                }
+                else if (DernierTirs[l].Y != 0/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X;
+                    ProchainTir.Y = DernierTir.Y-1;
+                }
+                else
+                {
+                    ProchainTir.X = DernierTir.X+1;
+                    ProchainTir.Y = DernierTir.Y;
+                }
+            }
+            else if (nt == 1 && l == nt - 2)//ensuite en haut
+            {
+                if (DernierTirs[l].Y != 0/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X;
+                    ProchainTir.Y = DernierTir.Y - 1;
+                }
+                else if(DernierTirs[l].X != 9/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X+1;
+                    ProchainTir.Y = DernierTir.Y;
+                }
+                else
+                {
+                    ProchainTir.X = DernierTir.X;
+                    ProchainTir.Y = DernierTir.Y+1;
+                }
+            }
+            else if (nt == 1 && l == nt - 3)//ensuite a droite
+            {
+                if (DernierTirs[l].X != 9/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X + 1;
+                    ProchainTir.Y = DernierTir.Y;
+                }
+                else if (DernierTirs[l].Y != 9/*bounds*/)
+                {
+                    ProchainTir.X = DernierTir.X;
+                    ProchainTir.Y = DernierTir.Y+1;
+                }
+                else
+                {
+                    ProchainTir.X = DernierTir.X - 1;
+                    ProchainTir.Y = DernierTir.Y;
+                }
+            }
+            else if (nt >= 2)//s'il y a au moins deux touche on continue sur la même ligne
+            {
+                int diffX = DernierTirs[l].X - DernierTirs[f].X;
+                int diffY = DernierTirs[l].Y - DernierTirs[f].Y;
+
+                if (diffX == 0 && diffY == 1)
+                {
+                    if (DernierTirs[l].Y != 9/*bounds*/)
+                    {
+                        ProchainTir.X = DernierTir.X;
+                        ProchainTir.Y = DernierTir.Y + 1;
+                    }
+                    else
+                    {
+                        ProchainTir.X = DernierTir.X;
+                        ProchainTir.Y = DernierTir.Y - 1;
+                    }
+                }
+                else if (diffX == 0 && diffY == -1)
+                {
+                    if (DernierTirs[l].Y != 0/*bounds*/)
+                    {
+                        ProchainTir.X = DernierTir.X;
+                        ProchainTir.Y = DernierTir.Y - 1;
+                    }
+                    else
+                    {
+                        ProchainTir.X = DernierTir.X;
+                        ProchainTir.Y = DernierTir.Y + 1;
+                    }
+                }
+                else if (diffX == 1 && diffY == 0)
+                {
+                    if (DernierTirs[l].X != 9/*bounds*/)
+                    {
+                        ProchainTir.X = DernierTir.X + 1;
+                        ProchainTir.Y = DernierTir.Y;
+                    }
+                    else
+                    {
+                        ProchainTir.X = DernierTir.X - 1;
+                        ProchainTir.Y = DernierTir.Y;
+                    }
+                }
+                else if (diffX == -1 && diffY == 0)
+                {
+                    if (DernierTirs[l].X != 0/*bounds*/)
+                    {
+                        ProchainTir.X = DernierTir.X - 1;
+                        ProchainTir.Y = DernierTir.Y;
+                    }
+                    else
+                    {
+                        ProchainTir.X = DernierTir.X + 1;
+                        ProchainTir.Y = DernierTir.Y;
+                    }
+                }
+            }
         }
         return ProchainTir;
     }
@@ -162,8 +272,12 @@ public class Bot
     {
         Coordonnées tir = DéterminerProchainTir();
         DernierTirs.Add(tir);
-        if (DernierTirs.Count >= 5)
+        if (DernierTirs.Count > 5)
             DernierTirs.RemoveAt(0);
 
+    }
+    static private bool EstTouché(ÉtatOccupation E)
+    {
+        return E == ÉtatOccupation.Touché;
     }
 }
