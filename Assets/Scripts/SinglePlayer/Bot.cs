@@ -127,7 +127,7 @@ public class Bot
         {
                 ProchainTir = PositionAuHasard();
         }
-        else //on commence par tirer en bas puis on tourne dans le sens horaire si ce n'est pas possible ou déjà fait
+        else 
         {
             int f = ÉtatDerniersTirs.FindIndex(p);//la première touche
             int l = ÉtatDerniersTirs.FindLastIndex(p);//la dernière touche
@@ -136,7 +136,7 @@ public class Bot
 
             if (nt == 1)
             {
-                ProchainTir = TirerBas(DernierTirTouché);
+                ProchainTir = TirerBas(DernierTirTouché);//on commence par tirer en bas puis on tourne dans le sens horaire si ce n'est pas possible ou déjà fait
             } 
             else if (nt >= 2)//s'il y a au moins deux touche on continue sur la même ligne
             {
@@ -202,6 +202,7 @@ public class Bot
                     }
                     else
                         ProchainTir = PositionAuHasard();
+                    //manque la partie si on touche plus de deux fois de suite
                 }
             }
         }
