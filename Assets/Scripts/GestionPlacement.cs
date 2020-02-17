@@ -29,7 +29,6 @@ public class GestionPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float distance = Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x, 2) + Mathf.Pow(Camera.main.transform.position.y, 2) + Mathf.Pow(Camera.main.transform.position.z, 2));
         if (Physics.Raycast(ray,out hit, Mathf.Infinity)){

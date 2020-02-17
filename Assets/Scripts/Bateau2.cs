@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bateau
+public class Bateau2
 {
     int longueur;
     public Vector3 Direction { get; set; }

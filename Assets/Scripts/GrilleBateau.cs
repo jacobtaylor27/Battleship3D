@@ -26,14 +26,6 @@ public class GrilleBateau
     }
    
 
-    public void RemplirArsenal()
-    {
-        BateauxPlacés.Add(new Bateau());
-        BateauxPlacés.Add(new Bateau(3));
-        BateauxPlacés.Add(new Bateau(3));
-        BateauxPlacés.Add(new Bateau(4));
-        BateauxPlacés.Add(new Bateau(5));
-    }
     public ÉtatOccupation this[int index1, int index2]
     {
         get { return Bateaux[index1, index2]; }
