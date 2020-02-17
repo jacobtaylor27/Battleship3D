@@ -8,6 +8,7 @@ public class Destroyer : Bateau
     {
         Nom = "Destroyer";
         Longueur = 2;
-        TypeOccupation = ÉtatOccupation.Destroyer;
+        Maquette = GameObject.Find("Destroyer");
+        TypeOccupation = TypeOccupation.Destroyer;
     }
 }

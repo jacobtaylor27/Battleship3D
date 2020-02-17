@@ -8,7 +8,7 @@ public class Joueur
     public PaneauJeu PaneauJeu { get; set; }
     public PaneauTirs PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
-    public bool aPerdu { get { return Arsenal.All(x => x.estCallé); } }
+    public bool aPerdu { get { return Arsenal.All(x => x.EstCallé); } }
 
     public Joueur()
     {

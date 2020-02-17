@@ -6,19 +6,16 @@ public class GestionnaireJeu : MonoBehaviour
 {
     Joueur Joueur { get; set; }
     Bot Bot { get; set; }
-    GameObject Destroyer { get; set; }
-    GameObject Cruiser { get; set; }
-    GameObject Submarine { get; set; }
-    GameObject Battleship { get; set; }
-    GameObject Carrier { get; set; }
+    KeyCode Placer { get; set; }
+    KeyCode Tourner { get; set; }
+    bool Fait { get; set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         Joueur = new Joueur();
         Bot = new Bot();
-
-        Destroyer = 
+        Placer = KeyCode.Mouse0; // CLICK GAUCHE
+        Tourner = KeyCode.R;
 
     }
 
@@ -27,10 +24,15 @@ public class GestionnaireJeu : MonoBehaviour
         var positionCamera = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         foreach (var b in Joueur.Arsenal)
         {
-            while (true)
+            Fait = false;
+            while (!Fait)
             {
                 Instantiate(b.Maquette, new Vector3(positionCamera.x, 1f, positionCamera.z), Quaternion.identity);
+                if (Input.GetKeyDown(Placer))
+                {
 
+                    Fait = true;
+                }
             }
 
         }

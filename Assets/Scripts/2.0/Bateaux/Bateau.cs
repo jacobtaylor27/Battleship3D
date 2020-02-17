@@ -9,11 +9,5 @@ public abstract class Bateau
     public int Coups { get; set; }
     public GameObject Maquette { get; set; }
     public TypeOccupation TypeOccupation { get; set; }
-    public bool estCallé
-    {
-        get
-        {
-            return Coups >= Longueur;
-        }
-    }
+    public bool EstCallé { get { return Coups >= Longueur; } }
 }
