@@ -7,12 +7,14 @@ public class Bot : Joueur
 {
     private Predicate<TypeOccupation> p = EstTouché;
     GrilleTirs GrilleDeTirs = new GrilleTirs();
-    GrilleBateau GrilleDeBateaux = new GrilleBateau();
+    //GrilleBateau GrilleDeBateaux = new GrilleBateau();
+    PaneauJeu PaneauJeu = new PaneauJeu();
+    Joueur JoueurEnemy = new Joueur();
     List<Coordonnées> DernierTirs = new List<Coordonnées>();
     List<TypeOccupation> ÉtatDerniersTirs = new List<TypeOccupation>();
-    private int AxeAuHasard () => UnityEngine.Random.Range(0, 11);
-    static private bool EstTouché (TypeOccupation e) => e == TypeOccupation.Touché;
-    private bool EstTiré (int posX, int posY) => (GrilleDeTirs[posX, posY] == TypeOccupation.Manqué || GrilleDeTirs[posX, posY] == TypeOccupation.Touché);
+    private int AxeAuHasard() => UnityEngine.Random.Range(0, 11);
+    static private bool EstTouché(TypeOccupation e) => e == TypeOccupation.Touché;
+    private bool EstTiré(int posX, int posY) => (GrilleDeTirs[posX, posY] == TypeOccupation.Manqué || GrilleDeTirs[posX, posY] == TypeOccupation.Touché);
 
     public void Placer()
     {
@@ -63,17 +65,52 @@ public class Bot : Joueur
         }
     }
 
-    public void Tirer()
+    public Coordonnées Tirer()
     {
-        Coordonnées tir = DéterminerProchainTir();
+
+
+        return DéterminerProchainTir();
+
+
+        int indexCaseTiré = PaneauJeu.Cases.FindIndex(x => x.Coordonnées == tir);
+        var typeOccupationCaseTiré = PaneauJeu.Cases[indexCaseTiré].TypeOccupation;
+
+        switch (typeOccupationCaseTiré)
+        {
+            case TypeOccupation.Battleship:
+                JoueurEnemy.Arsenal[3].PerdreVie();
+                break;
+            case TypeOccupation.Cruiser:
+                Console.WriteLine("yo");
+                break;
+            case TypeOccupation.Carrier:
+                Console.WriteLine("yo");
+                break;
+            case TypeOccupation.Submarine:
+                Console.WriteLine("yo");
+                break;
+            case TypeOccupation.Destroyer:
+                Console.WriteLine("yo");
+                break;
+        }
+
+
+
+
+
+
+        PaneauJeu.Cases[indexCaseTiré].TypeOccupation = TypeOccupation.Touché;
+
+
         DernierTirs.Add(tir);
         ÉtatDerniersTirs.Add(GrilleDeTirs[tir.Colonne, tir.Rangée]);
         if (DernierTirs.Count > 5)
             DernierTirs.RemoveAt(0);
         if (ÉtatDerniersTirs.Count > 5)
             ÉtatDerniersTirs.RemoveAt(0);
+
     }
-    
+
     private Coordonnées PositionAuHasard()
     {
         bool ok = false;
@@ -234,4 +271,6 @@ public class Bot : Joueur
         else
             return PositionAuHasard();
     }
+
+    
 }

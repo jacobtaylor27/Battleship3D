@@ -16,7 +16,6 @@ public class GestionnaireJeu : MonoBehaviour
         Bot = new Bot();
         Placer = KeyCode.Mouse0; // CLICK GAUCHE
         Tourner = KeyCode.R;
-
     }
 
     public void PlacerBateauxJoueur()
@@ -34,7 +33,6 @@ public class GestionnaireJeu : MonoBehaviour
                     Fait = true;
                 }
             }
-
         }
     }
 

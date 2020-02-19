@@ -23,4 +23,9 @@ public class Joueur
             new Submarine()
         };
     }
+
+    public void SeFaireTouché(Bateau b)
+    {
+        Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();
+    }
 }
