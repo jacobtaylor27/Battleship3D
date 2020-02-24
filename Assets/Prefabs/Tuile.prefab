@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 548498525694207020}
   - component: {fileID: 548498525694207021}
   - component: {fileID: 548498525694207022}
-  - component: {fileID: 548498525694207010}
+  - component: {fileID: 8432900399228872460}
   m_Layer: 0
   m_Name: Tuile
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 548498525694207023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.176, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalScale: {x: 20, y: 0.1, z: 20}
   m_Children:
   - {fileID: 548498525014763526}
   m_Father: {fileID: 0}
@@ -143,7 +143,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3b3f478b0c3012c4b9099224022968c9, type: 2}
+  - {fileID: 2100000, guid: ad28fc32beb81614a8eacbf023c15f12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -177,7 +177,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &548498525694207010
+--- !u!114 &8432900399228872460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,5 +195,3 @@ MonoBehaviour:
   TabTuiles:
   - {fileID: 4062014755327454846, guid: 1b78bebd2d48f1342b8ad1a6c6ba73a7, type: 3}
   - {fileID: 21300000, guid: 46422f50492bba145a5b3e50e101ece1, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
