@@ -71,7 +71,7 @@ public class GestionnaireJeu : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             //Mettre un tag pour tous les colliders et générer procéduralement les colliders
-            if (hit.collider.gameObject.name == "Box1" || hit.collider.gameObject.name == "Box2" || hit.collider.gameObject.name == "Box3" || hit.collider.gameObject.name == "Box4")
+            if (hit.collider.gameObject.name == "Tuile(Clone)")
                 test.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, 1f, hit.collider.gameObject.transform.position.z);
         }
     }

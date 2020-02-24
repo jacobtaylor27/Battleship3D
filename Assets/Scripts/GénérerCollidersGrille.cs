@@ -11,28 +11,32 @@ public class GénérerCollidersGrille : MonoBehaviour
     public GameObject ColliderBox;
     float Delta { get; set; }
     float Distance { get; set; }
+    float Décalage
+    {
+        get { return Delta / 2; }
+    }
 
     void Start()
     {
         Coins = GetComponentsInChildren<Transform>();// Éléments 1 à 4 sont les coins
-        Debug.Log(Coins.Length);
+
         Distance = Mathf.Sqrt(Mathf.Pow(Coins[1].position.x, 2) + Mathf.Pow(Coins[2].position.x, 2));
         Delta = Distance / Dimensions;
 
-        for (int i = 0; i < Dimensions; i++)
+        for(int i = 0; i < Dimensions; i++)
         {
-            for (int j = 0; j < Dimensions; j++)
+            for(int j = 0; j < Dimensions; j++)
             {
                 if (tag == "NPC")//Vérifier les tag dans la scène du projet final
                 {
-                    Instantiate(ColliderBox, new Vector3(Coins[1].position.x - Delta + -j * Delta, Coins[1].position.y, Coins[1].position.z + Delta + i * Delta), Quaternion.identity);
+                    Instantiate(ColliderBox, new Vector3(Coins[1].position.x + -j * Delta - Décalage, Coins[1].position.y, Coins[1].position.z + Décalage + i * Delta), Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(ColliderBox, new Vector3(Coins[1].position.x + j * Delta, Coins[1].position.y, Coins[1].position.z + -i * Delta), Quaternion.identity);
+                    Instantiate(ColliderBox, new Vector3(Coins[1].position.x + j * Delta + Décalage, Coins[1].position.y, Coins[1].position.z + -i * Delta - Décalage), Quaternion.identity);
                 }
             }
-        }
+        } 
 
     }
 }
