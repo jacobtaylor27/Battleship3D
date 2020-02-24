@@ -61,15 +61,13 @@ public class Bot : Joueur
                     p.TypeOccupation = b.TypeOccupation;
                 }
                 estDisponible = false;
+
             }
         }
     }
 
     public Coordonnées Tirer()
     {
-
-
-        return DéterminerProchainTir();
 
 
         int indexCaseTiré = PaneauJeu.Cases.FindIndex(x => x.Coordonnées == tir);
@@ -108,7 +106,7 @@ public class Bot : Joueur
             DernierTirs.RemoveAt(0);
         if (ÉtatDerniersTirs.Count > 5)
             ÉtatDerniersTirs.RemoveAt(0);
-
+        return DéterminerProchainTir();
     }
 
     private Coordonnées PositionAuHasard()

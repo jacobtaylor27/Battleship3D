@@ -5,7 +5,11 @@ using UnityEngine;
 public class GestionnaireJeu : MonoBehaviour
 {
     Joueur Joueur { get; set; }
+    PaneauJeu BateauxJoueur { get; set; }
+    PaneauTirs TirsJoueur { get; set; }
     Bot Bot { get; set; }
+    PaneauJeu BateauxBot { get; set; }
+    PaneauTirs TirsBot { get; set; }
     KeyCode Placer { get; set; }
     KeyCode Tourner { get; set; }
     bool Fait { get; set; }
@@ -16,10 +20,19 @@ public class GestionnaireJeu : MonoBehaviour
         Bot = new Bot();
         Placer = KeyCode.Mouse0; // CLICK GAUCHE
         Tourner = KeyCode.R;
+        BateauxJoueur = new PaneauJeu();
+        TirsJoueur = new PaneauTirs();
+        TirsBot = new PaneauTirs();
+        BateauxBot = new PaneauJeu();
     }
-
+    private void Update()
+    {
+        PlacerBateauxJoueur();
+        Bot.Placer();
+    }
     public void PlacerBateauxJoueur()
     {
+        //à mettre dans joueur(je crois)
         var positionCamera = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         foreach (var b in Joueur.Arsenal)
         {

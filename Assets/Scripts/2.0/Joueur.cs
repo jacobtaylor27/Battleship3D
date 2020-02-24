@@ -23,7 +23,10 @@ public class Joueur
             new Submarine()
         };
     }
-
+    public void Tirer()
+    {
+        //ici qu'on fait le système pour suivre la souris et tirer la où on click
+    }
     public void SeFaireTouché(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();
