@@ -38,6 +38,7 @@ public class GestionnaireJeu : MonoBehaviour
 
     private void GestionPlacement()
     {
+        //Mettre un bool EnPlacement pour arrêter cette méthode après le placement
         float zAxis;
         Vector3 mousePosition;
         RaycastHit hit;
