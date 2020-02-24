@@ -1,10 +1,14 @@
 ﻿using System;
 
-public class GrilleBateauxEventargs : EventArgs
+public class OccupationEventargs : EventArgs
 {
-    Coordonnées CoordÀChanger { get; set; }
-}
-public class GrillTirsEventArgs : EventArgs
-{
-    Coordonnées CoordÀChanger { get; set; }
+    Coordonnées nouvelleCoord { get; set; }
+
+    TypeOccupation nouvelleOccupation { get; set; }
+
+    public OccupationEventargs(Coordonnées coord, TypeOccupation occup)
+    {
+        nouvelleCoord = coord;
+        nouvelleOccupation = occup;
+    }
 }
