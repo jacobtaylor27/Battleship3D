@@ -17,6 +17,7 @@ public class Bateau2
         {
             return CptTouchés >= Longueur;
         }
+        private set { EstDétruit = value; }
     }
 
     public int Longueur
@@ -29,14 +30,14 @@ public class Bateau2
         }
     }
 
-    public Bateau()
+    public Bateau2()
     {
         Direction = Vector3.left;
         Origine = Vector3.zero;
         Longueur = 2;
         CptTouchés = 0;
     }
-    public Bateau(int longueur)
+    public Bateau2(int longueur)
     {
         Direction = Vector3.left;
         Origine = Vector3.zero; // trouver la position de départ du bateau (centre de la grille)
