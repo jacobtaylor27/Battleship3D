@@ -16,6 +16,8 @@ public class GestionnaireJeu : MonoBehaviour
 
     void Start()
     {
+        // Linker les callbacks (+=)
+
         Joueur = new Joueur();
         Bot = new Bot();
         Placer = KeyCode.Mouse0; // CLICK GAUCHE

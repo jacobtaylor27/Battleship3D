@@ -5,7 +5,9 @@ using UnityEngine;
 public class InformationTuile : MonoBehaviour
 {
     //Position de la tuile (en X et Z car Y = 0)
-    public int PositionX, PositionZ;
+    private Coordonnées Coordonnées;
+    public int rangée;
+    public int colonne;
     bool Touché;
 
     public SpriteRenderer spriteTuile;
@@ -22,11 +24,10 @@ public class InformationTuile : MonoBehaviour
     //fct qui recois les pos de chq tuile 
     public void DéfinirInformationTuile(int X, int Z)
     {
-        PositionX = X;
-        PositionZ = Z;
-        
-
-    } 
+        Coordonnées = new Coordonnées(X, Z);
+        rangée = Coordonnées.Rangée;
+        colonne = Coordonnées.Colonne;
+    }
 
     void OnMouseOver()
     {
