@@ -5,23 +5,18 @@ using System.Linq;
 using System;
 public class Bot : Joueur
 {
-    private Predicate<TypeOccupation> p = EstTouché;
-    PaneauJeu PaneauJeu = new PaneauJeu();
-    PaneauTirs PaneauTirs = new PaneauTirs();
-    //Joueur JoueurEnemy = new Joueur();
+    // Classe random pris de : http://stackoverflow.com/a/18267477/106356
+    System.Random rng = new System.Random(Guid.NewGuid().GetHashCode());
+
+    private Predicate<TypeOccupation> p = (TypeOccupation e) => e == TypeOccupation.Touché;
     List<Coordonnées> DernierTirs = new List<Coordonnées>();
     List<TypeOccupation> ÉtatDerniersTirs = new List<TypeOccupation>();
-    private int AxeAuHasard() => UnityEngine.Random.Range(0, 11);
-    static private bool EstTouché(TypeOccupation e) => e == TypeOccupation.Touché;
-
+    int AxeAuHasard() => rng.Next(0,11);
     bool EstTiré(int x, int y) => PaneauTirs.Cases.Find(c => c.Coordonnées.Colonne == x && c.Coordonnées.Rangée == y).TypeOccupation == TypeOccupation.Touché ||
-                                   PaneauTirs.Cases.Find(c => c.Coordonnées.Colonne == x && c.Coordonnées.Rangée == y).TypeOccupation == TypeOccupation.Manqué;
+                                  PaneauTirs.Cases.Find(c => c.Coordonnées.Colonne == x && c.Coordonnées.Rangée == y).TypeOccupation == TypeOccupation.Manqué;
 
     public void Placer()
     {
-        // Classe random pris de : http://stackoverflow.com/a/18267477/106356
-        System.Random rng = new System.Random(Guid.NewGuid().GetHashCode());
-
         foreach (var b in Arsenal)
         {
             bool estDisponible = true;
@@ -35,15 +30,11 @@ public class Bot : Joueur
                 var paneauxUtilisés = PaneauJeu.Cases.Range(rangéeInitiale, colonneInitiale, rangéeFinale, colonneFinale);
 
                 if (orientation == 0)
-                {
                     for (int i = 1; 1 < b.Longueur; i++)
                         rangéeFinale++;
-                }
                 else
-                {
                     for (int i = 1; i < b.Longueur; i++)
                         colonneFinale++;
-                }
 
                 if (rangéeFinale > 10 || colonneFinale > 10)
                 {
@@ -58,9 +49,8 @@ public class Bot : Joueur
                 }
 
                 foreach (var p in paneauxUtilisés)
-                {
                     p.TypeOccupation = b.TypeOccupation;
-                }
+
                 estDisponible = false;
 
             }
