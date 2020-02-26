@@ -26,15 +26,24 @@ public class Bot : Joueur
                 var rangéeInitiale = rng.Next(1, 11);
                 var rangéeFinale = rangéeInitiale;
                 var colonneFinale = colonneInitiale;
-                var orientation = rng.Next(0, 2);
+                var orientation = rng.Next(0, 4);
                 var paneauxUtilisés = PaneauJeu.Cases.Range(rangéeInitiale, colonneInitiale, rangéeFinale, colonneFinale);
 
                 if (orientation == 0)
                     for (int i = 1; 1 < b.Longueur; i++)
                         rangéeFinale++;
-                else
+
+                else if (orientation == 1)
                     for (int i = 1; i < b.Longueur; i++)
                         colonneFinale++;
+                
+                else if (orientation == 2)
+                    for (int i = 1; i < b.Longueur; i++)
+                        colonneFinale--;
+                
+                else if (orientation == 3)
+                    for (int i = 1; i < b.Longueur; i++)
+                        colonneFinale--;
 
                 if (rangéeFinale > 10 || colonneFinale > 10)
                 {

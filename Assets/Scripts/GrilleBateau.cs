@@ -12,7 +12,7 @@ public class GrilleBateau
     public GameObject grille;
     private Vector2 dimensionsGrillePhysique = new Vector2(10,10);//grandeur de la grille physiquement
     const int dimensions = 10;//nombre de cases
-    ÉtatOccupation[,] Bateaux = new ÉtatOccupation[dimensions, dimensions];
+    TypeOccupation[,] Bateaux = new TypeOccupation[dimensions, dimensions];
     List<Bateau> BateauxPlacés { get; set; }
 
     public GrilleBateau()
@@ -21,13 +21,13 @@ public class GrilleBateau
         {
             for (int j = 0; j < dimensions; j++)
             {
-                Bateaux[i, j] = ÉtatOccupation.Vide;
+                Bateaux[i, j] = TypeOccupation.Vide;
             }
         }
     }
    
 
-    public ÉtatOccupation this[int index1, int index2]
+    public TypeOccupation this[int index1, int index2]
     {
         get { return Bateaux[index1, index2]; }
         private set { Bateaux[index1, index2] = value; }
@@ -41,7 +41,7 @@ public class GrilleBateau
         //Prendre position du bateau dans grille et y placer l'origine
         ConvertirPositionToCoordonnées(bat.Origine);
         //Changer état pour ÉtatBateau.Actif à l'origine
-        Bateaux[coordOrigine.X,coordOrigine.Y] = ÉtatOccupation.Occupé;
+        Bateaux[coordOrigine.X,coordOrigine.Y] = TypeOccupation.Occupé;
         //Changer état à ÉtatActif pour toutes les cases selon bat.Direction à partir de l'origine jusqu'a longueur
         for(int i = 1; i < bat.Longueur; i++)
         {
