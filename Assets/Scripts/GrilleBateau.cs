@@ -6,6 +6,7 @@ using System;
 using System.Text;
 using System.IO;
 
+// Ce script va être fusionner avec PaneauJeu.cs
 public class GrilleBateau
 {
     public GameObject grille;

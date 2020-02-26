@@ -14,12 +14,6 @@ public class Case
         Coordonnées = new Coordonnées(rangée, colonne);
     }
 
-    public void FairePerdreVieBateau()
-    {
-        if (TypeOccupation == TypeOccupation.Battleship)
-            
-    }
-
     public bool EstOccupé
     {
         get

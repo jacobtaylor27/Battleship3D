@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+
+// Doit être fusionner avec le script CréerGrille.cs
 public class GénérerCollidersGrille : MonoBehaviour
 {
     // Start is called before the first frame update

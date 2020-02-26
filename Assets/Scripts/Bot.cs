@@ -6,15 +6,16 @@ using System;
 public class Bot : Joueur
 {
     private Predicate<TypeOccupation> p = EstTouché;
-    GrilleTirs GrilleDeTirs = new GrilleTirs();
-    //GrilleBateau GrilleDeBateaux = new GrilleBateau();
     PaneauJeu PaneauJeu = new PaneauJeu();
-    Joueur JoueurEnemy = new Joueur();
+    PaneauTirs PaneauTirs = new PaneauTirs();
+    //Joueur JoueurEnemy = new Joueur();
     List<Coordonnées> DernierTirs = new List<Coordonnées>();
     List<TypeOccupation> ÉtatDerniersTirs = new List<TypeOccupation>();
     private int AxeAuHasard() => UnityEngine.Random.Range(0, 11);
     static private bool EstTouché(TypeOccupation e) => e == TypeOccupation.Touché;
-    private bool EstTiré(int posX, int posY) => (GrilleDeTirs[posX, posY] == TypeOccupation.Manqué || GrilleDeTirs[posX, posY] == TypeOccupation.Touché);
+
+    bool EstTiré(int x, int y) => PaneauTirs.Cases.Find(c => c.Coordonnées.Colonne == x && c.Coordonnées.Rangée == y).TypeOccupation == TypeOccupation.Touché ||
+                                   PaneauTirs.Cases.Find(c => c.Coordonnées.Colonne == x && c.Coordonnées.Rangée == y).TypeOccupation == TypeOccupation.Manqué;
 
     public void Placer()
     {
@@ -66,31 +67,31 @@ public class Bot : Joueur
         }
     }
 
-    public Coordonnées Tirer()
+    public override Coordonnées Tirer()
     {
-
+        Coordonnées tir = DéterminerProchainTir();
 
         int indexCaseTiré = PaneauJeu.Cases.FindIndex(x => x.Coordonnées == tir);
         var typeOccupationCaseTiré = PaneauJeu.Cases[indexCaseTiré].TypeOccupation;
 
-        switch (typeOccupationCaseTiré)
-        {
-            case TypeOccupation.Battleship:
-                JoueurEnemy.Arsenal[3].PerdreVie();
-                break;
-            case TypeOccupation.Cruiser:
-                Console.WriteLine("yo");
-                break;
-            case TypeOccupation.Carrier:
-                Console.WriteLine("yo");
-                break;
-            case TypeOccupation.Submarine:
-                Console.WriteLine("yo");
-                break;
-            case TypeOccupation.Destroyer:
-                Console.WriteLine("yo");
-                break;
-        }
+        //switch (typeOccupationCaseTiré)
+        //{
+        //    case TypeOccupation.Battleship:
+        //        JoueurEnemy.Arsenal[3].PerdreVie();
+        //        break;
+        //    case TypeOccupation.Cruiser:
+        //        Console.WriteLine("yo");
+        //        break;
+        //    case TypeOccupation.Carrier:
+        //        Console.WriteLine("yo");
+        //        break;
+        //    case TypeOccupation.Submarine:
+        //        Console.WriteLine("yo");
+        //        break;
+        //    case TypeOccupation.Destroyer:
+        //        Console.WriteLine("yo");
+        //        break;
+        //}
 
 
 
@@ -101,12 +102,12 @@ public class Bot : Joueur
 
 
         DernierTirs.Add(tir);
-        ÉtatDerniersTirs.Add(GrilleDeTirs[tir.Colonne, tir.Rangée]);
+        ÉtatDerniersTirs.Add(PaneauTirs.Cases.Find(x => x.Coordonnées == tir).TypeOccupation);
         if (DernierTirs.Count > 5)
             DernierTirs.RemoveAt(0);
         if (ÉtatDerniersTirs.Count > 5)
             ÉtatDerniersTirs.RemoveAt(0);
-        return DéterminerProchainTir();
+        return tir;
     }
 
     private Coordonnées PositionAuHasard()
@@ -130,10 +131,10 @@ public class Bot : Joueur
         Coordonnées DernierTir = DernierTirs[DernierTirs.Count];
         for (int i = 0; i < DernierTirs.Count || b == true; i--)//s'il y a aucune touche dans les 5 derniers tirs on tir au hasard
         {
-            if (GrilleDeTirs[DernierTirs[DernierTirs.Count - i].Colonne, DernierTirs[DernierTirs.Count - i].Rangée] != TypeOccupation.Manqué)
-            {
+
+            if (PaneauTirs.Cases.Find(x => x.Coordonnées.Rangée == DernierTirs[DernierTirs.Count - i].Rangée &&
+            x.Coordonnées.Colonne == DernierTirs[DernierTirs.Count - i].Colonne).TypeOccupation == TypeOccupation.Manqué)
                 b = true;
-            }
         }
         if (!b)
             ProchainTir = PositionAuHasard();
@@ -270,5 +271,5 @@ public class Bot : Joueur
             return PositionAuHasard();
     }
 
-    
+
 }

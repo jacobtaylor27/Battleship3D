@@ -23,7 +23,7 @@ public class Joueur
             new Submarine()
         };
     }
-    public void Tirer()
+    public virtual Coordonnées Tirer()
     {
         //ici qu'on fait le système pour suivre la souris et tirer la où on click
     }

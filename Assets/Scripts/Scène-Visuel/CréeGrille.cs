@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Ce script va être fusionner avec GénérerCollidersGrille.cs
 public class CréeGrille : MonoBehaviour
 {
     //script qui a pour but de générer les 100 tuiles (chaque tuiles étant un préfab) qui forme la grille du joueur (10 par 10)
