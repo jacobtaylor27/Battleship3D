@@ -14,12 +14,12 @@ public class OccupationEventArgs : EventArgs
     }
 }
 
-public class ArsenalEventArgs : EventArgs
+public class BateauEventArgs : EventArgs
 {
-    List<Bateau> Arsenal { get; set; }
+    Bateau Bateau { get; set; }
 
-    public ArsenalEventArgs(List<Bateau> newArsenal)
+    public BateauEventArgs(Bateau bat)
     {
-        Arsenal = newArsenal;
+        Bateau = bat;
     }
 }
