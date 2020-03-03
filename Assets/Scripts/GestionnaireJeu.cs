@@ -34,7 +34,6 @@ public class GestionnaireJeu : MonoBehaviour
                 Instantiate(b.Maquette, new Vector3(positionCamera.x, 1f, positionCamera.z), Quaternion.identity);
                 if (Input.GetKeyDown(Placer))
                 {
-
                     Fait = true;
                 }
             }
