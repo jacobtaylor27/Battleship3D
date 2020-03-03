@@ -27,6 +27,10 @@ public class Joueur
             new Submarine()
         };
     }
+    private void onBateauDétruit(BateauEventArgs dataBateau)
+    {
+        this.BateauDétruit?.Invoke(this, dataBateau);
+    }
     public TypeOccupation DéterminerRésultatTir(Coordonnées emplacementCase)
     {
         TypeOccupation valeurRetour;

@@ -26,7 +26,6 @@ public class GestionnaireJeu : MonoBehaviour
 
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
-        Joueur.PaneauJeu.VérificationTerminée += CommencerPhasePlacement;
 
     }
     void Awake()

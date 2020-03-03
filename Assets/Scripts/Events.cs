@@ -20,6 +20,7 @@ public class BateauEventArgs : EventArgs
 
     public BateauEventArgs(Bateau bat)
     {
-        Bateau = bat;
+        Bateau.Coups = bat.Coups;
+        Bateau.Longueur = bat.Longueur;
     }
 }
