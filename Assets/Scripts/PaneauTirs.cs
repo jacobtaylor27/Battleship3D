@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class PaneauTirs : PaneauJeu
 {
+    public event EventHandler<OccupationEventArgs> OccupationModifiée;
+    private void onOccupationModifiée(OccupationEventArgs dataOccupation)
+    {
+        this.OccupationModifiée?.Invoke(this, dataOccupation);
+    }
+
     public List<Coordonnées> ChercherVoisinsDeTouché()
     {
         List<Case> cases = new List<Case>();

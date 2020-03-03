@@ -66,7 +66,7 @@ public class Bot : Joueur
         }
     }
 
-    public override TypeOccupation DéterminerRésultatTir()
+    public Coordonnées Tirer()
     {
         Coordonnées tir = DéterminerProchainTir();
 

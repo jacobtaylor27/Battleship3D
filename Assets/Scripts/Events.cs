@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 
-public class OccupationEventargs : EventArgs
+public class OccupationEventArgs : EventArgs
 {
     Coordonnées nouvelleCoord { get; set; }
 
     TypeOccupation nouvelleOccupation { get; set; }
 
-    public OccupationEventargs(Coordonnées coord, TypeOccupation occup)
+    public OccupationEventArgs(Coordonnées coord, TypeOccupation occup)
     {
         nouvelleCoord = coord;
         nouvelleOccupation = occup;
+    }
+}
+
+public class ArsenalEventArgs : EventArgs
+{
+    List<Bateau> Arsenal { get; set; }
+
+    public ArsenalEventArgs(List<Bateau> newArsenal)
+    {
+        Arsenal = newArsenal;
     }
 }

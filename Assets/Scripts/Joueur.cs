@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+
 
 public class Joueur
 {
@@ -9,6 +11,7 @@ public class Joueur
     public PaneauTirs PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
     public bool aPerdu { get { return Arsenal.All(x => x.EstCallé); } }
+    public event EventHandler<ArsenalEventArgs> ArsenalEventArgs;
 
     public Joueur()
     {

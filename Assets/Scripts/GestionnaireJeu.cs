@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+using System;
+using UnityEngine.Events;
 
 public class GestionnaireJeu : MonoBehaviour
 {
@@ -9,6 +13,9 @@ public class GestionnaireJeu : MonoBehaviour
     KeyCode Placer { get; set; }
     KeyCode Tourner { get; set; }
     bool Fait { get; set; }
+    int Tour { get; set; }
+    Button BoutonGameStart { get; set; }
+
 
     void Start()
     {
@@ -16,22 +23,49 @@ public class GestionnaireJeu : MonoBehaviour
         Bot = new Bot();
         Placer = KeyCode.Mouse0; // CLICK GAUCHE
         Tourner = KeyCode.R;
+
+        Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
+        Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
+        Joueur.PaneauJeu.VérificationTerminée += CommencerPhasePlacement;
+
     }
-    private void Update()
+    void Awake()
     {
-        PlacerBateauxJoueur();
-        Bot.Placer();
+        BoutonGameStart = GetComponents<Button>().First(x => x.name == "BtnCommencer");
+        BoutonGameStart.onClick.AddListener(CommencerPartie);
     }
+    private void CommencerPartie()
+    {
+        Bot.Placer();
+        GetComponent<GestionPlacement>().EnterState();
+    }
+
+    private void CommencerPhasePlacement()
+    {
+        GetComponent<GestionTirs>().EnterState();
+
+    }
+    private void LancerAnimationBot(object sender, OccupationEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+
 
     public void NextPlayer()
     {
-        //Player tempPlayer = currentPlayer;
+        //Joueur tempPlayer = currentPlayer;
         //currentPlayer = otherPlayer;
         //otherPlayer = tempPlayer;
     }
 
 
-    public void PlacerBateauxJoueur()
+    /*public void PlacerBateauxJoueur()
     {
         //à mettre dans joueur(je crois)
         var positionCamera = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -75,6 +109,6 @@ public class GestionnaireJeu : MonoBehaviour
             if (hit.collider.gameObject.name == "Tuile(Clone)")
                 test.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, 1f, hit.collider.gameObject.transform.position.z);
         }
-    }
+    }*/
 
 }

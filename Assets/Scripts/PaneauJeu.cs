@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 public class PaneauJeu
 {
@@ -18,5 +20,8 @@ public class PaneauJeu
         }
     }
 
-    public this
+    public Case TrouverCase(Coordonnées coord)
+    {
+        return Cases.Where(x => x.Coordonnées.Rangée == coord.Rangée && x.Coordonnées.Colonne == coord.Colonne).First();
+    }
 }
