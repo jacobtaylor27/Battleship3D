@@ -23,6 +23,14 @@ public class GestionnaireJeu : MonoBehaviour
         Bot.Placer();
     }
 
+    public void NextPlayer()
+    {
+        //Player tempPlayer = currentPlayer;
+        //currentPlayer = otherPlayer;
+        //otherPlayer = tempPlayer;
+    }
+
+
     public void PlacerBateauxJoueur()
     {
         //à mettre dans joueur(je crois)
