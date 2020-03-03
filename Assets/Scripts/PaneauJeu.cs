@@ -17,4 +17,6 @@ public class PaneauJeu
             }
         }
     }
+
+    public this
 }

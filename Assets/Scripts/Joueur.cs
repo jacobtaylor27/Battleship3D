@@ -23,10 +23,19 @@ public class Joueur
             new Submarine()
         };
     }
-    public virtual Coordonnées Tirer()
+    public TypeOccupation DéterminerRésultatTir(Coordonnées emplacementCase)
     {
-        //ici qu'on fait le système pour suivre la souris et tirer la où on click
+        TypeOccupation valeurRetour;
+
+        if (PaneauJeu.Cases.Find(x => x.Coordonnées.Equals(emplacementCase)).TypeOccupation == TypeOccupation.Occupé)
+            valeurRetour = TypeOccupation.Touché;
+
+        else
+            valeurRetour = TypeOccupation.Manqué;
+
+        return valeurRetour;
     }
+
     public void SeFaireTouché(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();

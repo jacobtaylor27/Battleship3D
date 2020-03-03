@@ -22,6 +22,7 @@ public class GestionnaireJeu : MonoBehaviour
         PlacerBateauxJoueur();
         Bot.Placer();
     }
+
     public void PlacerBateauxJoueur()
     {
         //à mettre dans joueur(je crois)

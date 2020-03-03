@@ -19,4 +19,9 @@ public class Coordonnées
         Rangée = rangée;
         Colonne = colonne;
     }
+
+    public bool Equals(Coordonnées obj)
+    {
+        return Colonne == obj.Colonne && Rangée == obj.Rangée;
+    }
 }

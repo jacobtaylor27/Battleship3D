@@ -66,39 +66,14 @@ public class Bot : Joueur
         }
     }
 
-    public override Coordonnées Tirer()
+    public override TypeOccupation DéterminerRésultatTir()
     {
         Coordonnées tir = DéterminerProchainTir();
 
         int indexCaseTiré = PaneauJeu.Cases.FindIndex(x => x.Coordonnées == tir);
         var typeOccupationCaseTiré = PaneauJeu.Cases[indexCaseTiré].TypeOccupation;
 
-        //switch (typeOccupationCaseTiré)
-        //{
-        //    case TypeOccupation.Battleship:
-        //        JoueurEnemy.Arsenal[3].PerdreVie();
-        //        break;
-        //    case TypeOccupation.Cruiser:
-        //        Console.WriteLine("yo");
-        //        break;
-        //    case TypeOccupation.Carrier:
-        //        Console.WriteLine("yo");
-        //        break;
-        //    case TypeOccupation.Submarine:
-        //        Console.WriteLine("yo");
-        //        break;
-        //    case TypeOccupation.Destroyer:
-        //        Console.WriteLine("yo");
-        //        break;
-        //}
-
-
-
-
-
-
         PaneauJeu.Cases[indexCaseTiré].TypeOccupation = TypeOccupation.Touché;
-
 
         DernierTirs.Add(tir);
         ÉtatDerniersTirs.Add(PaneauTirs.Cases.Find(x => x.Coordonnées == tir).TypeOccupation);
@@ -269,6 +244,5 @@ public class Bot : Joueur
         else
             return PositionAuHasard();
     }
-
 
 }
