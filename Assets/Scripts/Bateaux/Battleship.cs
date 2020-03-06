@@ -9,6 +9,6 @@ public class Battleship : Bateau
         Nom = "Battleship";
         Longueur = 4;
         Maquette = GameObject.Find("Battleship");
-        TypeOccupation = TypeOccupation.Battleship;
+        TypeOccupation = TypeOccupation.Occupé;
     }
 }
