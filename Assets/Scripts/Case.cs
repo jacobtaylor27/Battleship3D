@@ -18,12 +18,7 @@ public class Case
     {
         get
         {
-            return TypeOccupation == TypeOccupation.Battleship
-                || TypeOccupation == TypeOccupation.Carrier
-                || TypeOccupation == TypeOccupation.Cruiser
-                || TypeOccupation == TypeOccupation.Destroyer
-                || TypeOccupation == TypeOccupation.Submarine;
-        }
+            return TypeOccupation == TypeOccupation.Occupé;
     }
 }
 
