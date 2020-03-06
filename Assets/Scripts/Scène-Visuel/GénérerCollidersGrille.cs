@@ -11,8 +11,9 @@ public class GénérerCollidersGrille : MonoBehaviour
     const float Dimensions = 10f;
     Transform[] Coins;
     public GameObject ColliderBox;
-    float Delta { get; set; }
+    public float Delta { get; set; }//public pour utiliser dans gestion tir
     float Distance { get; set; }
+    public Transform Origine { get; set; }//xav
     float Décalage
     {
         get { return Delta / 2; }
@@ -20,6 +21,8 @@ public class GénérerCollidersGrille : MonoBehaviour
 
     void Start()
     {
+        Origine = Coins[0]; //je mets ça mais je sais pas vraiment c'est quel coins celui en bas a droite
+
         Coins = GetComponentsInChildren<Transform>();// Éléments 1 à 4 sont les coins
 
         Distance = Mathf.Sqrt(Mathf.Pow(Coins[1].position.x, 2) + Mathf.Pow(Coins[2].position.x, 2));
