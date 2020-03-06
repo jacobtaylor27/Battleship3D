@@ -33,14 +33,16 @@ public class GénérerCollidersGrille : MonoBehaviour
         Distance = Mathf.Sqrt(Mathf.Pow(CoinsPlayer[1].position.x, 2) + Mathf.Pow(CoinsPlayer[2].position.x, 2));
         Delta = Distance / Dimensions;
 
-        for(int i = 0; i < Dimensions; i++)
+        for (int i = 0; i < Dimensions; i++)
         {
-            for(int j = 0; j < Dimensions; j++)
+            for (int j = 0; j < Dimensions; j++)
             {
-                    Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity);
-                    Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity);
+                Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
+                //tuileNPC.GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
+                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
+                //tuilePlayer.GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
             }
-        } 
+        }
 
     }
 }
