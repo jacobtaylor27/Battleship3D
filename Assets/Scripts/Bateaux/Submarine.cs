@@ -9,6 +9,6 @@ public class Submarine : Bateau
         Nom = "Submarine";
         Longueur = 3;
         Maquette = GameObject.Find("Submarine");
-        TypeOccupation = TypeOccupation.Submarine;
+        TypeOccupation = TypeOccupation.Occupé;
     }
 }
