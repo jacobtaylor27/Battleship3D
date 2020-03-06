@@ -22,8 +22,7 @@ public class InformationTuile : MonoBehaviour
     //fct qui recois les pos de chq tuile 
     public void DéfinirInformationTuile(int X, int Z)
     {
-        coordGrille.Rangée = X;
-        coordGrille.Colonne = Z;
+        new Coordonnées(X, Z);
         
 
     } 
