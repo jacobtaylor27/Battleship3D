@@ -20,8 +20,8 @@ public class PaneauJeu
         }
     }
 
-    public Case TrouverCase(Coordonnées coord)
-    {
-        return Cases.Where(x => x.Coordonnées.Rangée == coord.Rangée && x.Coordonnées.Colonne == coord.Colonne).First();
-    }
+    //public Case TrouverCase(Coordonnées coord)
+    //{
+    //    return Cases.Where(x => x.Coordonnées.Rangée == coord.Rangée && x.Coordonnées.Colonne == coord.Colonne).First();
+    //}
 }
