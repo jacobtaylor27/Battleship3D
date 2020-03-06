@@ -52,7 +52,7 @@ public class GestionTirs : MonoBehaviour
                 if (Input.GetKeyDown(Tirer))
                 {
                     PositionVisée = hit.transform.position;
-                    CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Coordonnées;
+                    CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().coordGrille;
                 }
                    
         }
