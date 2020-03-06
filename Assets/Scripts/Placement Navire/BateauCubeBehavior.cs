@@ -9,12 +9,12 @@ public class BateauCubeBehavior : MonoBehaviour
     RaycastHit hit;
     InformationTuile InfoTuile;
 
-    Grille GrilleDeJeu;
+    //Grille GrilleDeJeu;
 
-    public void SetGrille(Grille  _GrileDeJeu)
-    {
-        GrilleDeJeu = _GrileDeJeu;
-    }
+    //public void SetGrille(Grille  _GrileDeJeu)
+    //{
+    //    GrilleDeJeu = _GrileDeJeu;
+    //}
     public bool SurTuile()
     {
         InfoTuile = GetInfoTuile(); // ajouter si tuile deja occuper

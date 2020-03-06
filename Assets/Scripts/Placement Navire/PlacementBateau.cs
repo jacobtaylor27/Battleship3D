@@ -9,7 +9,7 @@ public class PlacementBateau : MonoBehaviour
     public bool place; //Place mode on / off 
     bool PeutPlacé;
 
-    Grille GrilleDeJeu;
+    //Grille GrilleDeJeu;
     //https://docs.unity3d.com/ScriptReference/LayerMask.html
     public LayerMask Layer;   //layer à regardé
 
@@ -21,6 +21,7 @@ public class PlacementBateau : MonoBehaviour
 
     void Start()
     {
+        // JB : À mettre dans EnterState()? A voir qu'est-ce que ça fait exactement
         ActiverBateau(-1);
         ActiverBateau(BateauActuel);// ou -1 //chq bateau dans placement bateau sera desactiver 
 
@@ -143,5 +144,15 @@ public class PlacementBateau : MonoBehaviour
         //Desactiver Place
         //Desactiver les cubes(Prefab)
         //Verifier si tout les bateaux ont été placer
+    }
+
+    public void EnterState()
+    {
+        enabled = true;
+    }
+
+    public void ExitState()
+    {
+
     }
 }

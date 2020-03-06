@@ -20,7 +20,7 @@ public class GestionTirs : MonoBehaviour
     private void Start()
     {
         float delta = GetComponent<GénérerCollidersGrille>().Delta;//pas sur que ca marche de meme mais au moins j'ai le principe
-        Vector3 origine = GetComponent<GénérerCollidersGrille>().Origine.position;//same here
+        Vector3 origine = GetComponent<GénérerCollidersGrille>().OrigineNPC;//same here
         PosisitionVisée = new Vector3(origine.x + CoordVisée.Colonne * delta, origine.y + CoordVisée.Rangée * delta, origine.z);//pas sur si les modification doivent être faites sur x et y ou s'il y a le z qqpart
         //si nesséssaire on peut faire une fonction pour l'avoir en return c'est pas très compliqué
     }
