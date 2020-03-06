@@ -19,21 +19,22 @@ public class Case
         get
         {
             return TypeOccupation == TypeOccupation.Occupé;
-    }
-}
-
-public static class CaseExtensions
-{
-    public static Case At(this List<Case> paneaux, int rangée, int colonne)
-    {
-        return paneaux.Where(x => x.Coordonnées.Rangée == rangée && x.Coordonnées.Colonne == colonne).First();
+        }
     }
 
-    public static List<Case> Range(this List<Case> paneaux, int rangéeI, int colonneI, int rangéeF, int colonneF)
+    public static class CaseExtensions
     {
-        return paneaux.Where(x => x.Coordonnées.Rangée >= rangéeI
-                                  && x.Coordonnées.Colonne >= colonneI
-                                  && x.Coordonnées.Rangée <= rangéeF
-                                  && x.Coordonnées.Colonne <= colonneF).ToList();
+        public static Case At(this List<Case> paneaux, int rangée, int colonne)
+        {
+            return paneaux.Where(x => x.Coordonnées.Rangée == rangée && x.Coordonnées.Colonne == colonne).First();
+        }
+
+        public static List<Case> Range(this List<Case> paneaux, int rangéeI, int colonneI, int rangéeF, int colonneF)
+        {
+            return paneaux.Where(x => x.Coordonnées.Rangée >= rangéeI
+                                      && x.Coordonnées.Colonne >= colonneI
+                                      && x.Coordonnées.Rangée <= rangéeF
+                                      && x.Coordonnées.Colonne <= colonneF).ToList();
+        }
     }
 }
