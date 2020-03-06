@@ -6,8 +6,9 @@ public class GestionTirs : MonoBehaviour
 {
     Coordonnées CoordVisée { get; set; }
     public Vector3 PositionVisée { get; set; }
-    float delta { get; set; }
-    Vector3 origine { get; set; }
+
+    Vector3 Origine { get; set; }
+    float Delta { get; set; }
 
     KeyCode Tirer { get; set; }
 
@@ -28,11 +29,10 @@ public class GestionTirs : MonoBehaviour
     }
     private void Start()
     {
+        Origine = GetComponent<GénérerCollidersGrille>().OrigineNPC;
+        Delta = GetComponent<GénérerCollidersGrille>().Delta;
+
         Tirer = KeyCode.Mouse0;//click gauche
-
-        float delta = GetComponent<GénérerCollidersGrille>().Delta;//pas sur que ca marche de meme mais au moins j'ai le principe
-        Vector3 origine = GetComponent<GénérerCollidersGrille>().OrigineNPC;//same here
-
 
         plane = GameObject.Find("WaterFloor");
         // Trouver gameObjectGrille et set la hauteur voulue par rapport à la grille comme étant yAxis
@@ -51,10 +51,9 @@ public class GestionTirs : MonoBehaviour
             if (hit.collider.gameObject.name == "Tuile(Clone)")
                 if (Input.GetKeyDown(Tirer))
                 {
-                    PositionVisée = hit.transform.position;
                     CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().coordGrille;
+                    PositionVisée = new Vector3(Origine.x - Delta * CoordVisée.Rangée, Origine.y, Origine.z + Delta * CoordVisée.Colonne); )
                 }
-                   
         }
     }
 }
