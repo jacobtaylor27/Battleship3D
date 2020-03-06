@@ -1,4 +1,4 @@
 ﻿public enum TypeOccupation
 {
-    Vide, Occupé, /*Battleship, Cruiser, Carrier, Destroyer, Submarine,*/ Touché, Manqué
-}   
+    Vide, Occupé, Touché, Manqué
+}

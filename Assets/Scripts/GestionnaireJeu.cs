@@ -36,7 +36,7 @@ public class GestionnaireJeu : MonoBehaviour
     private void CommencerPartie()
     {
         Bot.Placer();
-        GetComponent<GestionPlacement>().EnterState();
+       // GetComponent<GestionPlacement>().EnterState();
     }
 
     private void CommencerPhasePlacement()

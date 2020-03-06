@@ -9,6 +9,6 @@ public class Carrier : Bateau
         Nom = "Carrier";
         Longueur = 5;
         Maquette = GameObject.Find("Carrier");
-        TypeOccupation = TypeOccupation.Carrier;
+        TypeOccupation = TypeOccupation.Occupé;
     }
 }
