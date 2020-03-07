@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class GestionTirs : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Coordonnées CoordVisée { get; set; }
+    public Vector3 PositionVisée { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    Vector3 Origine { get; set; }
+    float Delta { get; set; }
 
+    KeyCode Tirer { get; set; }
+
+    float zAxis;
+    Vector3 mousePosition;
+
+    RaycastHit hit;
+    Ray ray;
+
+    GameObject plane;
     public void EnterState()
     {
         enabled = true;
@@ -23,5 +26,34 @@ public class GestionTirs : MonoBehaviour
     public void ExitState()
     {
 
+    }
+    private void Start()
+    {
+        Origine = GetComponent<GénérerCollidersGrille>().OrigineNPC;
+        Delta = GetComponent<GénérerCollidersGrille>().Delta;
+
+        Tirer = KeyCode.Mouse0;//click gauche
+
+        plane = GameObject.Find("WaterFloor");
+        // Trouver gameObjectGrille et set la hauteur voulue par rapport à la grille comme étant yAxis
+        zAxis = plane.transform.position.z;
+        mousePosition.z = zAxis;
+
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+    void Update()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float distance = Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x, 2) + Mathf.Pow(Camera.main.transform.position.y, 2) + Mathf.Pow(Camera.main.transform.position.z, 2));
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            //Mettre un tag pour tous les colliders et générer procéduralement les colliders
+            if (hit.collider.gameObject.name == "Tuile(Clone)")
+                if (Input.GetKeyDown(Tirer))
+                {
+                    CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().coordGrille;
+                    PositionVisée = new Vector3(Origine.x - Delta * CoordVisée.Colonne, Origine.y, Origine.z + Delta * CoordVisée.Rangée);
+                }
+        }
     }
 }

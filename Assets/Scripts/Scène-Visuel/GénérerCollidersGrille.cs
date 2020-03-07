@@ -9,10 +9,13 @@ public class GénérerCollidersGrille : MonoBehaviour
 {
     // Start is called before the first frame update
     const float Dimensions = 10f;
-    Transform[] Coins;
+    Transform[] CoinsNPC;
+    Transform[] CoinsPlayer;
     public GameObject ColliderBox;
-    float Delta { get; set; }
+    public float Delta { get; set; }//public pour utiliser dans gestion tir
     float Distance { get; set; }
+    public Vector3 OrigineNPC { get; set; }//xav
+
     float Décalage
     {
         get { return Delta / 2; }
@@ -20,25 +23,26 @@ public class GénérerCollidersGrille : MonoBehaviour
 
     void Start()
     {
-        Coins = GetComponentsInChildren<Transform>();// Éléments 1 à 4 sont les coins
 
-        Distance = Mathf.Sqrt(Mathf.Pow(Coins[1].position.x, 2) + Mathf.Pow(Coins[2].position.x, 2));
+        //Coins = GetComponentsInChildren<Transform>();// Éléments 1 à 4 sont les coins
+        CoinsNPC = GameObject.FindGameObjectsWithTag("NPC").First(x => x.name == "Coins").GetComponentsInChildren<Transform>();
+        CoinsPlayer = GameObject.FindGameObjectsWithTag("Player").First(x => x.name == "Coins").GetComponentsInChildren<Transform>();
+
+        OrigineNPC = CoinsNPC[1].position; //je mets ça mais je sais pas vraiment c'est quel coins celui en bas a droite
+
+        Distance = Mathf.Sqrt(Mathf.Pow(CoinsPlayer[1].position.x, 2) + Mathf.Pow(CoinsPlayer[2].position.x, 2));
         Delta = Distance / Dimensions;
 
-        for(int i = 0; i < Dimensions; i++)
+        for (int i = 0; i < Dimensions; i++)
         {
-            for(int j = 0; j < Dimensions; j++)
+            for (int j = 0; j < Dimensions; j++)
             {
-                if (tag == "NPC")//Vérifier les tag dans la scène du projet final
-                {
-                    Instantiate(ColliderBox, new Vector3(Coins[1].position.x + -j * Delta - Décalage, Coins[1].position.y, Coins[1].position.z + Décalage + i * Delta), Quaternion.identity);
-                }
-                else
-                {
-                    Instantiate(ColliderBox, new Vector3(Coins[1].position.x + j * Delta + Décalage, Coins[1].position.y, Coins[1].position.z + -i * Delta - Décalage), Quaternion.identity);
-                }
+                Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
+                //tuileNPC.GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
+                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
+                //tuilePlayer.GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
             }
-        } 
+        }
 
     }
 }
