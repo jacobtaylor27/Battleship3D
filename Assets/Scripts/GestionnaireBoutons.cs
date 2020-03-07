@@ -35,5 +35,11 @@ public class GestionnaireBoutons : MonoBehaviour
 
     public void ChangerCouleurDefault() => GetComponent<Image>().color = CouleurDefault;
 
+    public void ChangerScenePrecedente()
+    {
+        var cool = PlayerPrefs.GetString("scènePrécédente");
+        ChangerScène(cool);
+    }
+
     public void ChangerScène(string nomScene) => SceneManager.LoadScene(nomScene);
 }
