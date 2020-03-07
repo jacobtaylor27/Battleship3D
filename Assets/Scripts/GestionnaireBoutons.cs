@@ -1,17 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GestionnaireBoutons : MonoBehaviour
 {
-    private Vector3 vecteurBoutonAgrandi { get; set; }
+    Vector3 VecteurAgrandi { get; set; }
+    Color CouleurDefault { get; set; }
+    Vector3 ScaleInitial { get; set; }
 
-    private void Start() => vecteurBoutonAgrandi = new Vector3(1.5f, 1.5f, 1.5f);
+    void Start()
+    {
+        VecteurAgrandi = new Vector3(3.5f, 3.5f, 3.5f);
+        ScaleInitial = transform.localScale;
+        CouleurDefault = GetComponent<Image>().color;
+    }
 
-    public void AgrandirBouton() => transform.localScale = vecteurBoutonAgrandi;
+    public void AgrandirBouton() => transform.localScale = VecteurAgrandi;
 
-    public void RétrécirBouton() => transform.localScale = Vector3.one;
+    public void RétrécirBouton() => transform.localScale = ScaleInitial;
 
-    public void Quitter() => Application.Quit();
+    public void Quitter()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #elif UNITY_WEBPLAYER
+            Application.OpenURL(webplayerQuitURL);
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    public void ChangerCouleurVert() => GetComponent<Image>().color = Color.green;
+
+    public void ChangerCouleurDefault() => GetComponent<Image>().color = CouleurDefault;
+
+    public void ChangerScène(string nomScene) => SceneManager.LoadScene(nomScene);
 
 }
