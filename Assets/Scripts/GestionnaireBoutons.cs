@@ -10,6 +10,7 @@ public class GestionnaireBoutons : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.SetString("scènePrécédente",SceneManager.GetActiveScene().name);
         VecteurAgrandi = new Vector3(3.5f, 3.5f, 3.5f);
         ScaleInitial = transform.localScale;
         CouleurDefault = GetComponent<Image>().color;
@@ -35,5 +36,4 @@ public class GestionnaireBoutons : MonoBehaviour
     public void ChangerCouleurDefault() => GetComponent<Image>().color = CouleurDefault;
 
     public void ChangerScène(string nomScene) => SceneManager.LoadScene(nomScene);
-
 }
