@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
+using System.Collections.Generic;
 
 public class GestionnaireBoutons : MonoBehaviour
 {
     Vector3 VecteurAgrandi { get; set; }
     Color CouleurDefault { get; set; }
     Vector3 ScaleInitial { get; set; }
+    List<string> Scènes { get; set; }
 
     void Start()
     {
-        PlayerPrefs.SetString("scènePrécédente",SceneManager.GetActiveScene().name);
+        DontDestroyOnLoad(gameObject);
+        Scènes = new List<string>();
         VecteurAgrandi = new Vector3(3.5f, 3.5f, 3.5f);
         ScaleInitial = transform.localScale;
         CouleurDefault = GetComponent<Image>().color;
@@ -22,13 +26,13 @@ public class GestionnaireBoutons : MonoBehaviour
 
     public void Quitter()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #elif UNITY_WEBPLAYER
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBPLAYER
             Application.OpenURL(webplayerQuitURL);
-        #else
+#else
             Application.Quit();
-        #endif
+#endif
     }
 
     public void ChangerCouleurVert() => GetComponent<Image>().color = Color.green;
@@ -37,9 +41,13 @@ public class GestionnaireBoutons : MonoBehaviour
 
     public void ChangerScenePrecedente()
     {
-        var cool = PlayerPrefs.GetString("scènePrécédente");
-        ChangerScène(cool);
+        Scènes.RemoveAt(Scènes.Count - 1);
+        SceneManager.LoadScene(Scènes[Scènes.Count - 1]);
     }
 
-    public void ChangerScène(string nomScene) => SceneManager.LoadScene(nomScene);
+    public void ChangerScène(string nomScene)
+    {
+        Scènes.Add(nomScene);
+        SceneManager.LoadScene(nomScene);
+    }
 }
