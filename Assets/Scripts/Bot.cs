@@ -22,12 +22,12 @@ public class Bot : Joueur
             bool estDisponible = true;
             while (estDisponible)
             {
-                var colonneInitiale = rng.Next(1, 11);
-                var rangéeInitiale = rng.Next(1, 11);
-                var rangéeFinale = rangéeInitiale;
-                var colonneFinale = colonneInitiale;
-                var orientation = rng.Next(0, 4);
-                var paneauxUtilisés = PaneauJeu.Cases.Range(rangéeInitiale, colonneInitiale, rangéeFinale, colonneFinale);
+                int colonneInitiale = rng.Next(1, 11);
+                int rangéeInitiale = rng.Next(1, 11);
+                int rangéeFinale = rangéeInitiale;
+                int colonneFinale = colonneInitiale;
+                int orientation = rng.Next(0, 4);
+                List<Case> paneauxUtilisés = PaneauJeu.Cases.Range(rangéeInitiale, colonneInitiale, rangéeFinale, colonneFinale);
 
                 if (orientation == 0)
                     for (int i = 1; 1 < b.Longueur; i++)
