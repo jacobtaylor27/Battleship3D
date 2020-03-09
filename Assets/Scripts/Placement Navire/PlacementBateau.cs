@@ -42,7 +42,7 @@ public class PlacementBateau : MonoBehaviour
 
             }
             //place le bateau
-            if (Input.GetMouseButton(0))    //Left Click
+            if (Input.GetMouseButtonDown(0))    //Left Click
             {
                 if (PeutPlacé)
                 {
