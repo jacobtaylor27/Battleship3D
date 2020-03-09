@@ -54,8 +54,6 @@ public class GestionnaireJeu : MonoBehaviour
         throw new NotImplementedException();
     }
 
-
-
     public void NextPlayer()
     {
         //Joueur tempPlayer = currentPlayer;
