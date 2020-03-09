@@ -7,9 +7,9 @@ using System;
 public class PaneauTirs : PaneauJeu
 {
     public event EventHandler<OccupationEventArgs> OccupationModifiée;
-    
-    
-    private void onOccupationModifiée(OccupationEventArgs dataOccupation)
+
+
+    public void OnOccupationModifiée(OccupationEventArgs dataOccupation)
     {
         this.OccupationModifiée?.Invoke(this, dataOccupation);
     }

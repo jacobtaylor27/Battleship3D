@@ -66,11 +66,12 @@ public class GestionnaireJeu : MonoBehaviour
     public void DéterminerRésultatTir()
     {
         Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CaseVisée);
-
+        TypeOccupation tempOccupation;
         if (AutreJoueur.PaneauJeu.TrouverCase(CaseVisée).EstOccupé)
-            CaseÀChanger.TypeOccupation = TypeOccupation.Touché;
+            tempOccupation = TypeOccupation.Touché;
         else
-            CaseÀChanger.TypeOccupation = TypeOccupation.Manqué;
+            tempOccupation = TypeOccupation.Manqué;
+        JoueurActif.PaneauTirs.OnOccupationModifiée(new OccupationEventArgs(CaseVisée, tempOccupation));
     }
 
     public void NextPlayer()
