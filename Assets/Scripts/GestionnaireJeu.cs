@@ -8,19 +8,28 @@ using UnityEngine.Events;
 
 public class GestionnaireJeu : MonoBehaviour
 {
-    Joueur Joueur { get; set; }
-    Bot Bot { get; set; }
+    public static GestionnaireJeu manager;
+    private Joueur Joueur { get; set; }
+    private Bot Bot { get; set; }
+    Joueur JoueurActif { get; set; }
+    Joueur AutreJoueur { get; set; }
     KeyCode Placer { get; set; }
     KeyCode Tourner { get; set; }
     bool Fait { get; set; }
     int Tour { get; set; }
     Button BoutonGameStart { get; set; }
+    public Vector3 PositionVisée { get; set; }
+    public Coordonnées CaseVisée { get;set; }
 
 
     void Start()
     {
         Joueur = new Joueur();
         Bot = new Bot();
+
+        JoueurActif = Bot;
+        AutreJoueur = Joueur;
+
         Placer = KeyCode.Mouse0; // CLICK GAUCHE
         Tourner = KeyCode.R;
 
@@ -36,10 +45,10 @@ public class GestionnaireJeu : MonoBehaviour
     private void CommencerPartie()
     {
         Bot.Placer();
-       // GetComponent<GestionPlacement>().EnterState();
+        GetComponent<PlacementBateau>().EnterState();
     }
 
-    private void CommencerPhasePlacement()
+    private void CommencerPhaseTirs()
     {
         GetComponent<GestionTirs>().EnterState();
 
@@ -54,11 +63,21 @@ public class GestionnaireJeu : MonoBehaviour
         throw new NotImplementedException();
     }
 
+    public void DéterminerRésultatTir()
+    {
+        Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CaseVisée);
+
+        if (AutreJoueur.PaneauJeu.TrouverCase(CaseVisée).EstOccupé)
+            CaseÀChanger.TypeOccupation = TypeOccupation.Touché;
+        else
+            CaseÀChanger.TypeOccupation = TypeOccupation.Manqué;
+    }
+
     public void NextPlayer()
     {
-        //Joueur tempPlayer = currentPlayer;
-        //currentPlayer = otherPlayer;
-        //otherPlayer = tempPlayer;
+        Joueur tempPlayer = JoueurActif;
+        JoueurActif = AutreJoueur;
+        AutreJoueur = tempPlayer;
     }
 
 
@@ -78,34 +97,8 @@ public class GestionnaireJeu : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void GestionPlacement()
-    {
-        //Mettre un bool EnPlacement pour arrêter cette méthode après le placement
-        float zAxis;
-        Vector3 mousePosition;
-        RaycastHit hit;
-        Ray ray;
-        GameObject bateau;
-        GameObject Grille;
-
-        Grille = GameObject.Find("WaterFloor");
-        zAxis = Grille.transform.position.z;
-        mousePosition.z = zAxis;
-
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Changer la valeur de y pour hauteur voulue
-        test = Instantiate(cube, new Vector3(mousePosition.x, 1f, mousePosition.z), Quaternion.identity);
-
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float distance = Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x, 2) + Mathf.Pow(Camera.main.transform.position.y, 2) + Mathf.Pow(Camera.main.transform.position.z, 2));
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            //Mettre un tag pour tous les colliders et générer procéduralement les colliders
-            if (hit.collider.gameObject.name == "Tuile(Clone)")
-                test.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, 1f, hit.collider.gameObject.transform.position.z);
-        }
     }*/
+
+    
 
 }

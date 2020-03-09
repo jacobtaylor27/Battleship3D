@@ -23,9 +23,12 @@ public class GestionTirs : MonoBehaviour
     {
         enabled = true;
     }
-    public void ExitState()
+    private void ExitState()
     {
-
+        enabled = false;
+        GestionnaireJeu.manager.PositionVisée = PositionVisée;
+        GestionnaireJeu.manager.CaseVisée = CoordVisée;
+        // a verifier
     }
     private void Start()
     {
