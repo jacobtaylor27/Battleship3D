@@ -5,8 +5,7 @@ using UnityEngine;
 public class InformationTuile : MonoBehaviour
 {
     //Position de la tuile (en X et Z car Y = 0)
-    public Coordonnées coordGrille;
-    bool Touché;
+    public Case Case { get; set; }
 
     public SpriteRenderer spriteTuile;
     //tableau qui contient chq sprite qui seront utiliser (Ex : sprite touché, coulé, raté, etc. )
@@ -22,10 +21,8 @@ public class InformationTuile : MonoBehaviour
     //fct qui recois les pos de chq tuile 
     public void DéfinirInformationTuile(int X, int Z)
     {
-        coordGrille = new Coordonnées(X, Z);
-        
-
-    } 
+        Case = new Case(X,Z);
+    }
 
     void OnMouseOver()
     {
@@ -35,4 +32,10 @@ public class InformationTuile : MonoBehaviour
     {
         SurlignierTuile(0);      //(montre le périmètre)
     }
+
+    private void OnMouseDown()
+    {
+        Debug.Log(Case.ToString());
+    }
+
 }

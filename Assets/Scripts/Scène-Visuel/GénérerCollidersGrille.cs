@@ -38,9 +38,7 @@ public class GénérerCollidersGrille : MonoBehaviour
             for (int j = 0; j < Dimensions; j++)
             {
                 Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
-                //tuileNPC.GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
-                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
-                //tuilePlayer.GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
+                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
             }
         }
 

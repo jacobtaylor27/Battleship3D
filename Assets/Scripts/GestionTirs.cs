@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GestionTirs : MonoBehaviour
 {
     Coordonnées CoordVisée { get; set; }
     public Vector3 PositionVisée { get; set; }
+
+    Camera CamBot { get; set; }
 
     Vector3 Origine { get; set; }
     float Delta { get; set; }
@@ -38,24 +41,26 @@ public class GestionTirs : MonoBehaviour
         Tirer = KeyCode.Mouse0;//click gauche
 
         plane = GameObject.Find("WaterFloor");
+        CamBot = Camera.current; // Trouver la bonne caméra
         // Trouver gameObjectGrille et set la hauteur voulue par rapport à la grille comme étant yAxis
         zAxis = plane.transform.position.z;
         mousePosition.z = zAxis;
 
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = CamBot.ScreenToWorldPoint(Input.mousePosition);
     }
     void Update()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float distance = Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x, 2) + Mathf.Pow(Camera.main.transform.position.y, 2) + Mathf.Pow(Camera.main.transform.position.z, 2));
+        float distance = Mathf.Sqrt(Mathf.Pow(CamBot.transform.position.x, 2) + Mathf.Pow(CamBot.transform.position.y, 2) + Mathf.Pow(CamBot.transform.position.z, 2));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             //Mettre un tag pour tous les colliders et générer procéduralement les colliders
             if (hit.collider.gameObject.name == "Tuile(Clone)")
                 if (Input.GetKeyDown(Tirer))
                 {
-                    CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().coordGrille;
+                    CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case.Coordonnées;
                     PositionVisée = new Vector3(Origine.x - Delta * CoordVisée.Colonne, Origine.y, Origine.z + Delta * CoordVisée.Rangée);
+                    ExitState();
                 }
         }
     }

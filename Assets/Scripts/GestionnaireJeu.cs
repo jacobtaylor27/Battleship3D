@@ -39,12 +39,13 @@ public class GestionnaireJeu : MonoBehaviour
     }
     void Awake()
     {
-        BoutonGameStart = GetComponents<Button>().First(x => x.name == "BtnCommencer");
-        BoutonGameStart.onClick.AddListener(CommencerPartie);
-    }
+        BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
+        //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
+        BoutonGameStart.onClick.AddListener(CommencerPhaseTirs);//Test seulement
+    } 
     private void CommencerPartie()
     {
-        Bot.Placer();
+        Bot.Placer(); 
         GetComponent<PlacementBateau>().EnterState();
     }
 
@@ -71,7 +72,7 @@ public class GestionnaireJeu : MonoBehaviour
             tempOccupation = TypeOccupation.Touché;
         else
             tempOccupation = TypeOccupation.Manqué;
-        JoueurActif.PaneauTirs.OnOccupationModifiée(new OccupationEventArgs(CaseVisée, tempOccupation));
+        JoueurActif.PaneauTirs.OnOccupationModifiée(new OccupationEventArgs(new Case(CaseVisée, tempOccupation)));
     }
 
     public void NextPlayer()
@@ -80,26 +81,6 @@ public class GestionnaireJeu : MonoBehaviour
         JoueurActif = AutreJoueur;
         AutreJoueur = tempPlayer;
     }
-
-
-    /*public void PlacerBateauxJoueur()
-    {
-        //à mettre dans joueur(je crois)
-        var positionCamera = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        foreach (var b in Joueur.Arsenal)
-        {
-            Fait = false;
-            while (!Fait)
-            {
-                Instantiate(b.Maquette, new Vector3(positionCamera.x, 1f, positionCamera.z), Quaternion.identity);
-                if (Input.GetKeyDown(Placer))
-                {
-                    Fait = true;
-                }
-            }
-        }
-    }*/
-
     
 
 }
