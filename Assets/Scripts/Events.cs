@@ -7,10 +7,10 @@ public class OccupationEventArgs : EventArgs
 
     TypeOccupation nouvelleOccupation { get; set; }
 
-    public OccupationEventArgs(Coordonnées coord, TypeOccupation occup)
+    public OccupationEventArgs(Case caseJeu)
     {
-        nouvelleCoord = coord;
-        nouvelleOccupation = occup;
+        nouvelleCoord = caseJeu.Coordonnées;
+        nouvelleOccupation = caseJeu.TypeOccupation;
     }
 }
 
