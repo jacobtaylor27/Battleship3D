@@ -354,7 +354,6 @@ GameObject:
   - component: {fileID: 379418165}
   - component: {fileID: 379418164}
   - component: {fileID: 379418167}
-  - component: {fileID: 379418168}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -437,18 +436,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8290390ae4da31749a956dc8903ffe62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &379418168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379418163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab0a682b343fc443a76cadeb27a861d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &550839320
@@ -535,8 +522,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 379418168}
-        m_MethodName: ChangerDeScene
+      - m_Target: {fileID: 550839325}
+        m_MethodName: "ChangerSc\xE8ne"
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1687,8 +1674,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 379418168}
-        m_MethodName: ChangerDeScene
+      - m_Target: {fileID: 379418167}
+        m_MethodName: "ChangerSc\xE8ne"
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -13,7 +13,6 @@ public class GestionnaireBoutons : MonoBehaviour
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
         Scènes = new List<string>();
         VecteurAgrandi = new Vector3(3.5f, 3.5f, 3.5f);
         ScaleInitial = transform.localScale;
