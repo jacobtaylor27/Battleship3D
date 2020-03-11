@@ -14,12 +14,23 @@ public class Case
         Coordonnées = new Coordonnées(rangée, colonne);
     }
 
+    public Case(Coordonnées coord, TypeOccupation occup)
+    {
+        Coordonnées = coord;
+        TypeOccupation = occup;
+    }
+
     public bool EstOccupé
     {
         get
         {
             return TypeOccupation == TypeOccupation.Occupé;
         }
+    }
+
+    public override string ToString()
+    {
+        return string.Format("v = ({0},{1}), {2}", Coordonnées.Rangée, Coordonnées.Colonne, TypeOccupation);
     }
 
 }

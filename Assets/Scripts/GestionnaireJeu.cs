@@ -71,7 +71,7 @@ public class GestionnaireJeu : MonoBehaviour
             tempOccupation = TypeOccupation.Touché;
         else
             tempOccupation = TypeOccupation.Manqué;
-        JoueurActif.PaneauTirs.OnOccupationModifiée(new OccupationEventArgs(CaseVisée, tempOccupation));
+        JoueurActif.PaneauTirs.OnOccupationModifiée(new OccupationEventArgs(new Case(CaseVisée, tempOccupation)));
     }
 
     public void NextPlayer()
