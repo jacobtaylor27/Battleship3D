@@ -7,32 +7,15 @@ public class GestionTirs : MonoBehaviour
 {
     Coordonnées CoordVisée { get; set; }
     public Vector3 PositionVisée { get; set; }
-
     Camera CamBot { get; set; }
-
     Vector3 Origine { get; set; }
     float Delta { get; set; }
-
     KeyCode Tirer { get; set; }
-
-    float zAxis;
     Vector3 mousePosition;
-
     RaycastHit hit;
     Ray ray;
 
     GameObject plane;
-    public void EnterState()
-    {
-        enabled = true;
-    }
-    private void ExitState()
-    {
-        enabled = false;
-        GestionnaireJeu.manager.PositionVisée = PositionVisée;
-        GestionnaireJeu.manager.CaseVisée = CoordVisée;
-        // a verifier
-    }
     private void Start()
     {
         Origine = GetComponent<GénérerCollidersGrille>().OrigineNPC;
@@ -41,17 +24,22 @@ public class GestionTirs : MonoBehaviour
         Tirer = KeyCode.Mouse0;//click gauche
 
         plane = GameObject.Find("WaterFloor");
-        CamBot = Camera.current; // Trouver la bonne caméra
+        CamBot = Camera.allCameras[2]; // Caméra Bot --> trouvée avec Debug donc à changer si on rajoute des cams.
+
         // Trouver gameObjectGrille et set la hauteur voulue par rapport à la grille comme étant yAxis
-        zAxis = plane.transform.position.z;
+        float zAxis = plane.transform.position.z;
         mousePosition.z = zAxis;
 
         mousePosition = CamBot.ScreenToWorldPoint(Input.mousePosition);
     }
+    private void Awake()
+    {
+        enabled = false;
+    }
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float distance = Mathf.Sqrt(Mathf.Pow(CamBot.transform.position.x, 2) + Mathf.Pow(CamBot.transform.position.y, 2) + Mathf.Pow(CamBot.transform.position.z, 2));
+        ray = CamBot.ScreenPointToRay(Input.mousePosition);
+        //float distance = Mathf.Sqrt(Mathf.Pow(CamBot.transform.position.x, 2) + Mathf.Pow(CamBot.transform.position.y, 2) + Mathf.Pow(CamBot.transform.position.z, 2));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             //Mettre un tag pour tous les colliders et générer procéduralement les colliders
@@ -63,5 +51,19 @@ public class GestionTirs : MonoBehaviour
                     ExitState();
                 }
         }
+    }
+    public void EnterState()
+    {
+        enabled = true;
+    }
+    private void ExitState()
+    {
+        enabled = false;
+        GestionnaireJeu.manager.PositionVisée = PositionVisée;
+        GestionnaireJeu.manager.CaseVisée = CoordVisée;
+
+        GestionnaireJeu.manager.DéterminerRésultatTir();
+        GestionnaireJeu.manager.NextPlayer();
+        // a verifier
     }
 }

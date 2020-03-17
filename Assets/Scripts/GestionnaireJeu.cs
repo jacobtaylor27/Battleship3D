@@ -15,11 +15,11 @@ public class GestionnaireJeu : MonoBehaviour
     Joueur AutreJoueur { get; set; }
     KeyCode Placer { get; set; }
     KeyCode Tourner { get; set; }
-    bool Fait { get; set; }
-    int Tour { get; set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CaseVisée { get;set; }
+    bool Fait { get; set; }
+    int Tour { get; set; }
 
 
     void Start()
@@ -36,32 +36,33 @@ public class GestionnaireJeu : MonoBehaviour
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
 
-    }
-    void Awake()
-    {
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
         BoutonGameStart.onClick.AddListener(CommencerPhaseTirs);//Test seulement
+
+    }
+    void Awake()
+    {
+        manager = this;
     } 
     private void CommencerPartie()
     {
-        Bot.Placer(); 
-        GetComponent<PlacementBateau>().EnterState();
+        Bot.Placer(); // Bot devra appeler NextPlayer()
+        GetComponent<PlacementBateau>().EnterState();// ExitState() devra appeler NextPlayer()
     }
 
     private void CommencerPhaseTirs()
     {
         GetComponent<GestionTirs>().EnterState();
-
     }
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
-        throw new NotImplementedException();
+        Debug.Log("Animation bot lancée");
     }
 
     private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
     {
-        throw new NotImplementedException();
+        Debug.Log("Animation joueur Lancée");
     }
 
     public void DéterminerRésultatTir()
