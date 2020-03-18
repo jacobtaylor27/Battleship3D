@@ -158,6 +158,10 @@ public class PlacementBateau : MonoBehaviour
 
     public void ExitState()
     {
+        enabled = false;
 
+        // S'assurer de modifier la GrilleLogique et OccupationEventArgs
+
+        GestionnaireJeu.manager.NextPlayer();// Ou CommencerPhaseTirs();
     }
 }

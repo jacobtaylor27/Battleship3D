@@ -2209,7 +2209,7 @@ GameObject:
   - component: {fileID: 1960297941}
   - component: {fileID: 1960297940}
   m_Layer: 5
-  m_Name: Camera
+  m_Name: CanvasCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
