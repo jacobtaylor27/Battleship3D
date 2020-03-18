@@ -60,7 +60,7 @@ public class GestionTirs : MonoBehaviour
     {
         enabled = false;
         GestionnaireJeu.manager.PositionVisée = PositionVisée;
-        GestionnaireJeu.manager.CaseVisée = CoordVisée;
+        GestionnaireJeu.manager.CoordVisée = CoordVisée;
 
         GestionnaireJeu.manager.DéterminerRésultatTir();
         GestionnaireJeu.manager.NextPlayer();

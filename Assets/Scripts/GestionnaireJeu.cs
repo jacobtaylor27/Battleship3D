@@ -17,7 +17,7 @@ public class GestionnaireJeu : MonoBehaviour
     KeyCode Tourner { get; set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
-    public Coordonnées CaseVisée { get;set; }
+    public Coordonnées CoordVisée { get;set; }
     bool Fait { get; set; }
     int Tour { get; set; }
 
@@ -67,13 +67,13 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void DéterminerRésultatTir()
     {
-        Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CaseVisée);
+        //Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CoordVisée);
         TypeOccupation tempOccupation;
-        if (AutreJoueur.PaneauJeu.TrouverCase(CaseVisée).EstOccupé)
+        if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
             tempOccupation = TypeOccupation.Touché;
         else
             tempOccupation = TypeOccupation.Manqué;
-        JoueurActif.PaneauTirs.OnOccupationModifiée(new OccupationEventArgs(new Case(CaseVisée, tempOccupation)));
+        JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
     }
 
     public void NextPlayer()
