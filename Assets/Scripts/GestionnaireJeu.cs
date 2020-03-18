@@ -71,6 +71,7 @@ public class GestionnaireJeu : MonoBehaviour
         TypeOccupation tempOccupation;
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
             tempOccupation = TypeOccupation.Touché;
+            // Modifier l'état bateau touché ici?
         else
             tempOccupation = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);

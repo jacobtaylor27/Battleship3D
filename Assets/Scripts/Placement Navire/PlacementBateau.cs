@@ -27,6 +27,11 @@ public class PlacementBateau : MonoBehaviour
 
     }
 
+    private void Awake()
+    {
+        enabled = false; // nécessaire pour le gestionnaire jeu
+    }
+
     // Update is called once per frame
     void Update()
     {
