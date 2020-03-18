@@ -17,9 +17,11 @@ public class GestionnaireJeu : MonoBehaviour
     KeyCode Tourner { get; set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
-    public Coordonnées CoordVisée { get;set; }
+    public Coordonnées CoordVisée { get; set; }
     bool Fait { get; set; }
     int Tour { get; set; }
+
+    Button BoutonTirerBot {get;set;}//test
 
 
     void Start()
@@ -40,6 +42,15 @@ public class GestionnaireJeu : MonoBehaviour
         //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
         BoutonGameStart.onClick.AddListener(CommencerPhaseTirs);//Test seulement
 
+        BoutonTirerBot = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "TirerBot");//test
+        BoutonTirerBot.onClick.AddListener(TirerBotTest);//test
+    }
+
+    private void TirerBotTest()//test
+    {
+        CoordVisée = Bot.Tirer();
+        Debug.Log(CoordVisée.ToString());
+        DéterminerRésultatTir();
     }
     void Awake()
     {
