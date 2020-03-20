@@ -70,12 +70,8 @@ public class Bot : Joueur
     {
         Coordonnées tir = DéterminerProchainTir();
 
-        Case c = PaneauJeu.TrouverCase(tir);
-
-        c.TypeOccupation = TypeOccupation.Touché;
-
         DernierTirs.Add(tir);
-        ÉtatDerniersTirs.Add(PaneauTirs.TrouverCase(tir).TypeOccupation);
+        ÉtatDerniersTirs.Add(GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation);
         if (DernierTirs.Count > 5)
             DernierTirs.RemoveAt(0);
         if (ÉtatDerniersTirs.Count > 5)
@@ -104,7 +100,7 @@ public class Bot : Joueur
         bool b = false;
         Coordonnées ProchainTir = new Coordonnées();
         DernierTir = DernierTirs[DernierTirs.Count-1];
-        for (int i = 0; i < DernierTirs.Count - 99 || b == true; i++)//s'il y a aucune touche dans les 5 derniers tirs on tir au hasard
+        for (int i = 0; i < DernierTirs.Count - 1 || b == true; i++)//s'il y a aucune touche dans les 5 derniers tirs on tir au hasard
         {
             if (PaneauTirs.TrouverCase(DernierTirs[DernierTirs.Count - i - 1]).TypeOccupation == TypeOccupation.Manqué)
                  b = true;

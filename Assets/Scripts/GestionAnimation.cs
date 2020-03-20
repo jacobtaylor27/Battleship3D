@@ -56,8 +56,8 @@ public class GestionAnimation : MonoBehaviour
         {
             for(int j = 0; j < 2; j++)
             {
-                for (int k = 0; k < 2; k++)
-                   Canon.transform.position = new Vector3(x, Canon.transform.position.y, z);//Changer Canon.transform.position pour la boule.
+                for (int k = 0; k < 2; k++) { }
+                   //Canon.transform.position = new Vector3(x, Canon.transform.position.y, z);//Changer Canon.transform.position pour la boule.
             }
         }
     }

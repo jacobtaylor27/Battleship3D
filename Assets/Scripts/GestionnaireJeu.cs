@@ -10,7 +10,7 @@ public class GestionnaireJeu : MonoBehaviour
 {
     public static GestionnaireJeu manager;
     private Joueur Joueur { get; set; }
-    private Bot Bot { get; set; }
+    public Bot Bot { get; set; }//xav:je le mets public car j'ai besoin daller checher son panneau tir dans Bot
     Joueur JoueurActif { get; set; }
     Joueur AutreJoueur { get; set; }
     KeyCode Placer { get; set; }
@@ -49,8 +49,9 @@ public class GestionnaireJeu : MonoBehaviour
     private void TirerBotTest()//test
     {
         CoordVisée = Bot.Tirer();
-        Debug.Log(CoordVisée.ToString());
+        Debug.Log(Joueur.PaneauJeu.TrouverCase(CoordVisée).ToString());
         DéterminerRésultatTir();
+        Bot.PaneauTirs.TrouverCase(CoordVisée).TypeOccupation = TypeOccupation.Touché;
     }
     void Awake()
     {
