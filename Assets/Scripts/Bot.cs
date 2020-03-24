@@ -11,10 +11,10 @@ public class Bot : Joueur
     private Predicate<TypeOccupation> p = (TypeOccupation e) => e == TypeOccupation.Touché;
     List<Coordonnées> DernierTirs = new List<Coordonnées>(5);
     List<TypeOccupation> ÉtatDerniersTirs = new List<TypeOccupation>();
-    int AxeAuHasard() => rng.Next(0,11);
-    bool EstTiré(Coordonnées coord) => PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
-                                  PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
-
+    int AxeAuHasard() => rng.Next(0,10);
+    bool EstTiré(Coordonnées coord) => GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
+                                  GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
+    int cpt = 0;
     public void Placer()
     {
         foreach (var b in Arsenal)
@@ -68,14 +68,31 @@ public class Bot : Joueur
 
     public Coordonnées Tirer()
     {
+        
         Coordonnées tir = DéterminerProchainTir();
 
         DernierTirs.Add(tir);
-        ÉtatDerniersTirs.Add(GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation);
+
+        //test
+        if (cpt== 0)
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+        if (cpt == 1)
+            ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
+        if (cpt == 2)
+            ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
+        if (cpt == 3)
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+        if (cpt == 4)
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+        if (cpt == 5)
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+        //test
+
         if (DernierTirs.Count > 5)
             DernierTirs.RemoveAt(0);
         if (ÉtatDerniersTirs.Count > 5)
             ÉtatDerniersTirs.RemoveAt(0);
+        cpt++;//test
         return tir;
     }
 
@@ -95,15 +112,24 @@ public class Bot : Joueur
 
     private Coordonnées DéterminerProchainTir()
     {
-        Coordonnées DernierTir = new Coordonnées(0,0);
-        DernierTirs.Add(DernierTir);
+        if (GestionnaireJeu.manager.Tour == 0)
+        {
+            GestionnaireJeu.manager.Tour++;//test seulement
+            return PositionAuHasard();
+        }
+            
+        
         bool b = false;
         Coordonnées ProchainTir = new Coordonnées();
-        DernierTir = DernierTirs[DernierTirs.Count-1];
-        for (int i = 0; i < DernierTirs.Count - 1 || b == true; i++)//s'il y a aucune touche dans les 5 derniers tirs on tir au hasard
+        Coordonnées DernierTir = DernierTirs[DernierTirs.Count-1];
+        for (int i = 0; i <= DernierTirs.Count - 1; i++)//s'il y a aucune touche dans les 5 derniers tirs on tir au hasard
         {
-            if (PaneauTirs.TrouverCase(DernierTirs[DernierTirs.Count - i - 1]).TypeOccupation == TypeOccupation.Manqué)
-                 b = true;
+            if (GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(DernierTirs[DernierTirs.Count - i - 1]).TypeOccupation != TypeOccupation.Manqué)
+            {
+                b = true;
+                break;
+            }
+                 
         }
         if (!b)
             ProchainTir = PositionAuHasard();
@@ -112,6 +138,7 @@ public class Bot : Joueur
             int f = ÉtatDerniersTirs.FindIndex(p);//la première touche
             int l = ÉtatDerniersTirs.FindLastIndex(p);//la dernière touche
             int nt = ÉtatDerniersTirs.FindAll(p).Count();//le nombre de touche
+
             Coordonnées DernierTirTouché = DernierTirs[l];
             Coordonnées PremierTirTouché = DernierTirs[f];
 
@@ -126,12 +153,12 @@ public class Bot : Joueur
                 if (diffX == 0 && diffY >= 1)
                 {
                     
-                    if (DernierTirTouché.Rangée != 9/*bounds*/|| !EstTiré(new Coordonnées(DernierTirTouché.Colonne, DernierTirTouché.Rangée + 1)))
+                    if (DernierTirTouché.Rangée != 9/*bounds*/&& !EstTiré(new Coordonnées(DernierTirTouché.Rangée + 1, DernierTirTouché.Colonne)))
                     {
                         ProchainTir.Colonne = DernierTirTouché.Colonne;
                         ProchainTir.Rangée = DernierTirTouché.Rangée + 1;
                     }
-                    else if (DernierTirTouché.Rangée != 0/*bounds*/|| !EstTiré(new Coordonnées(PremierTirTouché.Colonne, PremierTirTouché.Rangée - 1)))
+                    else if (DernierTirTouché.Rangée != 0/*bounds*/&& !EstTiré(new Coordonnées(PremierTirTouché.Rangée - 1, PremierTirTouché.Colonne)))
                     {
                         ProchainTir.Colonne = PremierTirTouché.Colonne;
                         ProchainTir.Rangée = PremierTirTouché.Rangée - 1;
@@ -141,12 +168,12 @@ public class Bot : Joueur
                 }
                 else if (diffX == 0 && diffY <= -1)
                 {
-                    if (DernierTirTouché.Rangée != 0/*bounds*/|| !EstTiré(new Coordonnées(DernierTirTouché.Colonne, DernierTirTouché.Rangée - 1)))
+                    if (DernierTirTouché.Rangée != 0/*bounds*/&& !EstTiré(new Coordonnées(DernierTirTouché.Rangée-1, DernierTirTouché.Colonne)))
                     {
                         ProchainTir.Colonne = DernierTirTouché.Colonne;
                         ProchainTir.Rangée = DernierTirTouché.Rangée - 1;
                     }
-                    else if (DernierTirTouché.Rangée != 9/*bounds*/|| !EstTiré(new Coordonnées(PremierTirTouché.Colonne, PremierTirTouché.Rangée + 1)))
+                    else if (DernierTirTouché.Rangée != 9/*bounds*/&& !EstTiré(new Coordonnées(PremierTirTouché.Rangée+1, PremierTirTouché.Colonne)))
                     {
                         ProchainTir.Colonne = PremierTirTouché.Colonne;
                         ProchainTir.Rangée = PremierTirTouché.Rangée + 1;
@@ -156,12 +183,12 @@ public class Bot : Joueur
                 }
                 else if (diffX >= 1 && diffY == 0)
                 {
-                    if (DernierTirTouché.Colonne != 9/*bounds*/|| !EstTiré(new Coordonnées(DernierTirTouché.Colonne + 1, DernierTirTouché.Rangée)))
+                    if (DernierTirTouché.Colonne != 9/*bounds*/&& !EstTiré(new Coordonnées(DernierTirTouché.Rangée, DernierTirTouché.Colonne+1)))
                     {
                         ProchainTir.Colonne = DernierTirTouché.Colonne + 1;
                         ProchainTir.Rangée = DernierTirTouché.Rangée;
                     }
-                    else if (DernierTirTouché.Colonne != 0/*bounds*/|| !EstTiré(new Coordonnées(PremierTirTouché.Colonne - 1, PremierTirTouché.Rangée)))
+                    else if (DernierTirTouché.Colonne != 0/*bounds*/&& !EstTiré(new Coordonnées(PremierTirTouché.Rangée, PremierTirTouché.Colonne-1)))
                     {
                         ProchainTir.Colonne = PremierTirTouché.Colonne - 1;
                         ProchainTir.Rangée = PremierTirTouché.Rangée;
@@ -171,12 +198,12 @@ public class Bot : Joueur
                 }
                 else if (diffX <= -1 && diffY == 0)
                 {
-                    if (DernierTirTouché.Colonne != 0/*bounds*/|| !EstTiré(new Coordonnées(DernierTirTouché.Colonne - 1, DernierTirTouché.Rangée)))
+                    if (DernierTirTouché.Colonne != 0/*bounds*/&& !EstTiré(new Coordonnées(DernierTirTouché.Rangée, DernierTirTouché.Colonne-1)))
                     {
                         ProchainTir.Colonne = DernierTirTouché.Colonne - 1;
                         ProchainTir.Rangée = DernierTirTouché.Rangée;
                     }
-                    else if (DernierTirTouché.Colonne != 9/*bounds*/|| !EstTiré(new Coordonnées(PremierTirTouché.Colonne + 1, PremierTirTouché.Rangée)))
+                    else if (DernierTirTouché.Colonne != 9/*bounds*/&& !EstTiré(new Coordonnées(PremierTirTouché.Rangée, PremierTirTouché.Colonne+1)))
                     {
                         ProchainTir.Colonne = PremierTirTouché.Colonne + 1;
                         ProchainTir.Rangée = PremierTirTouché.Rangée;
@@ -192,7 +219,7 @@ public class Bot : Joueur
     private Coordonnées TirerBas(Coordonnées last)
     {
         Coordonnées ToReturn = new Coordonnées();
-        if (last.Rangée != 9/*bounds*/|| !EstTiré(new Coordonnées(last.Colonne, last.Rangée + 1)))
+        if (last.Rangée != 9/*bounds*/&& !EstTiré(new Coordonnées(last.Rangée+1, last.Colonne)))
         {
             ToReturn.Colonne = last.Colonne;
             ToReturn.Rangée = last.Rangée + 1;
@@ -205,7 +232,7 @@ public class Bot : Joueur
     private Coordonnées TirerGauche(Coordonnées last)
     {
         Coordonnées ToReturn = new Coordonnées();
-        if (last.Colonne != 0/*bounds*/|| !EstTiré(new Coordonnées(last.Colonne - 1, last.Rangée)))
+        if (last.Colonne != 0/*bounds*/&& !EstTiré(new Coordonnées(last.Rangée, last.Colonne-1)))
         {
             ToReturn.Colonne = last.Colonne - 1;
             ToReturn.Rangée = last.Rangée;
@@ -218,7 +245,7 @@ public class Bot : Joueur
     private Coordonnées TirerHaut(Coordonnées last)
     {
         Coordonnées ToReturn = new Coordonnées();
-        if (last.Rangée != 0/*bounds*/|| !EstTiré(new Coordonnées(last.Colonne, last.Rangée - 1)))
+        if (last.Rangée != 0/*bounds*/&& !EstTiré(new Coordonnées(last.Rangée-1, last.Colonne)))
         {
             ToReturn.Colonne = last.Colonne;
             ToReturn.Rangée = last.Rangée - 1;
@@ -231,7 +258,7 @@ public class Bot : Joueur
     private Coordonnées TirerDroite(Coordonnées last)
     {
         Coordonnées ToReturn = new Coordonnées();
-        if (last.Colonne != 9/*bounds*/|| !EstTiré(new Coordonnées(last.Colonne + 1, last.Rangée)))
+        if (last.Colonne != 9/*bounds*/&& !EstTiré(new Coordonnées(last.Rangée, last.Colonne+1)))
         {
             ToReturn.Colonne = last.Colonne + 1;
             ToReturn.Rangée = last.Rangée;

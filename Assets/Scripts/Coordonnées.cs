@@ -24,4 +24,9 @@ public class Coordonnées
     {
         return Colonne == obj.Colonne && Rangée == obj.Rangée;
     }
+
+    public override string ToString()
+    {
+        return $"{Rangée},{Colonne}";
+    }
 }

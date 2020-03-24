@@ -19,7 +19,7 @@ public class GestionnaireJeu : MonoBehaviour
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
     bool Fait { get; set; }
-    int Tour { get; set; }
+    public int Tour { get; set; }//xav:je le mets public car besoin dans bot
 
     Button BoutonTirerBot {get;set;}//test
 
@@ -55,6 +55,7 @@ public class GestionnaireJeu : MonoBehaviour
     }
     void Awake()
     {
+        Tour = 0;//xav: pour test bot
         manager = this;
     } 
     private void CommencerPartie()
