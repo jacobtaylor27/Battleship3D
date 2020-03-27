@@ -11,17 +11,17 @@ public class GestionnaireJeu : MonoBehaviour
     public static GestionnaireJeu manager;
     private Joueur Joueur { get; set; }
     public Bot Bot { get; set; }//xav:je le mets public car j'ai besoin daller checher son panneau tir dans Bot
-    Joueur JoueurActif { get; set; }
-    Joueur AutreJoueur { get; set; }
+    public Joueur JoueurActif { get; private set; }
+    public Joueur AutreJoueur { get; private set; }
     KeyCode Placer { get; set; }
     KeyCode Tourner { get; set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
     bool Fait { get; set; }
-    public int Tour { get; set; }//xav:je le mets public car besoin dans bot
+    public int Tour { get; set; }//xav:je le mets public car besoin dans bot // remettre private set
 
-    Button BoutonTirerBot {get;set;}//test
+    Button BoutonTirerBot { get; set; }//test
 
 
     void Start()
@@ -57,7 +57,7 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Tour = 0;//xav: pour test bot
         manager = this;
-    } 
+    }
     private void CommencerPartie()
     {
         Bot.Placer(); // Bot devra appeler NextPlayer()
@@ -70,12 +70,12 @@ public class GestionnaireJeu : MonoBehaviour
     }
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
-        Debug.Log("Animation bot lancée");
+        GetComponent<GestionAnimation>().EnterState();
     }
 
     private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
     {
-        Debug.Log("Animation joueur Lancée");
+        GetComponent<GestionAnimation>().EnterState();
     }
 
     public void DéterminerRésultatTir()
@@ -84,7 +84,7 @@ public class GestionnaireJeu : MonoBehaviour
         TypeOccupation tempOccupation;
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
             tempOccupation = TypeOccupation.Touché;
-            // Modifier l'état bateau touché ici?
+        // Modifier l'état bateau touché ici?
         else
             tempOccupation = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
@@ -95,7 +95,8 @@ public class GestionnaireJeu : MonoBehaviour
         Joueur tempPlayer = JoueurActif;
         JoueurActif = AutreJoueur;
         AutreJoueur = tempPlayer;
+        Tour++;
     }
-    
+
 
 }

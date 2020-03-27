@@ -15,6 +15,7 @@ public class Bot : Joueur
     bool EstTiré(Coordonnées coord) => GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
                                   GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
     int cpt = 0;
+
     public void Placer()
     {
         foreach (var b in Arsenal)

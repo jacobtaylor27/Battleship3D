@@ -5,7 +5,7 @@ using UnityEngine;
 public class GestionAnimation : MonoBehaviour
 {
     const float tempsAnimation = 2f;
-    public GameObject Canon { get; set; }
+    GameObject Canon { get; set; }
     Vector3 VitesseInitiale { get; set; }
     Vector3 RotationCanon { get; set; }
     Vector3 VCanonPosition { get; set; }
@@ -16,7 +16,14 @@ public class GestionAnimation : MonoBehaviour
 
     void Start()
     {
-        // Trouver canon si bot ou joueur
+        GameObject[] tempCanons = GameObject.FindGameObjectsWithTag("Canon");
+
+        if (GestionnaireJeu.manager.Tour % 2 != 0)
+            Canon = tempCanons[0];
+        else
+            Canon = tempCanons[1];
+
+        Debug.Log(Canon.GetComponentsInChildren<Transform>()[1].gameObject.name);
 
         VCanonPosition = GestionnaireJeu.manager.PositionVisée - Canon.transform.position;
         Angle = Vector3.SignedAngle(Canon.transform.position, VCanonPosition, Vector3.up);
@@ -57,7 +64,7 @@ public class GestionAnimation : MonoBehaviour
             for(int j = 0; j < 2; j++)
             {
                 for (int k = 0; k < 2; k++) { }
-                   //Canon.transform.position = new Vector3(x, Canon.transform.position.y, z);//Changer Canon.transform.position pour la boule.
+                   //Canon.transform.position = new Vector3(, Canon.transform.position.y, z);//Changer Canon.transform.position pour la boule.
             }
         }
     }

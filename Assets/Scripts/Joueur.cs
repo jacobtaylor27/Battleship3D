@@ -11,7 +11,7 @@ public class Joueur
     public PaneauTirs PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
     public bool aPerdu { get { return Arsenal.All(x => x.EstCallé); } }
-    
+
     public event EventHandler<BateauEventArgs> BateauDétruit;
 
     public Joueur()
@@ -27,6 +27,7 @@ public class Joueur
             new Submarine()
         };
     }
+    
     private void onBateauDétruit(BateauEventArgs dataBateau)
     {
         this.BateauDétruit?.Invoke(this, dataBateau);
