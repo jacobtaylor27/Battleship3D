@@ -12,9 +12,9 @@ public class Bot : Joueur
     List<Coordonnées> DernierTirs = new List<Coordonnées>(5);
     List<TypeOccupation> ÉtatDerniersTirs = new List<TypeOccupation>();
     int AxeAuHasard() => rng.Next(0,10);
-    bool EstTiré(Coordonnées coord) => GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
-                                  GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
-    int cpt = 0;
+    bool EstTiré(Coordonnées coord) => GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
+                                  GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
+    int cpt = 0;//test
 
     public void Placer()
     {
@@ -76,17 +76,17 @@ public class Bot : Joueur
 
         //test
         if (cpt== 0)
-            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
         if (cpt == 1)
-            ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
+            ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
         if (cpt == 2)
-            ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
+            ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
         if (cpt == 3)
-            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
         if (cpt == 4)
-            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
         if (cpt == 5)
-            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
+            ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
         //test
 
         if (DernierTirs.Count > 5)
@@ -125,12 +125,11 @@ public class Bot : Joueur
         Coordonnées DernierTir = DernierTirs[DernierTirs.Count-1];
         for (int i = 0; i <= DernierTirs.Count - 1; i++)//s'il y a aucune touche dans les 5 derniers tirs on tir au hasard
         {
-            if (GestionnaireJeu.manager.Bot.PaneauTirs.TrouverCase(DernierTirs[DernierTirs.Count - i - 1]).TypeOccupation != TypeOccupation.Manqué)
+            if (GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(DernierTirs[DernierTirs.Count - i - 1]).TypeOccupation != TypeOccupation.Manqué)
             {
                 b = true;
                 break;
             }
-                 
         }
         if (!b)
             ProchainTir = PositionAuHasard();
