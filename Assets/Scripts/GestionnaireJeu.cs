@@ -37,6 +37,8 @@ public class GestionnaireJeu : MonoBehaviour
 
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
+        //Joueur.BateauDétruit += MéthodeQuelconque;
+        //Bot.BateauDétruit += MéthodeQuelconque;
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
@@ -71,11 +73,13 @@ public class GestionnaireJeu : MonoBehaviour
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
         GetComponent<GestionAnimation>().EnterState();
+        //Debug.Log("animBot");
     }
 
     private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
     {
         GetComponent<GestionAnimation>().EnterState();
+        //Debug.Log("animJoueur");
     }
 
     public void DéterminerRésultatTir()

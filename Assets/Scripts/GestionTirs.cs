@@ -47,7 +47,7 @@ public class GestionTirs : MonoBehaviour
                 if (Input.GetKeyDown(Tirer))
                 {
                     CoordVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case.Coordonnées;
-                    PositionVisée = new Vector3(Origine.x - Delta * CoordVisée.Colonne, Origine.y, Origine.z + Delta * CoordVisée.Rangée);
+                    PositionVisée = new Vector3(Origine.x - Delta * CoordVisée.Colonne - Delta / 2, Origine.y, Origine.z + Delta * CoordVisée.Rangée + Delta / 2);
                     ExitState();
                 }
         }
@@ -63,7 +63,6 @@ public class GestionTirs : MonoBehaviour
         GestionnaireJeu.manager.CoordVisée = CoordVisée;
 
         GestionnaireJeu.manager.DéterminerRésultatTir();
-        GestionnaireJeu.manager.NextPlayer();
         // a verifier
     }
 }

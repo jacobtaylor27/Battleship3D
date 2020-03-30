@@ -5,30 +5,38 @@ using UnityEngine;
 public class GestionAnimation : MonoBehaviour
 {
     const float tempsAnimation = 2f;
-    GameObject Canon { get; set; }
+    GameObject[] Canons { get; set; }
+    GameObject Affut { get; set; }
     Vector3 VitesseInitiale { get; set; }
-    Vector3 RotationCanon { get; set; }
-    Vector3 VCanonPosition { get; set; }
-    float Angle { get; set; }
+    Vector3 PositionCanon { get; set; }
+    Vector3 VCanonInit { get; set; }
+    Vector3 VCanonFinal { get; set; }
+    float AngleX { get; set; }
+    float AngleY { get; set; }
+    float[,] MatriceRotationX { get; set; }
+    float[,] MatriceRotationY { get; set; }
+    int test { get; set; }
 
-    float[,] MatriceRotation;
 
-
-    void Start()
+    private void OnEnable()
     {
-        GameObject[] tempCanons = GameObject.FindGameObjectsWithTag("Canon");
+        Canons = GameObject.FindGameObjectsWithTag("Canon");
+        Debug.Log(GestionnaireJeu.manager.JoueurActif);
+        Debug.Log(GestionnaireJeu.manager.Tour);
 
-        if (GestionnaireJeu.manager.Tour % 2 != 0)
-            Canon = tempCanons[0];
+        if (GestionnaireJeu.manager.Tour % 2 == 0)
+            Affut = Canons[0].GetComponentsInChildren<Transform>()[1].gameObject;
         else
-            Canon = tempCanons[1];
+            Affut = Canons[1].GetComponentsInChildren<Transform>()[1].gameObject;
 
-        Debug.Log(Canon.GetComponentsInChildren<Transform>()[1].gameObject.name);
+        VCanonInit = Affut.GetComponentsInChildren<Transform>()[4].position - Affut.transform.position;
 
-        VCanonPosition = GestionnaireJeu.manager.PositionVisée - Canon.transform.position;
-        Angle = Vector3.SignedAngle(Canon.transform.position, VCanonPosition, Vector3.up);
+        VCanonFinal = GestionnaireJeu.manager.PositionVisée - Affut.transform.position;
+        VCanonFinal = new Vector3(VCanonFinal.x, 0, VCanonFinal.z);
+        AngleY = Mathf.Deg2Rad * Vector3.Angle(VCanonInit, VCanonFinal);
 
-        //Rotation pour mettre le canon et la position sur le même axe;
+        CréerMatricesRotation();
+        FaireRotationVecteur();
 
 
     }
@@ -41,7 +49,8 @@ public class GestionAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (test == 4)
+            ExitState();
     }
 
     public void EnterState()
@@ -51,21 +60,30 @@ public class GestionAnimation : MonoBehaviour
 
     private void ExitState()
     {
+        enabled = false;
+        GestionnaireJeu.manager.NextPlayer();
+    }
+    private void CréerMatricesRotation()
+    {
+        MatriceRotationX = new float[3, 3] { { 1, 0, 0 }, { 0, Mathf.Cos(AngleX), Mathf.Sin(AngleX) }, { 0, -Mathf.Sin(AngleX), Mathf.Cos(AngleX) } };
+        MatriceRotationY = new float[3, 3] { { Mathf.Cos(AngleY), 0, -Mathf.Sin(AngleY) }, { 0, 1, 0 }, { Mathf.Sin(AngleY), 0, Mathf.Cos(AngleY) } };
+    }
+    private void FaireRotationVecteur()
+    {
+        Vector3 tempVect = VCanonInit;
 
-    }
-    private void CréerMatriceRotation()
-    {
-        MatriceRotation = new float[2,2] { { Mathf.Cos(Angle), Mathf.Sin(Angle) }, { -Mathf.Sin(Angle), Mathf.Cos(Angle) } };
-    }
-    private void MultiplierMatrices()
-    {
-        for(int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
-            for(int j = 0; j < 2; j++)
+            for (int j = 0; j < 3; j++)
             {
-                for (int k = 0; k < 2; k++) { }
-                   //Canon.transform.position = new Vector3(, Canon.transform.position.y, z);//Changer Canon.transform.position pour la boule.
+                tempVect[i] += tempVect[i] * MatriceRotationY[j, i];
             }
         }
+
+        Affut.GetComponentsInChildren<Transform>()[4].position = tempVect;
+        //affut.transform.rotation = new quaternion(matricetransformée[1], affut.transform.rotation.y, matricetransformée[0], affut.transform.rotation.w);
+        //Affut.transform.localEulerAngles = new Vector3(90,0,0);
+        test = 4;
+
     }
 }
