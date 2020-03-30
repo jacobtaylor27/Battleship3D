@@ -10,7 +10,7 @@ public class GestionnaireJeu : MonoBehaviour
 {
     public static GestionnaireJeu manager;
     private Joueur Joueur { get; set; }
-    public Bot Bot { get; set; }//xav:je le mets public car j'ai besoin daller checher son panneau tir dans Bot
+    private Bot Bot { get; set; }//xav:je le mets public car j'ai besoin daller checher son panneau tir dans Bot
     public Joueur JoueurActif { get; private set; }
     public Joueur AutreJoueur { get; private set; }
     KeyCode Placer { get; set; }
