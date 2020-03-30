@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Assets.SCRIPTS;
 
 public class PlacementBateau : MonoBehaviour
 {
