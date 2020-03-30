@@ -10,9 +10,6 @@ public class BateauÀPlacer
 {
     public GameObject BateauCube;
     public GameObject BateauPrefab;
-    //doive être public
     public int NombreÀPlacer = 1;
-    //[HideInInspector]
-    //public int NombrePlacer = 0;
 }
 

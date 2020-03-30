@@ -6,15 +6,10 @@ using UnityEngine;
 public class PlacementBateau : MonoBehaviour
 {
     public bool place; //Place mode on / off 
-    bool PeutPlacé;
-
-    //Grille GrilleDeJeu;
-    //https://docs.unity3d.com/ScriptReference/LayerMask.html
-    public LayerMask Layer;   //layer à regardé
-
+    bool PeutÊtrePlacé { get; set; }
+    public LayerMask Layer;
     public List<BateauÀPlacer> ListeBateau = new List<BateauÀPlacer>();
-    int BateauActuel = 4;//changer pour avoir le bon bateau (de 0 à 4)
-
+    int BateauActuel = 4; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
 
@@ -22,49 +17,37 @@ public class PlacementBateau : MonoBehaviour
     {
         // JB : À mettre dans EnterState()? A voir qu'est-ce que ça fait exactement
         ActiverBateau(-1);
-        ActiverBateau(BateauActuel);// ou -1 //chq bateau dans placement bateau sera desactiver 
-
+        ActiverBateau(BateauActuel);// ou -1 //chq bateau dans placement bateau sera desactiver
+        PtCollision = new Vector3();
     }
 
     private void Awake()
     {
-        enabled = false; // nécessaire pour le gestionnaire jeu
+        enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Qd placing == true -> shoot a ray pour avoir la position
         if (place)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // "shoot" le ray a un endroit à parir du screenpoint 
-            //si il y a une tuile(Cast un ray physique)
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
-            {
-                //if(tuile == !Tuile Adversaire)
-                PtCollision = hit.point;  //"sauvegarde" le hit comme un vecteur
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            }
-            //place le bateau
-            if (Input.GetMouseButtonDown(0))    //Left Click
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
+                PtCollision = hit.point;
+
+            if (Input.GetMouseButtonDown(0)) // Click gauche
             {
-                if (PeutPlacé)
-                {
-                    //placer bateau
+                if (PeutÊtrePlacé)
                     PlacerBateau();
-                }
             }
-            //Rotation du bateau
-            if (Input.GetMouseButtonDown(1))
-            {
-                //rotate le bateau
+
+            if (Input.GetMouseButtonDown(1)) // Click droit
                 ChangerDirectionBateau();
-            }
-            //place ghost
+
             PlacerBateauCube();
         }
     }
-    
+
     void ActiverBateau(int num)
     {
         if (num != -1)
@@ -72,7 +55,6 @@ public class PlacementBateau : MonoBehaviour
             if (ListeBateau[num].BateauCube.activeInHierarchy)
             {
                 return;
-
             }
         }
         //Desactive les bateaux
@@ -93,7 +75,7 @@ public class PlacementBateau : MonoBehaviour
     {
         if (place)
         {
-            PeutPlacé = VérifierPlace(); //check for other ships
+            PeutÊtrePlacé = VérifierPlace(); //check for other ships
             //placer bateau actuel de liste bateau
             ListeBateau[BateauActuel].BateauCube.transform.position = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
         }
@@ -104,41 +86,34 @@ public class PlacementBateau : MonoBehaviour
         }
 
     }
-    
-    private bool VérifierPlace()
-    {
-        foreach (Transform child in ListeBateau[BateauActuel].BateauCube.transform) // vérifie le transform pour chq bateau de la liste  
-        {
 
-            BateauCubeBehavior bateauCube = child.GetComponent<BateauCubeBehavior>();
-            if (!bateauCube.SurTuile()) //si le bateau n'est pas sur une tuile
+    bool VérifierPlace()
+    {
+        foreach (Transform t in ListeBateau[BateauActuel].BateauCube.transform)
+        {
+            BateauCubeBehavior bateauCube = t.GetComponent<BateauCubeBehavior>();
+
+            if (!bateauCube.SurTuile())
             {
-                //changer couleur prefab pour signifier que le bateau ne peut pas être placer en rouge
-                //https://forum.unity.com/threads/how-to-set-base-tint-color-of-material.287499/
-                //rgb et alpha
-                child.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0, 250);
+                t.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0, 250);
                 return false;
             }
-            //sinon garder couler de base (blanche)
-            child.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0, 250);
 
-
+            t.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0);
         }
+
         return true;
     }
     void ChangerDirectionBateau()
     {
-        //https://docs.unity3d.com/ScriptReference/Transform-localEulerAngles.html        
         ListeBateau[BateauActuel].BateauCube.transform.localEulerAngles += new Vector3(0, 90, 0); // fait tourner BateauActuel de 90 Deg selon l'axe des Y
-
-
     }
 
     void PlacerBateau()
     {
         //instantier un nouveau bateau à partir de la liste de Bateau 
 
-        
+
         Vector3 PositionCoup = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z));//hit point
         Quaternion RotationCoup = ListeBateau[BateauActuel].BateauCube.transform.rotation;
 
