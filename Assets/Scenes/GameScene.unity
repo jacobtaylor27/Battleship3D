@@ -437,8 +437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8189e4de2e1d75142b3f93af1b050bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grandeur: 10
-  Vitesse: 0.5
+  Grandeur: 0
+  Vitesse: 0
 --- !u!1 &532785673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1204,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255926412}
   m_CullTransparentMesh: 0
+--- !u!1001 &1267983978
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1666554163}
+    m_Modifications:
+    - target: {fileID: 976811134791372653, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_Name
+      value: BateauCube5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -157.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 30.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 23.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 70a7bde41a7b0d74faf5a9a50579d3e3, type: 3}
 --- !u!1001 &1467623865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2116,7 +2185,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.280859, y: -9.620787, z: -8.333305}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1699689197}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2183,26 +2253,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bc005a9a91e984f87d6c525e810575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  place: 0
+  place: 1
   Layer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   ListeBateau:
-  - BateauCube: {fileID: 0}
-    BateauPrefab: {fileID: 0}
-    "Nombre\xC0Placer": 0
-  - BateauCube: {fileID: 0}
-    BateauPrefab: {fileID: 0}
-    "Nombre\xC0Placer": 0
-  - BateauCube: {fileID: 0}
-    BateauPrefab: {fileID: 0}
-    "Nombre\xC0Placer": 0
-  - BateauCube: {fileID: 0}
-    BateauPrefab: {fileID: 0}
-    "Nombre\xC0Placer": 0
-  - BateauCube: {fileID: 0}
-    BateauPrefab: {fileID: 0}
-    "Nombre\xC0Placer": 0
+  - BateauPrefab: {fileID: 6220136312300023521, guid: d48f93be64b89f64ab37d04d538ab0d6,
+      type: 3}
+    BateauCube: {fileID: 1699689196}
+--- !u!1 &1699689196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 976811134791372653, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1267983978}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1699689197 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3231309720465933793, guid: 70a7bde41a7b0d74faf5a9a50579d3e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1267983978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1776917064
 PrefabInstance:
   m_ObjectHideFlags: 0
