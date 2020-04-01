@@ -8,7 +8,7 @@ public class Battleship : Bateau
     {
         Nom = "Battleship";
         Longueur = 5;
-        Maquette = GameObject.Find("Battleship");
+        BateauPrefab = GameObject.Find("Battleship");
         TypeOccupation = TypeOccupation.Occupé;
     }
 }

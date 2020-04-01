@@ -8,7 +8,7 @@ public class Cruiser : Bateau
     {
         Nom = "Cruiser";
         Longueur = 4;
-        Maquette = GameObject.Find("Cruiser");
+        BateauPrefab = GameObject.Find("Cruiser");
         TypeOccupation = TypeOccupation.Occupé;
     }
 }

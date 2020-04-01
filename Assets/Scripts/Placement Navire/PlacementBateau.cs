@@ -8,7 +8,9 @@ public class PlacementBateau : MonoBehaviour
     public bool place; //Place mode on / off 
     bool PeutÊtrePlacé { get; set; }
     public LayerMask Layer;
-    public List<BateauÀPlacer> ListeBateau = new List<BateauÀPlacer>();
+    
+    public List<Bateau> ListeBateau = new List<Bateau>();
+    
     int BateauActuel = 4; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
@@ -20,11 +22,10 @@ public class PlacementBateau : MonoBehaviour
         ActiverBateau(BateauActuel);// ou -1 //chq bateau dans placement bateau sera desactiver
         PtCollision = new Vector3();
     }
-
-    private void Awake()
-    {
-        enabled = false;
-    }
+    //private void Awake()
+    //{
+    //    enabled = true;
+    //}
 
     void Update()
     {
@@ -125,17 +126,17 @@ public class PlacementBateau : MonoBehaviour
         //Verifier si tout les bateaux ont été placer
     }
 
-    public void EnterState()
-    {
-        enabled = true;
-    }
+    //public void EnterState()
+    //{
+    //    enabled = true;
+    //}
 
-    public void ExitState()
-    {
-        enabled = false;
+    //public void ExitState()
+    //{
+    //    enabled = false;
 
-        // S'assurer de modifier la GrilleLogique et OccupationEventArgs
+    //    // S'assurer de modifier la GrilleLogique et OccupationEventArgs
 
-        GestionnaireJeu.manager.NextPlayer();// Ou CommencerPhaseTirs();
-    }
+    //    GestionnaireJeu.manager.NextPlayer();// Ou CommencerPhaseTirs();
+    //}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BateauCubeBehavior : MonoBehaviour
 {
-    public LayerMask Layer { get; set; }
+    public LayerMask Layer;
     RaycastHit hit;
     InformationTuile InfoTuile;
 
