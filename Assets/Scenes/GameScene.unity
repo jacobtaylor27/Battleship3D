@@ -2240,7 +2240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b027a95210fa3304bacd93823b9db3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
+  projectile: {fileID: 54559176382995329, guid: df121a75ca726514895639074a1ba830,
+    type: 3}
 --- !u!114 &1666554168
 MonoBehaviour:
   m_ObjectHideFlags: 0
