@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GestionAnimation : MonoBehaviour
 {
-    const float TempsAnimation = 7f;
+    const float TempsAnimation = 3f;
     const float AccélérationGravitationnelle = -9.80f;
     const float HauteurMax = 500f;
 
@@ -39,10 +39,11 @@ public class GestionAnimation : MonoBehaviour
         AngleY = Vector3.SignedAngle(VCanonInit, VCanonFinal, Vector3.up);
 
         float VitesseIX = VCanonFinal.magnitude / TempsAnimation; // vitesse initiale en x
-        float VitesseIY = (HauteurMax - AccélérationGravitationnelle * Mathf.Pow(TempsAnimation,2) / 2) / TempsAnimation; // vitesse initiale en y;
+        float VitesseIY = (HauteurMax - AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) / 2) / TempsAnimation; // vitesse initiale en y;
 
-        AngleX = Mathf.Atan(VitesseIY / VitesseIX);
-        VitesseInitiale = new Vector3(VitesseIX * Mathf.Cos(AngleY), VitesseIY, VitesseIX * Mathf.Sin(AngleY));
+        AngleX = Mathf.Rad2Deg * Mathf.Atan(VitesseIY / VitesseIX);
+        //VitesseInitiale = new Vector3(VitesseIX * Mathf.Sin(AngleY * Mathf.Deg2Rad), VitesseIY, VitesseIX * Mathf.Cos(AngleY * Mathf.Deg2Rad));
+        VitesseInitiale = Mathf.Sqrt(Mathf.Pow(VitesseIX,2) + Mathf.Pow(VitesseIY,2)) * Vector3.forward;
         test = 0;
 
 
@@ -57,14 +58,42 @@ public class GestionAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (test < 60)
-            Affut.transform.Rotate(-AngleX / 60f, AngleY / 60f, 0);
-        else
+        //if (test < 60)
+        //    Affut.transform.Rotate(-AngleX / 60f, AngleY / 60f, 0);
+        //else
+        //{
+        //    GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]);
+        //    GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]).GetComponent<Rigidbody>().velocity = VitesseInitiale;
+        //    ExitState();
+        //}
+
+        if (test < 30)
         {
-            GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]);
-            GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]).GetComponent<Rigidbody>().velocity = VitesseInitiale;
-            ExitState();
+            Affut.transform.Rotate(Vector3.up, AngleY / 30f, Space.Self);
         }
+        else if(test >= 30 && test < 60)
+        {
+            Affut.transform.Rotate(Vector3.left, AngleX / 30f, Space.Self);
+        }
+        else if(test >= 60 && test < 240)
+        {
+            if (test == 60)
+            {
+                GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]).GetComponent<Rigidbody>().MovePosition(GestionnaireJeu.manager.PositionVisée);
+
+            }
+        }
+        else if (test >= 240 && test < 270)
+        {
+           Affut.transform.Rotate(Vector3.left, -AngleX / 30f, Space.Self);
+        }
+        else if (test >= 270 && test < 300)
+        {
+           Affut.transform.Rotate(Vector3.up, -AngleY / 30f, Space.Self);
+        }
+        else
+            ExitState();
+
 
         test++;
     }
