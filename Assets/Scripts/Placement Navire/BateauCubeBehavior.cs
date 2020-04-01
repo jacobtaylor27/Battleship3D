@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BateauCubeBehavior : MonoBehaviour
 {
-    public LayerMask Layer { get; set; }
+    public LayerMask Layer;
     RaycastHit hit;
     InformationTuile InfoTuile;
 
@@ -23,7 +23,7 @@ public class BateauCubeBehavior : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, -transform.up);
 
-        if (Physics.Raycast(ray, out hit, 1f, Layer))
+        if (Physics.Raycast(ray, out hit, 20f, Layer))
         {
             Debug.DrawRay(ray.origin, ray.direction, Color.red);
             return hit.collider.GetComponent<InformationTuile>();

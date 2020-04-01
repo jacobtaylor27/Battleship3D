@@ -25,7 +25,7 @@ public class Vagues : MonoBehaviour
             Hauteur.y += Mathf.Sin(Time.time * Vitesse + HauteuDeBase[i].x + HauteuDeBase[i].y + HauteuDeBase[i].z) * Grandeur;
             Sommets[i] = Hauteur;
         }
-        //mesh.vertices = Sommets;
+        mesh.vertices = Sommets;
         
     }
 

@@ -8,7 +8,7 @@ public class Destroyer : Bateau
     {
         Nom = "Destroyer";
         Longueur = 3;
-        Maquette = GameObject.Find("Destroyer");
+        BateauPrefab = GameObject.Find("Destroyer");
         TypeOccupation = TypeOccupation.Occupé;
     }
 }

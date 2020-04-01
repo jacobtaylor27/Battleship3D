@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 548498525014763526}
   - component: {fileID: 548498525014763527}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AccentTuile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 548498525694207021}
   - component: {fileID: 548498525694207022}
   - component: {fileID: 8432900399228872460}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tuile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,8 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c188e9930982c469590a9c05f5abeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PositionX: 0
-  PositionZ: 0
   spriteTuile: {fileID: 548498525014763527}
   TabTuiles:
   - {fileID: 4062014755327454846, guid: 1b78bebd2d48f1342b8ad1a6c6ba73a7, type: 3}

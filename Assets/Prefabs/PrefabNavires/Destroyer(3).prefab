@@ -779,7 +779,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5171665013316825323}
   m_Layer: 0
-  m_Name: Destroyer(4)
+  m_Name: Destroyer(3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

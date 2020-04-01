@@ -8,8 +8,10 @@ public class PlacementBateau : MonoBehaviour
     public bool place; //Place mode on / off 
     bool PeutÊtrePlacé { get; set; }
     public LayerMask Layer;
-    public List<BateauÀPlacer> ListeBateau = new List<BateauÀPlacer>();
-    int BateauActuel = 4; //Changer pour avoir le bon bateau (de 0 à 4)
+
+    public List<Bateau> ListeBateau = new List<Bateau>();
+
+    int BateauActuel = 0; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
 
@@ -23,7 +25,7 @@ public class PlacementBateau : MonoBehaviour
 
     private void Awake()
     {
-        enabled = false;
+        enabled = true;
     }
 
     void Update()
@@ -31,9 +33,21 @@ public class PlacementBateau : MonoBehaviour
         if (place)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity,Layer))
+            {
+                PtCollision = hit.collider.gameObject.transform.position;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
-                PtCollision = hit.point;
+                //if (Layer != 8)
+                //{
+                //    foreach(Transform t in ListeBateau[BateauActuel].BateauCube.transform)
+                //    {
+                //        BateauCubeBehavior bateauCube = t.GetComponent<BateauCubeBehavior>();
+                //        ListeBateau[BateauActuel].BateauCube.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0);
+
+                //    }
+                //}
+
+            }
 
             if (Input.GetMouseButtonDown(0)) // Click gauche
             {
@@ -75,9 +89,10 @@ public class PlacementBateau : MonoBehaviour
     {
         if (place)
         {
+            //Debug.Log(PtCollision.x);
             PeutÊtrePlacé = VérifierPlace(); //check for other ships
             //placer bateau actuel de liste bateau
-            ListeBateau[BateauActuel].BateauCube.transform.position = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
+            ListeBateau[BateauActuel].BateauCube.transform.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
         }
         else
         {
