@@ -8,6 +8,7 @@ public abstract class Bateau
     public int Longueur { get; set; }
     public int Coups { get; set; }
     public GameObject Maquette { get; set; }
+    public List<Case> CasesOccupées { get; set; }
     public TypeOccupation TypeOccupation { get; set; }
     public bool EstCallé { get { return Coups >= Longueur; } }
     public void PerdreVie() => Coups++;
