@@ -11,7 +11,7 @@ public class PlacementBateau : MonoBehaviour
 
     public List<Bateau> ListeBateau = new List<Bateau>();
 
-    int BateauActuel = 0; //Changer pour avoir le bon bateau (de 0 à 4)
+    int BateauActuel = 4; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
 
@@ -25,6 +25,7 @@ public class PlacementBateau : MonoBehaviour
 
     private void Awake()
     {
+        //ListeBateau[BateauActuel].BateauCube.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0, 50);
         enabled = true;
     }
 
@@ -37,6 +38,7 @@ public class PlacementBateau : MonoBehaviour
             {
                 PtCollision = hit.collider.gameObject.transform.position;
 
+
                 //if (Layer != 8)
                 //{
                 //    foreach(Transform t in ListeBateau[BateauActuel].BateauCube.transform)
@@ -48,6 +50,7 @@ public class PlacementBateau : MonoBehaviour
                 //}
 
             }
+
 
             if (Input.GetMouseButtonDown(0)) // Click gauche
             {
