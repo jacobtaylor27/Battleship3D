@@ -5,58 +5,42 @@ using UnityEngine;
 
 public class PlacementBateau : MonoBehaviour
 {
-    public bool place; //Place mode on / off 
-    bool PeutÊtrePlacé { get; set; }
-    public LayerMask Layer;
-
-    public List<Bateau> ListeBateau = new List<Bateau>();
-
-    int BateauActuel = 4; //Changer pour avoir le bon bateau (de 0 à 4)
+    [SerializeField]
+    bool place; // Booléen accessible dans l'inspecteur permet de placer les bateaux si la valeur = vrai 
+    [SerializeField]
+    LayerMask Layer;
+    [SerializeField]
+    List<Bateau> ListeBateau = new List<Bateau>();
+    bool peutÊtrePlacé;
+    int BateauActuel = 0; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
+    Transform transformBateauActuel;
 
     void Start()
     {
+        transformBateauActuel = ListeBateau[BateauActuel].BateauCube.transform;
         // JB : À mettre dans EnterState()? A voir qu'est-ce que ça fait exactement
         ActiverBateau(-1);
         ActiverBateau(BateauActuel);// ou -1 //chq bateau dans placement bateau sera desactiver
         PtCollision = new Vector3();
     }
 
-    private void Awake()
-    {
-        //ListeBateau[BateauActuel].BateauCube.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0, 50);
-        enabled = true;
-    }
+    void Awake() => enabled = true;
 
     void Update()
     {
         if (place)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity,Layer))
-            {
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
                 PtCollision = hit.collider.gameObject.transform.position;
 
 
-                //if (Layer != 8)
-                //{
-                //    foreach(Transform t in ListeBateau[BateauActuel].BateauCube.transform)
-                //    {
-                //        BateauCubeBehavior bateauCube = t.GetComponent<BateauCubeBehavior>();
-                //        ListeBateau[BateauActuel].BateauCube.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0);
-
-                //    }
-                //}
-
-            }
-
-
             if (Input.GetMouseButtonDown(0)) // Click gauche
-            {
-                if (PeutÊtrePlacé)
-                    PlacerBateau();
-            }
+                if (peutÊtrePlacé)
+                    PlacerBateau(ListeBateau[BateauActuel]);
 
             if (Input.GetMouseButtonDown(1)) // Click droit
                 ChangerDirectionBateau();
@@ -68,21 +52,16 @@ public class PlacementBateau : MonoBehaviour
     void ActiverBateau(int num)
     {
         if (num != -1)
-        {
             if (ListeBateau[num].BateauCube.activeInHierarchy)
-            {
                 return;
-            }
-        }
+
         //Desactive les bateaux
         for (int i = 0; i < ListeBateau.Count; i++)
-        {
             ListeBateau[i].BateauCube.SetActive(false);
-        }
+
         if (num == -1)
-        {
             return;
-        }
+
         //Activer les bateaux voulue
         ListeBateau[num].BateauCube.SetActive(true);
 
@@ -91,23 +70,19 @@ public class PlacementBateau : MonoBehaviour
     void PlacerBateauCube()
     {
         if (place)
-        {
-            //Debug.Log(PtCollision.x);
-            PeutÊtrePlacé = VérifierPlace(); //check for other ships
+            //peutÊtrePlacé = VérifierPlace(); //check for other ships
             //placer bateau actuel de liste bateau
-            ListeBateau[BateauActuel].BateauCube.transform.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
-        }
+            transformBateauActuel.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
+
         else
-        {
             //Desactiver chq ghost (bateau)
             ActiverBateau(-1);
-        }
 
     }
 
     bool VérifierPlace()
     {
-        foreach (Transform t in ListeBateau[BateauActuel].BateauCube.transform)
+        foreach (Transform t in transformBateauActuel)
         {
             BateauCubeBehavior bateauCube = t.GetComponent<BateauCubeBehavior>();
 
@@ -122,20 +97,17 @@ public class PlacementBateau : MonoBehaviour
 
         return true;
     }
-    void ChangerDirectionBateau()
-    {
-        ListeBateau[BateauActuel].BateauCube.transform.localEulerAngles += new Vector3(0, 90, 0); // fait tourner BateauActuel de 90 Deg selon l'axe des Y
-    }
+
+    void ChangerDirectionBateau() => transformBateauActuel.localEulerAngles += new Vector3(0, 90, 0);
 
     void PlacerBateau()
     {
         //instantier un nouveau bateau à partir de la liste de Bateau 
 
+        Vector3 PositionRaycast = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z));
+        Quaternion RotationCoup = transformBateauActuel.rotation;
 
-        Vector3 PositionCoup = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z));//hit point
-        Quaternion RotationCoup = ListeBateau[BateauActuel].BateauCube.transform.rotation;
-
-        GameObject NouveauBateau = Instantiate(ListeBateau[BateauActuel].BateauPrefab, PositionCoup, RotationCoup);
+        Instantiate(ListeBateau[BateauActuel].BateauPrefab, PositionRaycast, RotationCoup);
 
         //Update la Grille et incrmenter le nmbre de bateau actuellement placer
         //Desactiver Place
@@ -143,10 +115,32 @@ public class PlacementBateau : MonoBehaviour
         //Verifier si tout les bateaux ont été placer
     }
 
-    public void EnterState()
+    public void PlacerBateau(Bateau bateau)
     {
-        enabled = true;
+        bateau.BateauPrefab.transform.position = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.y));
+        bateau.BateauPrefab.transform.rotation = transformBateauActuel.rotation;
+
+        Instantiate(bateau.BateauPrefab, bateau.BateauPrefab.transform.position, bateau.BateauPrefab.transform.rotation);
     }
+
+    bool SontTousPlacés()
+    {
+        bool temp = false;
+
+        foreach (Bateau b in ListeBateau)
+        {
+            if (b.EstPlacé)
+                temp = true;
+            else
+            {
+                return false;
+            }
+
+        }
+        return temp;
+    }
+
+    public void EnterState() => enabled = true;
 
     public void ExitState()
     {

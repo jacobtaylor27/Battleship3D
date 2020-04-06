@@ -14,5 +14,6 @@ public class Bateau
     public List<Case> CasesOccupées { get; set; }
     public TypeOccupation TypeOccupation { get; set; }
     public bool EstCallé { get { return Coups >= Longueur; } }
+    public bool EstPlacé;
     public void PerdreVie() => Coups++;
 }
