@@ -12,7 +12,7 @@ public class PlacementBateau : MonoBehaviour
     [SerializeField]
     List<Bateau> ListeBateau = new List<Bateau>();
     bool peutÊtrePlacé;
-    int BateauActuel = 4; //Changer pour avoir le bon bateau (de 0 à 4)
+    int BateauActuel = 0; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
     Transform transformBateauActuel;
@@ -40,7 +40,7 @@ public class PlacementBateau : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) // Click gauche
                 if (peutÊtrePlacé)
-                    PlacerBateau();
+                    PlacerBateau(ListeBateau[BateauActuel]);
 
             if (Input.GetMouseButtonDown(1)) // Click droit
                 ChangerDirectionBateau();
@@ -115,10 +115,29 @@ public class PlacementBateau : MonoBehaviour
         //Verifier si tout les bateaux ont été placer
     }
 
-    void PlacerBateau(Bateau bateau)
+    public void PlacerBateau(Bateau bateau)
     {
         bateau.BateauPrefab.transform.position = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.y));
         bateau.BateauPrefab.transform.rotation = transformBateauActuel.rotation;
+
+        Instantiate(bateau.BateauPrefab, bateau.BateauPrefab.transform.position, bateau.BateauPrefab.transform.rotation);
+    }
+
+    bool SontTousPlacés()
+    {
+        bool temp = false;
+
+        foreach (Bateau b in ListeBateau)
+        {
+            if (b.EstPlacé)
+                temp = true;
+            else
+            {
+                return false;
+            }
+
+        }
+        return temp;
     }
 
     public void EnterState() => enabled = true;
