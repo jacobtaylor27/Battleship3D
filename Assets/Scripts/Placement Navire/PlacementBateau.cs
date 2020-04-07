@@ -12,7 +12,7 @@ public class PlacementBateau : MonoBehaviour
     [SerializeField]
     List<Bateau> ListeBateau = new List<Bateau>();
     bool peutÊtrePlacé;
-    int BateauActuel = 0; //Changer pour avoir le bon bateau (de 0 à 4)
+    int BateauActuel = 2; //Changer pour avoir le bon bateau (de 0 à 4)
     RaycastHit hit;
     Vector3 PtCollision;
     Transform transformBateauActuel;
@@ -40,7 +40,7 @@ public class PlacementBateau : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) // Click gauche
                 if (peutÊtrePlacé)
-                    PlacerBateau(ListeBateau[BateauActuel]);
+                    PlacerBateau();
 
             if (Input.GetMouseButtonDown(1)) // Click droit
                 ChangerDirectionBateau();
@@ -70,14 +70,16 @@ public class PlacementBateau : MonoBehaviour
     void PlacerBateauCube()
     {
         if (place)
-            //peutÊtrePlacé = VérifierPlace(); //check for other ships
+        {
+            peutÊtrePlacé = VérifierPlace(); //check for other ships
             //placer bateau actuel de liste bateau
             transformBateauActuel.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
-
+        }
         else
+        {
             //Desactiver chq ghost (bateau)
             ActiverBateau(-1);
-
+        } 
     }
 
     bool VérifierPlace()
@@ -107,7 +109,7 @@ public class PlacementBateau : MonoBehaviour
         Vector3 PositionRaycast = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z));
         Quaternion RotationCoup = transformBateauActuel.rotation;
 
-        Instantiate(ListeBateau[BateauActuel].BateauPrefab, PositionRaycast, RotationCoup);
+        GameObject NouveauBateau = Instantiate(ListeBateau[BateauActuel].BateauPrefab, PositionRaycast, RotationCoup);
 
         //Update la Grille et incrmenter le nmbre de bateau actuellement placer
         //Desactiver Place
