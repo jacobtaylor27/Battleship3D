@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GestionAnimation : MonoBehaviour
 {
-    const float TempsAnimation = 3f;
+    const float TempsAnimation = 6f;
     const float AccélérationGravitationnelle = -9.80f;
     const float HauteurMax = 500f;
+    const float VitesseInit = 100f;
 
     GameObject lol { get; set; }
     public GameObject projectile;
@@ -43,15 +44,17 @@ public class GestionAnimation : MonoBehaviour
         float VitesseIX = VCanonFinal.magnitude / TempsAnimation; // vitesse initiale en x
         float VitesseIY = (HauteurMax - AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) / 2) / TempsAnimation; // vitesse initiale en y;
 
-        AngleX = Mathf.Rad2Deg * Mathf.Atan(VitesseIY / VitesseIX);
+        //AngleX = Mathf.Rad2Deg * Mathf.Atan(VitesseIY / VitesseIX);
+        AngleX = Mathf.Rad2Deg * Mathf.Atan((-0.5f*AccélérationGravitationnelle*Mathf.Pow(AccélérationGravitationnelle,2)/ (GestionnaireJeu.manager.PositionVisée.magnitude - Affut.transform.position.magnitude)));
         //VitesseInitiale = new Vector3(VitesseIX * Mathf.Sin(AngleY * Mathf.Deg2Rad), VitesseIY, VitesseIX * Mathf.Cos(AngleY * Mathf.Deg2Rad));
         //VitesseInitiale = Mathf.Sqrt(Mathf.Pow(VitesseIX,2) + Mathf.Pow(VitesseIY,2));
         test = 0;
 
         //Force = (projectile.GetComponent<Rigidbody>().mass * VitesseIY / 0.2f)*Mathf.Cos(AngleX*Mathf.Deg2Rad);
-        Force = projectile.GetComponent<Rigidbody>().mass *-((VitesseIY+AccélérationGravitationnelle*TempsAnimation)- VitesseIY) * Mathf.Sin(AngleX * Mathf.Deg2Rad);
+        //Force = projectile.GetComponent<Rigidbody>().mass *-((VitesseIY+AccélérationGravitationnelle*TempsAnimation)- VitesseIY) * Mathf.Sin(AngleX * Mathf.Deg2Rad);
         //VitesseI = Mathf.Sqrt((VCanonFinal).magnitude*-AccélérationGravitationnelle/Mathf.Sin(2*AngleX*Mathf.Deg2Rad));
-        VitesseI = new Vector3(0, HauteurMax / TempsAnimation*0.3f, VCanonFinal.magnitude / TempsAnimation*0.3f).magnitude;
+        //VitesseI = new Vector3(0, HauteurMax / TempsAnimation*0.3f, VCanonFinal.magnitude / TempsAnimation*0.3f).magnitude;
+        VitesseI = -0.5f * AccélérationGravitationnelle * TempsAnimation / Mathf.Sin(Mathf.Deg2Rad * AngleX);
     }
 
     private void Awake()
@@ -86,7 +89,8 @@ public class GestionAnimation : MonoBehaviour
                 lol = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
                 //lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
                 //lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
-                lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward * VitesseI),ForceMode.Impulse);
+                //lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward )* VitesseI,ForceMode.VelocityChange);
+                lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
             }
         }
         else if (test >= 240 && test < 270)
