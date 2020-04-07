@@ -154,11 +154,11 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276674546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.3, y: 3, z: 2}
   m_Children: []
   m_Father: {fileID: 1599948328}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -207,7 +207,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 276674549}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666554168}
+        m_MethodName: PlacerBateau
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &276674549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,7 +1664,7 @@ RectTransform:
   m_LocalScale: {x: 2.3, y: 3, z: 2}
   m_Children: []
   m_Father: {fileID: 1599948328}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1702,7 +1713,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1278974997}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666554168}
+        m_MethodName: PlacerBateau
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1278974997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1771,7 +1793,7 @@ RectTransform:
   m_LocalScale: {x: 2.3, y: 3, z: 2}
   m_Children: []
   m_Father: {fileID: 1599948328}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1820,7 +1842,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1370361651}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666554168}
+        m_MethodName: PlacerBateau
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1370361651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2583,11 +2616,11 @@ RectTransform:
   - {fileID: 1255926413}
   - {fileID: 1960297939}
   - {fileID: 1863794894}
-  - {fileID: 1982255050}
-  - {fileID: 1278974995}
-  - {fileID: 1630547675}
-  - {fileID: 276674547}
   - {fileID: 1370361649}
+  - {fileID: 1630547675}
+  - {fileID: 1278974995}
+  - {fileID: 1982255050}
+  - {fileID: 276674547}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2700,11 +2733,11 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630547674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.3, y: 3, z: 2}
   m_Children: []
   m_Father: {fileID: 1599948328}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2753,7 +2786,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1630547677}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666554168}
+        m_MethodName: PlacerBateau
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1630547677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2986,18 +3030,23 @@ MonoBehaviour:
   - BateauPrefab: {fileID: 5278806449485535244, guid: c92abb7fa454fc54c991b4d75473306c,
       type: 3}
     BateauCube: {fileID: 1886496150}
+    "EstPlac\xE9": 0
   - BateauPrefab: {fileID: 8692617874929974714, guid: a8fbca5edccfc3e48bbc77db1a15ebee,
       type: 3}
     BateauCube: {fileID: 1264377860}
+    "EstPlac\xE9": 0
   - BateauPrefab: {fileID: 6030497606468837228, guid: d9262abefcfe935488ed3648ebbc72ba,
       type: 3}
     BateauCube: {fileID: 1382685196}
+    "EstPlac\xE9": 0
   - BateauPrefab: {fileID: 5198791628887568204, guid: 4bbf9e292c53b3242964e513c814af23,
       type: 3}
     BateauCube: {fileID: 2081951287}
+    "EstPlac\xE9": 0
   - BateauPrefab: {fileID: 6220136312300023521, guid: d48f93be64b89f64ab37d04d538ab0d6,
       type: 3}
     BateauCube: {fileID: 888474120}
+    "EstPlac\xE9": 0
 --- !u!1001 &1776917064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3718,11 +3767,11 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982255049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.3, y: 3, z: 2}
   m_Children: []
   m_Father: {fileID: 1599948328}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3771,7 +3820,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1982255052}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666554168}
+        m_MethodName: PlacerBateau
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1982255052
 MonoBehaviour:
   m_ObjectHideFlags: 0
