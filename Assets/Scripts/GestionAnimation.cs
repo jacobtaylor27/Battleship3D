@@ -13,7 +13,6 @@ public class GestionAnimation : MonoBehaviour
     public GameObject projectile;
     GameObject[] Canons { get; set; }
     GameObject Affut { get; set; }
-    float Force { get; set; }
     Vector3 VCanonInit { get; set; }
     Vector3 VCanonFinal { get; set; }
     float AngleX { get; set; }
@@ -37,24 +36,26 @@ public class GestionAnimation : MonoBehaviour
         VCanonInit = Affut.GetComponentsInChildren<Transform>()[4].position - Affut.transform.position;
         VCanonInit = new Vector3(VCanonInit.x, 0, VCanonInit.z);
 
-        VCanonFinal = GestionnaireJeu.manager.PositionVisée - Affut.transform.position;
+        //VCanonFinal = GestionnaireJeu.manager.PositionVisée - Affut.transform.position;
+        VCanonFinal = GestionnaireJeu.manager.PositionVisée - Affut.GetComponentsInChildren<Transform>()[4].position;
         VCanonFinal = new Vector3(VCanonFinal.x, 0, VCanonFinal.z);
+
+        //Angle pour rotation autour de Y
         AngleY = Vector3.SignedAngle(VCanonInit, VCanonFinal, Vector3.up);
 
-        float VitesseIX = VCanonFinal.magnitude / TempsAnimation; // vitesse initiale en x
-        float VitesseIY = (HauteurMax - AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) / 2) / TempsAnimation; // vitesse initiale en y;
+        //Vitesse en angle
+        VitesseI = Mathf.Sqrt(Mathf.Pow((VCanonFinal.magnitude / TempsAnimation),2) + Mathf.Pow((GestionnaireJeu.manager.PositionVisée.y - 0.5f * AccélérationGravitationnelle * Mathf.Pow(TempsAnimation,2) - Affut.GetComponentsInChildren<Transform>()[4].position.y) / TempsAnimation,2));
 
-        //AngleX = Mathf.Rad2Deg * Mathf.Atan(VitesseIY / VitesseIX);
-        AngleX = Mathf.Rad2Deg * Mathf.Atan((-0.5f*AccélérationGravitationnelle*Mathf.Pow(AccélérationGravitationnelle,2)/ (GestionnaireJeu.manager.PositionVisée.magnitude - Affut.transform.position.magnitude)));
-        //VitesseInitiale = new Vector3(VitesseIX * Mathf.Sin(AngleY * Mathf.Deg2Rad), VitesseIY, VitesseIX * Mathf.Cos(AngleY * Mathf.Deg2Rad));
-        //VitesseInitiale = Mathf.Sqrt(Mathf.Pow(VitesseIX,2) + Mathf.Pow(VitesseIY,2));
+        //Angles possible
+        float Angle1 = Mathf.Acos(VCanonFinal.magnitude / (VitesseI * TempsAnimation));
+        float Angle2 = Mathf.Asin((-0.5f * AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) - Affut.transform.position.y) / (VitesseI * TempsAnimation));
+
+        //Angle pour rotation autour de X
+        AngleX = Mathf.Min(Angle1, Angle2) * Mathf.Rad2Deg;
+
         test = 0;
 
-        //Force = (projectile.GetComponent<Rigidbody>().mass * VitesseIY / 0.2f)*Mathf.Cos(AngleX*Mathf.Deg2Rad);
-        //Force = projectile.GetComponent<Rigidbody>().mass *-((VitesseIY+AccélérationGravitationnelle*TempsAnimation)- VitesseIY) * Mathf.Sin(AngleX * Mathf.Deg2Rad);
-        //VitesseI = Mathf.Sqrt((VCanonFinal).magnitude*-AccélérationGravitationnelle/Mathf.Sin(2*AngleX*Mathf.Deg2Rad));
-        //VitesseI = new Vector3(0, HauteurMax / TempsAnimation*0.3f, VCanonFinal.magnitude / TempsAnimation*0.3f).magnitude;
-        VitesseI = -0.5f * AccélérationGravitationnelle * TempsAnimation / Mathf.Sin(Mathf.Deg2Rad * AngleX);
+
     }
 
     private void Awake()
@@ -89,8 +90,8 @@ public class GestionAnimation : MonoBehaviour
                 lol = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
                 //lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
                 //lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
-                //lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward )* VitesseI,ForceMode.VelocityChange);
-                lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
+                lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward )* VitesseI,ForceMode.VelocityChange);
+                //lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
             }
         }
         else if (test >= 240 && test < 270)
