@@ -6,14 +6,23 @@ using UnityEngine;
 [Serializable]
 public class Bateau
 {
-    public string Nom { get; set; }
+    //public string Nom { get; set; }
+    public TypeOccupation TypeOccupation { get; set; }
     public int Longueur { get; set; }
     public int Coups { get; set; }
-    public GameObject BateauPrefab;
-    public GameObject BateauCube;
+    public GameObject PrefabBateau;
+    public GameObject PrefabCube;
     public List<Case> CasesOccupées { get; set; }
-    public TypeOccupation TypeOccupation { get; set; }
     public bool EstCallé { get { return Coups >= Longueur; } }
-    public bool EstPlacé;
+    public bool EstPlacé { get; set; }
     public void PerdreVie() => Coups++;
+
+    public Bateau(int n, GameObject prefab, GameObject cube)
+    {
+        Longueur = n;
+        PrefabBateau = prefab;
+        PrefabCube = cube;
+        EstPlacé = false;
+        CasesOccupées = new List<Case>(n);
+    }
 }

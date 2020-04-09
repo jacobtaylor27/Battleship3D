@@ -8,6 +8,7 @@ TagManager:
   - PlayerCamera
   - NPC
   - Canon
+  - Cube
   layers:
   - Default
   - TransparentFX

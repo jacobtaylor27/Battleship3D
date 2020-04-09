@@ -2,154 +2,164 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlacementBateau : MonoBehaviour
+public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
-    bool place; // Booléen accessible dans l'inspecteur permet de placer les bateaux si la valeur = vrai 
-    [SerializeField]
-    LayerMask Layer;
-    [SerializeField]
-    List<Bateau> ListeBateau = new List<Bateau>();
-    bool peutÊtrePlacé;
-    int BateauActuel = 2; //Changer pour avoir le bon bateau (de 0 à 4)
+    bool ActiverPlacement;
+
+
+    int Layer = 8;
+    List<Bateau> Bateaux;
+    bool PeutÊtrePlacé;
+    int IndiceBateauActuel;
     RaycastHit hit;
     Vector3 PtCollision;
-    Transform transformBateauActuel;
+    Ray ray;
+    GameObject CubeÀPlacer;
 
     void Start()
     {
-        transformBateauActuel = ListeBateau[BateauActuel].BateauCube.transform;
-        // JB : À mettre dans EnterState()? A voir qu'est-ce que ça fait exactement
-        ActiverBateau(-1);
-        ActiverBateau(BateauActuel);// ou -1 //chq bateau dans placement bateau sera desactiver
+        ValeursInitiales();
+        CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, Input.mousePosition, Quaternion.identity);
+        //ActiverBateau(-1);
+        //ActiverBateau(IndiceBateauActuel);
+        //Debug.Log(Camera.allCameras[0].name);
+        //Debug.Log(Camera.allCameras[1].name);
+        //Debug.Log(Camera.allCameras[2].name);
+    }
+
+    void ValeursInitiales()
+    {
+        Bateaux = GestionnaireJeu.manager.JoueurActif.Arsenal;
+        IndiceBateauActuel = 0;
+        PeutÊtrePlacé = true;
         PtCollision = new Vector3();
     }
 
-    void Awake() => enabled = true;
-
     void Update()
     {
-        if (place)
+        if (ActiverPlacement)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Camera cameraJoueur = Camera.allCameras[1]; // vérfier indice
+            ray = cameraJoueur.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.gameObject.layer == Layer)
+            {
                 PtCollision = hit.collider.gameObject.transform.position;
+            }
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("gauche");
+                PlacerBateau(Bateaux[IndiceBateauActuel]);
+            }
 
-            if (Input.GetMouseButtonDown(0)) // Click gauche
-                if (peutÊtrePlacé)
-                    PlacerBateau();
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("droite");
+                ChangerDirectionCubes();
+            }
+            DéplacerCubes();
+        }
+    }
 
-            if (Input.GetMouseButtonDown(1)) // Click droit
-                ChangerDirectionBateau();
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("pointer");
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Debug.Log("right");
+            ChangerDirectionCubes();
+        }
 
-            PlacerBateauCube();
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Debug.Log("gauche");
+            if (PeutÊtrePlacé)
+            {
+                PlacerBateau(Bateaux[IndiceBateauActuel]);
+            }
         }
     }
 
     void ActiverBateau(int num)
     {
         if (num != -1)
-            if (ListeBateau[num].BateauCube.activeInHierarchy)
+            if (Bateaux[num].PrefabCube.activeInHierarchy)
                 return;
 
         //Desactive les bateaux
-        for (int i = 0; i < ListeBateau.Count; i++)
-            ListeBateau[i].BateauCube.SetActive(false);
+        for (int i = 0; i < Bateaux.Count; i++)
+            Bateaux[i].PrefabCube.SetActive(false);
 
         if (num == -1)
             return;
 
         //Activer les bateaux voulue
-        ListeBateau[num].BateauCube.SetActive(true);
+        Bateaux[num].PrefabCube.SetActive(true);
 
     }
 
-    void PlacerBateauCube()
+    void DéplacerCubes(/*Bateau b*/)
     {
-        if (place)
-        {
-            peutÊtrePlacé = VérifierPlace(); //check for other ships
-            //placer bateau actuel de liste bateau
-            transformBateauActuel.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z)); //round les valeurs pour avoir que des entiers
-        }
-        else
-        {
-            //Desactiver chq ghost (bateau)
-            ActiverBateau(-1);
-        } 
+        PeutÊtrePlacé = VérifierPlace();
+        CubeÀPlacer.transform.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z));
     }
 
     bool VérifierPlace()
     {
-        foreach (Transform t in transformBateauActuel)
+        foreach (MeshRenderer mesh in CubeÀPlacer.GetComponentsInChildren<MeshRenderer>())
         {
-            BateauCubeBehavior bateauCube = t.GetComponent<BateauCubeBehavior>();
+            BateauCubeBehavior bateauCube = mesh.GetComponent<BateauCubeBehavior>();
 
             if (!bateauCube.SurTuile())
             {
-                t.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0, 250);
+                mesh.material.color = new Color(255, 0, 0, 250);
                 return false;
             }
 
-            t.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0);
+            mesh.material.color = new Color(0, 0, 0);
         }
 
         return true;
     }
 
-    void ChangerDirectionBateau() => transformBateauActuel.localEulerAngles += new Vector3(0, 90, 0);
-
-    void PlacerBateau()
+    void ChangerDirectionCubes()
     {
-        //instantier un nouveau bateau à partir de la liste de Bateau 
-
-        Vector3 PositionRaycast = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.z));
-        Quaternion RotationCoup = transformBateauActuel.rotation;
-
-        GameObject NouveauBateau = Instantiate(ListeBateau[BateauActuel].BateauPrefab, PositionRaycast, RotationCoup);
-
-        //Update la Grille et incrmenter le nmbre de bateau actuellement placer
-        //Desactiver Place
-        //Desactiver les cubes(Prefab)
-        //Verifier si tout les bateaux ont été placer
+        CubeÀPlacer.transform.localEulerAngles += new Vector3(0, 90, 0);
     }
 
-    public void PlacerBateau(Bateau bateau)
+    void PlacerBateau(Bateau b)
     {
-        bateau.BateauPrefab.transform.position = new Vector3(Mathf.Round(PtCollision.x), 0, Mathf.Round(PtCollision.y));
-        bateau.BateauPrefab.transform.rotation = transformBateauActuel.rotation;
+        Instantiate(b.PrefabBateau, CubeÀPlacer.transform.position, CubeÀPlacer.transform.rotation);
+        b.EstPlacé = true;
+        IndiceBateauActuel++;
+        Vector3 temp = new Vector3(CubeÀPlacer.transform.position.x, CubeÀPlacer.transform.position.y, CubeÀPlacer.transform.position.z);
+        Quaternion tempR = new Quaternion(CubeÀPlacer.transform.rotation.x, CubeÀPlacer.transform.rotation.y, CubeÀPlacer.transform.rotation.z, CubeÀPlacer.transform.rotation.w);
+        Destroy(CubeÀPlacer);
+        CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, temp, tempR);
 
-        Instantiate(bateau.BateauPrefab, bateau.BateauPrefab.transform.position, bateau.BateauPrefab.transform.rotation);
+        if (SontTousPlacés())
+            ExitState();
     }
 
     bool SontTousPlacés()
     {
-        bool temp = false;
-
-        foreach (Bateau b in ListeBateau)
-        {
-            if (b.EstPlacé)
-                temp = true;
-            else
-            {
-                return false;
-            }
-
-        }
-        return temp;
+        return Bateaux.TrueForAll(x => x.EstPlacé == true);
     }
 
-    public void EnterState() => enabled = true;
+    public void EnterState()
+    {
+        enabled = true;
+    }
 
     public void ExitState()
     {
         enabled = false;
-
-        // S'assurer de modifier la GrilleLogique et OccupationEventArgs
-
-        GestionnaireJeu.manager.NextPlayer();// Ou CommencerPhaseTirs();
+        GestionnaireJeu.manager.NextPlayer();
     }
+
+
 }
