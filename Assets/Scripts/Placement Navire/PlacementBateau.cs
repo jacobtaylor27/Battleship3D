@@ -86,7 +86,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     }
 
 
-    void DéplacerCubes(/*Bateau b*/)
+    void DéplacerCubes()
     {
         PeutÊtrePlacé = VérifierPlace();
         CubeÀPlacer.transform.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z));
@@ -120,12 +120,17 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 
     void PlacerBateau(Bateau b)
     {
+        
         Instantiate(b.PrefabBateau, CubeÀPlacer.transform.position, CubeÀPlacer.transform.rotation);
 
         //Changer occupations dans paneaujeu
         //Ajouter case occupées sur le bateau
         GestionnaireJeu.manager.UpdateOccupation(IndiceBateauActuel, DéterminerOrientation(CubeÀPlacer.transform.localEulerAngles.y), CaseVisée);
         b.EstPlacé = true;
+
+        if (SontTousPlacés())
+            ExitState();
+
         IndiceBateauActuel++;
 
         //Crée les cubes du prochain bateau
@@ -135,8 +140,6 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
         CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, temp, tempR);
 
 
-        if (SontTousPlacés())
-            ExitState();
     }
 
     private Vector3 DéterminerOrientation(float eulerAngleY)
