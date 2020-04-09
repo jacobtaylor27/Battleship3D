@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Layer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
 --- !u!1 &3755604987633924236
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Layer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
 --- !u!1 &4035652776869169537
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Layer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
 --- !u!1 &5970782899907456129
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,4 +469,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Layer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512

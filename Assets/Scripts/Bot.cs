@@ -65,6 +65,7 @@ public class Bot : Joueur
 
             }
         }
+        GestionnaireJeu.manager.NextPlayer();
     }
 
     public Coordonnées Tirer()

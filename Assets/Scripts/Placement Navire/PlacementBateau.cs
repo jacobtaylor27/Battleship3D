@@ -10,7 +10,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     bool ActiverPlacement;
 
 
-    int Layer = 8;
+    int Layer = 9;
     List<Bateau> Bateaux;
     bool PeutÊtrePlacé;
     int IndiceBateauActuel;
@@ -18,16 +18,16 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     Vector3 PtCollision;
     Ray ray;
     GameObject CubeÀPlacer;
+    Case CaseVisée;
 
+    private void Awake()
+    {
+        enabled = false;
+    }
     void Start()
     {
         ValeursInitiales();
         CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, Input.mousePosition, Quaternion.identity);
-        //ActiverBateau(-1);
-        //ActiverBateau(IndiceBateauActuel);
-        //Debug.Log(Camera.allCameras[0].name);
-        //Debug.Log(Camera.allCameras[1].name);
-        //Debug.Log(Camera.allCameras[2].name);
     }
 
     void ValeursInitiales()
@@ -48,6 +48,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
             if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.gameObject.layer == Layer)
             {
                 PtCollision = hit.collider.gameObject.transform.position;
+                CaseVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case;
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -84,23 +85,6 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    void ActiverBateau(int num)
-    {
-        if (num != -1)
-            if (Bateaux[num].PrefabCube.activeInHierarchy)
-                return;
-
-        //Desactive les bateaux
-        for (int i = 0; i < Bateaux.Count; i++)
-            Bateaux[i].PrefabCube.SetActive(false);
-
-        if (num == -1)
-            return;
-
-        //Activer les bateaux voulue
-        Bateaux[num].PrefabCube.SetActive(true);
-
-    }
 
     void DéplacerCubes(/*Bateau b*/)
     {
@@ -114,7 +98,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
         {
             BateauCubeBehavior bateauCube = mesh.GetComponent<BateauCubeBehavior>();
 
-            if (!bateauCube.SurTuile())
+            if (!bateauCube.EstSurTuile())
             {
                 mesh.material.color = new Color(255, 0, 0, 250);
                 return false;
@@ -128,26 +112,59 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 
     void ChangerDirectionCubes()
     {
+        if (CubeÀPlacer.transform.localEulerAngles == new Vector3(0, 360, 0))
+            CubeÀPlacer.transform.localEulerAngles = Vector3.zero;
+
         CubeÀPlacer.transform.localEulerAngles += new Vector3(0, 90, 0);
     }
 
     void PlacerBateau(Bateau b)
     {
         Instantiate(b.PrefabBateau, CubeÀPlacer.transform.position, CubeÀPlacer.transform.rotation);
+
+        //Changer occupations dans paneaujeu
+        //Ajouter case occupées sur le bateau
+        GestionnaireJeu.manager.UpdateOccupation(IndiceBateauActuel, DéterminerOrientation(CubeÀPlacer.transform.localEulerAngles.y), CaseVisée);
         b.EstPlacé = true;
         IndiceBateauActuel++;
+
+        //Crée les cubes du prochain bateau
         Vector3 temp = new Vector3(CubeÀPlacer.transform.position.x, CubeÀPlacer.transform.position.y, CubeÀPlacer.transform.position.z);
         Quaternion tempR = new Quaternion(CubeÀPlacer.transform.rotation.x, CubeÀPlacer.transform.rotation.y, CubeÀPlacer.transform.rotation.z, CubeÀPlacer.transform.rotation.w);
         Destroy(CubeÀPlacer);
         CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, temp, tempR);
 
+
         if (SontTousPlacés())
             ExitState();
     }
 
+    private Vector3 DéterminerOrientation(float eulerAngleY)
+    {
+        Vector3 orientation = Vector3.zero;
+
+        switch (eulerAngleY)
+        {
+            case 0f:
+                orientation = Vector3.right;
+                break;
+            case 90f:
+                orientation = Vector3.forward;
+                break;
+            case 180f:
+                orientation = Vector3.left;
+                break;
+            case 270f:
+                orientation = Vector3.back;
+                break;
+        }
+
+        return orientation;
+    }
+
     bool SontTousPlacés()
     {
-        return Bateaux.TrueForAll(x => x.EstPlacé == true);
+        return Bateaux.TrueForAll(x => x.EstPlacé);
     }
 
     public void EnterState()

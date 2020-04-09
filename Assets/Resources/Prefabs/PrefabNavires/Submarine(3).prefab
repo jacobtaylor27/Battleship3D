@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1303317318647951000}
   - component: {fileID: 8566912871875852872}
   - component: {fileID: 3843522141520450522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 6889855599620881517}
   - component: {fileID: 536906565532701448}
   - component: {fileID: 1040568194074022645}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6257072527007383430}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 9100328578950737482}
   - component: {fileID: 8330430213322059233}
   - component: {fileID: 6032943312733234745}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 8286317543960733548}
   - component: {fileID: 1477045955744181689}
   - component: {fileID: 1169633182500601026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 7094868056220300347}
   - component: {fileID: 99787437348778979}
   - component: {fileID: 1610884332730239768}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Submarine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 3301998460163751436}
   - component: {fileID: 5223960320478693813}
   - component: {fileID: 7154019318475992785}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 4465594510754490036}
   - component: {fileID: 3126926963356901645}
   - component: {fileID: 8299015035539447779}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 8339723308865703227}
   - component: {fileID: 7779998930455657965}
   - component: {fileID: 910023430415518791}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7243863873066365260}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Submarine(3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -910,10 +910,55 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.66999996
       objectReference: {fileID: 0}
+    - target: {fileID: 736430172972344415, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 736570521353850433, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 736622592054556303, guid: 5fde87cfc9d12a0428149bf6edeea573,
         type: 3}
       propertyPath: m_Name
       value: Submarine
+      objectReference: {fileID: 0}
+    - target: {fileID: 736622592054556303, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 736702642638157779, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 736747279482113021, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 736854500238723821, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 737022183222878089, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 738171946619729799, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 738214635668083729, guid: 5fde87cfc9d12a0428149bf6edeea573,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fde87cfc9d12a0428149bf6edeea573, type: 3}

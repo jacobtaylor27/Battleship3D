@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1232794812057220848}
   - component: {fileID: 2018222759853877521}
   - component: {fileID: 8774378294751529388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 4049703066397640716}
   - component: {fileID: 2135907469298981106}
   - component: {fileID: 9169536285989661223}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 1339762188779426739}
   - component: {fileID: 3121493990291573393}
   - component: {fileID: 5131709236468597250}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 6400285226888873291}
   - component: {fileID: 4271397922164521692}
   - component: {fileID: 5755764853725548297}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 3052811872948430336}
   - component: {fileID: 6274922054158354887}
   - component: {fileID: 8892337783953180883}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 3817478515905542985}
   - component: {fileID: 8696221839497312287}
   - component: {fileID: 6405585638868690965}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 2191397602944499257}
   - component: {fileID: 6139484797799160449}
   - component: {fileID: 8773727771047339035}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 1407213829474300593}
   - component: {fileID: 5651862508792058353}
   - component: {fileID: 7720761089350189090}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -930,7 +930,7 @@ GameObject:
   - component: {fileID: 5273379298757767224}
   - component: {fileID: 34454498617441980}
   - component: {fileID: 2910565997682656862}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Large Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 4410173613944174573}
   - component: {fileID: 1704440892087283627}
   - component: {fileID: 7243746773668964397}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 5445271271384537045}
   - component: {fileID: 1521931272075348819}
   - component: {fileID: 7793452850888615741}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 8817069817220775526}
   - component: {fileID: 8847753169871010510}
   - component: {fileID: 8110947260374286326}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1321,7 +1321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3503086555892404438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cruiser(4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1356,7 +1356,7 @@ GameObject:
   - component: {fileID: 5732972422371087112}
   - component: {fileID: 5184216375893670869}
   - component: {fileID: 1169533366083471162}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medium Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1451,7 +1451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3298388660350060509}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1495,7 +1495,7 @@ GameObject:
   - component: {fileID: 4751375610175857868}
   - component: {fileID: 8053165950260689017}
   - component: {fileID: 7316983350302488366}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1594,7 @@ GameObject:
   - component: {fileID: 6294727800163218204}
   - component: {fileID: 8723322671026374786}
   - component: {fileID: 5051283506510889370}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1692,7 +1692,7 @@ GameObject:
   - component: {fileID: 7682590341543095965}
   - component: {fileID: 1856273287056735012}
   - component: {fileID: 2543760333142860665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1791,7 +1791,7 @@ GameObject:
   - component: {fileID: 939429978614483077}
   - component: {fileID: 7876985325009109681}
   - component: {fileID: 566892618709835467}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1889,7 +1889,7 @@ GameObject:
   - component: {fileID: 8331495569465296244}
   - component: {fileID: 1461549225997603813}
   - component: {fileID: 980271313065273522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Large Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1987,7 +1987,7 @@ GameObject:
   - component: {fileID: 6138302380511331167}
   - component: {fileID: 1622675573859050279}
   - component: {fileID: 7322324931489211053}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cruiser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2091,7 +2091,7 @@ GameObject:
   - component: {fileID: 5936582267918437750}
   - component: {fileID: 4028143585306676590}
   - component: {fileID: 8578973791278666335}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2187,6 +2187,111 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cruiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540444981794429376, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540492995031579988, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540512780232462040, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540969548510706382, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540983333508756064, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541040691146867934, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541048172604719950, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541134856063657034, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541152175297926340, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541163015314850702, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541205516421777636, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541268445638630036, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541277615753255214, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541296144286134238, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541433762411209124, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541872990816724286, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541929326813600710, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541947256086639922, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541991654225644442, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3542021128296724018, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3542033229447125864, guid: c987fd500a5ebe6499924ee5deddde97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3543823914585296860, guid: c987fd500a5ebe6499924ee5deddde97,
         type: 3}

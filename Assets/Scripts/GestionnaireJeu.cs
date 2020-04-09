@@ -29,7 +29,7 @@ public class GestionnaireJeu : MonoBehaviour
         Joueur = new Joueur();
         Bot = new Bot();
 
-        JoueurActif = Bot;
+        JoueurActif = Bot; 
         AutreJoueur = Joueur;
 
         Placer = KeyCode.Mouse0; // CLICK GAUCHE
@@ -42,7 +42,7 @@ public class GestionnaireJeu : MonoBehaviour
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
-        BoutonGameStart.onClick.AddListener(CommencerPhaseTirs);//Test seulement
+        BoutonGameStart.onClick.AddListener(CommencerPartie);//Test seulement
 
         BoutonTirerBot = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "TirerBot");//test
         BoutonTirerBot.onClick.AddListener(TirerBotTest);//test
@@ -94,6 +94,17 @@ public class GestionnaireJeu : MonoBehaviour
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
     }
 
+    public void UpdateOccupation(int indiceBateau, Vector3 orientation, Case caseVisée)
+    {
+        for (int i = 0; i < JoueurActif.Arsenal[indiceBateau].Longueur; i++)
+        {
+            Coordonnées coordOccupée = new Coordonnées(caseVisée.Coordonnées.Rangée + i * (int)orientation.z, caseVisée.Coordonnées.Colonne + i * (int)orientation.x);
+            JoueurActif.PaneauJeu.TrouverCase(coordOccupée).TypeOccupation = TypeOccupation.Occupé;
+            JoueurActif.Arsenal[indiceBateau].CasesOccupées.Add(JoueurActif.PaneauJeu.TrouverCase(coordOccupée));
+        }
+
+    }
+
     public void NextPlayer()
     {
         Joueur tempPlayer = JoueurActif;
@@ -101,6 +112,8 @@ public class GestionnaireJeu : MonoBehaviour
         AutreJoueur = tempPlayer;
         Tour++;
     }
+
+
 
 
 }

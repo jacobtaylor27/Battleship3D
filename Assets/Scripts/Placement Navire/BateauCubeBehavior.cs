@@ -8,10 +8,10 @@ public class BateauCubeBehavior : MonoBehaviour
     RaycastHit hit;
     InformationTuile InfoTuile;
 
-    public bool SurTuile()
+    public bool EstSurTuile()
     {
         InfoTuile = GetInfoTuile();
-        if (InfoTuile != null)
+        if (InfoTuile != null && InfoTuile.Case.TypeOccupation == TypeOccupation.Vide)
         {
             return true;
         }

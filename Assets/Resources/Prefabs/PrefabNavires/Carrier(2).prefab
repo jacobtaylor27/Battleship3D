@@ -10,7 +10,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8952022038507575768}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 8171909499456230781}
   - component: {fileID: 3859429762224046187}
   - component: {fileID: 2204172021174150420}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2783855542093737071}
   - component: {fileID: 5693442552027469953}
   - component: {fileID: 5281418750172389261}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 6056949014000594185}
   - component: {fileID: 7091436843518852481}
   - component: {fileID: 1583278027947219305}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Cannons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8577330133151555585}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Carrier(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 3981785508246369414}
   - component: {fileID: 8392608882305142831}
   - component: {fileID: 2798072767557219971}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 1440199045082373868}
   - component: {fileID: 8936493196347788610}
   - component: {fileID: 2117231452409187639}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Carrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 6849554819957329453}
   - component: {fileID: 6378319423034550537}
   - component: {fileID: 1934849021746540031}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,10 +717,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 850140232356084011, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 850145186757404079, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 850225646105598843, guid: dc5c19980131b4f4eb413731c684358a,
         type: 3}
       propertyPath: m_Name
       value: Carrier
+      objectReference: {fileID: 0}
+    - target: {fileID: 850225646105598843, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 850296975035671497, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 850326110218993859, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 850595166111333851, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 850755725135365233, guid: dc5c19980131b4f4eb413731c684358a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc5c19980131b4f4eb413731c684358a, type: 3}

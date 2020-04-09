@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 548498525014763526}
   - component: {fileID: 548498525014763527}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: AccentTuile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 548498525694207021}
   - component: {fileID: 548498525694207022}
   - component: {fileID: 8432900399228872460}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Tuile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
