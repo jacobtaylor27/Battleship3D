@@ -37,8 +37,10 @@ public class GénérerCollidersGrille : MonoBehaviour
         {
             for (int j = 0; j < Dimensions; j++)
             {
-                Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i,j);
-                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i, j);
+                //Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i, j, "NPC");
+                //Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(i, j, "Player");
+                Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(new Coordonnées(i,j)));
+                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(GestionnaireJeu.manager.AutreJoueur.PaneauJeu.TrouverCase(new Coordonnées(i, j)));
             }
         }
 

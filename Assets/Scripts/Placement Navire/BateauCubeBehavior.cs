@@ -11,7 +11,7 @@ public class BateauCubeBehavior : MonoBehaviour
     public bool EstSurTuile()
     {
         InfoTuile = GetInfoTuile();
-        if (InfoTuile != null && InfoTuile.Case.TypeOccupation == TypeOccupation.Vide)
+        if (InfoTuile != null)
         {
             return true;
         }
@@ -22,11 +22,10 @@ public class BateauCubeBehavior : MonoBehaviour
     public InformationTuile GetInfoTuile()
     {
         Ray ray = new Ray(transform.position, -transform.up);
-
         if (Physics.Raycast(ray, out hit, 20f, Layer))
         {
             Debug.DrawRay(ray.origin, ray.direction, Color.red);
-            return hit.collider.GetComponent<InformationTuile>();
+            return hit.collider.gameObject.GetComponent<InformationTuile>();
         }
 
         return null;

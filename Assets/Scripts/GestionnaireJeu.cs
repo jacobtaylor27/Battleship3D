@@ -23,21 +23,15 @@ public class GestionnaireJeu : MonoBehaviour
 
     Button BoutonTirerBot { get; set; }//test
 
-
     void Start()
     {
-        Joueur = new Joueur();
-        Bot = new Bot();
-
-        JoueurActif = Bot; 
-        AutreJoueur = Joueur;
 
         Placer = KeyCode.Mouse0; // CLICK GAUCHE
         Tourner = KeyCode.R;
 
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
-        //Joueur.BateauDétruit += MéthodeQuelconque;
+        //Joueur.BateauDétruit += MéthodeQuelconque; //Trigger un event pour dire que le bateau est détruit, ex: un message s'affiche?
         //Bot.BateauDétruit += MéthodeQuelconque;
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
@@ -59,11 +53,18 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Tour = 0;//xav: pour test bot
         manager = this;
+
+        Joueur = new Joueur();
+        Bot = new Bot();
+
+        JoueurActif = Bot;
+        AutreJoueur = Joueur;
     }
     private void CommencerPartie()
     {
-        Bot.Placer(); // Bot devra appeler NextPlayer()
-        GetComponent<PlacementBateau>().EnterState();// ExitState() devra appeler NextPlayer()
+        //Bot.Placer(); // Bot devra appeler NextPlayer()
+        NextPlayer();
+        GetComponent<PlacementBateau>().EnterState();
     }
 
     private void CommencerPhaseTirs()
@@ -99,7 +100,7 @@ public class GestionnaireJeu : MonoBehaviour
         for (int i = 0; i < JoueurActif.Arsenal[indiceBateau].Longueur; i++)
         {
             Coordonnées coordOccupée = new Coordonnées(caseVisée.Coordonnées.Rangée + i * (int)orientation.z, caseVisée.Coordonnées.Colonne + i * (int)orientation.x);
-            JoueurActif.PaneauJeu.TrouverCase(coordOccupée).TypeOccupation = TypeOccupation.Occupé;
+            JoueurActif.PaneauJeu.ModifierÉtatCase(coordOccupée, TypeOccupation.Occupé);
             JoueurActif.Arsenal[indiceBateau].CasesOccupées.Add(JoueurActif.PaneauJeu.TrouverCase(coordOccupée));
         }
 

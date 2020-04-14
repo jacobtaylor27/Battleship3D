@@ -5,7 +5,7 @@ using UnityEngine;
 public class InformationTuile : MonoBehaviour
 {
     //Position de la tuile (en X et Z car Y = 0)
-    public Case Case { get; set; }
+    public Case Case { get; private set; }
 
     public SpriteRenderer spriteTuile;
     //tableau qui contient chq sprite qui seront utiliser (Ex : sprite touché, coulé, raté, etc. )
@@ -19,9 +19,15 @@ public class InformationTuile : MonoBehaviour
         spriteTuile.sprite = TabTuiles[numTuile];
     }
     //fct qui recois les pos de chq tuile 
-    public void DéfinirInformationTuile(int X, int Z)
+    public void DéfinirInformationTuile(Case newCase)
     {
-        Case = new Case(X,Z);
+        Case = newCase;
+        //if(joueur == "NPC")
+        //{
+        //    Case = GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(new Coordonnées(X, Z)); //Inverser JoueurActif et AutreJoueur si on modifie qui commence
+        //}
+        //else if(joueur == "Player")
+        //    Case = GestionnaireJeu.manager.AutreJoueur.PaneauJeu.TrouverCase(new Coordonnées(X, Z));
     }
 
     void OnMouseOver()

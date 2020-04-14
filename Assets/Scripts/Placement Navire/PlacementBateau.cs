@@ -6,10 +6,6 @@ using UnityEngine.EventSystems;
 
 public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]
-    bool ActiverPlacement;
-
-
     int Layer = 9;
     List<Bateau> Bateaux;
     bool PeutÊtrePlacé;
@@ -40,30 +36,27 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
-        if (ActiverPlacement)
+        Camera cameraJoueur = Camera.allCameras[1]; // vérfier indice
+        ray = cameraJoueur.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity,LayerMask.GetMask(new string[] { "Tuile" })) && hit.collider.gameObject.layer == Layer)
         {
-            Camera cameraJoueur = Camera.allCameras[1]; // vérfier indice
-            ray = cameraJoueur.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.collider.gameObject.layer == Layer)
-            {
-                PtCollision = hit.collider.gameObject.transform.position;
-                CaseVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case;
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("gauche");
-                PlacerBateau(Bateaux[IndiceBateauActuel]);
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                Debug.Log("droite");
-                ChangerDirectionCubes();
-            }
-            DéplacerCubes();
+            PtCollision = hit.collider.gameObject.transform.position;
+            CaseVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("gauche");
+            PlacerBateau(Bateaux[IndiceBateauActuel]);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("droite");
+            ChangerDirectionCubes();
+        }
+        DéplacerCubes();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -98,7 +91,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
         {
             BateauCubeBehavior bateauCube = mesh.GetComponent<BateauCubeBehavior>();
 
-            if (!bateauCube.EstSurTuile())
+            if (!bateauCube.EstSurTuile() || bateauCube.GetInfoTuile().Case.TypeOccupation == TypeOccupation.Occupé)
             {
                 mesh.material.color = new Color(255, 0, 0, 250);
                 return false;
@@ -120,7 +113,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 
     void PlacerBateau(Bateau b)
     {
-        
+
         Instantiate(b.PrefabBateau, CubeÀPlacer.transform.position, CubeÀPlacer.transform.rotation);
 
         //Changer occupations dans paneaujeu
@@ -128,16 +121,22 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
         GestionnaireJeu.manager.UpdateOccupation(IndiceBateauActuel, DéterminerOrientation(CubeÀPlacer.transform.localEulerAngles.y), CaseVisée);
         b.EstPlacé = true;
 
-        if (SontTousPlacés())
+        if (!SontTousPlacés())
+        {
+            IndiceBateauActuel++;
+
+            //Crée les cubes du prochain bateau
+            Vector3 temp = new Vector3(CubeÀPlacer.transform.position.x, CubeÀPlacer.transform.position.y, CubeÀPlacer.transform.position.z);
+            Quaternion tempR = new Quaternion(CubeÀPlacer.transform.rotation.x, CubeÀPlacer.transform.rotation.y, CubeÀPlacer.transform.rotation.z, CubeÀPlacer.transform.rotation.w);
+            Destroy(CubeÀPlacer);
+            CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, temp, tempR);
+
+        }
+        else
+        {
+            Destroy(CubeÀPlacer);
             ExitState();
-
-        IndiceBateauActuel++;
-
-        //Crée les cubes du prochain bateau
-        Vector3 temp = new Vector3(CubeÀPlacer.transform.position.x, CubeÀPlacer.transform.position.y, CubeÀPlacer.transform.position.z);
-        Quaternion tempR = new Quaternion(CubeÀPlacer.transform.rotation.x, CubeÀPlacer.transform.rotation.y, CubeÀPlacer.transform.rotation.z, CubeÀPlacer.transform.rotation.w);
-        Destroy(CubeÀPlacer);
-        CubeÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, temp, tempR);
+        }
 
 
     }
@@ -175,7 +174,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
         enabled = true;
     }
 
-    public void ExitState()
+    private void ExitState()
     {
         enabled = false;
         GestionnaireJeu.manager.NextPlayer();

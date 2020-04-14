@@ -2615,11 +2615,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1666554163}
-  - component: {fileID: 1666554164}
   - component: {fileID: 1666554166}
+  - component: {fileID: 1666554164}
+  - component: {fileID: 1666554168}
   - component: {fileID: 1666554165}
   - component: {fileID: 1666554167}
-  - component: {fileID: 1666554168}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2705,7 +2705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bc005a9a91e984f87d6c525e810575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActiverPlacement: 1
 --- !u!1001 &1776917064
 PrefabInstance:
   m_ObjectHideFlags: 0
