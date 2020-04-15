@@ -25,7 +25,7 @@ public class BateauCubeBehavior : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 20f, Layer))
         {
             Debug.DrawRay(ray.origin, ray.direction, Color.red);
-            return hit.collider.gameObject.GetComponent<InformationTuile>();
+            return hit.collider.GetComponent<InformationTuile>();
         }
 
         return null;
