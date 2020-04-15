@@ -3,69 +3,87 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.EventSystems;
 public class Bot : Joueur
 {
-    // Classe random pris de : http://stackoverflow.com/a/18267477/106356
-    System.Random rng = new System.Random(Guid.NewGuid().GetHashCode());
-
     private Predicate<TypeOccupation> p = (TypeOccupation e) => e == TypeOccupation.Touché;
     List<Coordonnées> DernierTirs = new List<Coordonnées>(5);
     List<TypeOccupation> ÉtatDerniersTirs = new List<TypeOccupation>();
-    int AxeAuHasard() => rng.Next(0,10);
+    int AxeAuHasard() => UnityEngine.Random.Range(0, 9);
     bool EstTiré(Coordonnées coord) => GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
                                   GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
     int cpt = 0;//test
 
     public void Placer()
     {
-        foreach (var b in Arsenal)
+        int cpt2 = 0;
+        UnityEngine.Random rnd = new UnityEngine.Random();
+        foreach (var b in GestionnaireJeu.manager.JoueurActif.Arsenal)
         {
-            bool estDisponible = true;
-            while (estDisponible)
+            List<Case> paneauxUtilisés = new List<Case>();
+            bool estPlacer = false;
+            while (!estPlacer)
             {
-                int colonneInitiale = rng.Next(1, 11);
-                int rangéeInitiale = rng.Next(1, 11);
+                int colonneInitiale = UnityEngine.Random.Range(0, 9);
+                int rangéeInitiale = UnityEngine.Random.Range(0, 9);
                 int rangéeFinale = rangéeInitiale;
                 int colonneFinale = colonneInitiale;
-                int orientation = rng.Next(0, 4);
-                List<Case> paneauxUtilisés = PaneauJeu.Cases.Range(rangéeInitiale, colonneInitiale, rangéeFinale, colonneFinale);
-
-                if (orientation == 0)
-                    for (int i = 1; 1 < b.Longueur; i++)
-                        rangéeFinale++;
-
-                else if (orientation == 1)
-                    for (int i = 1; i < b.Longueur; i++)
-                        colonneFinale++;
+                int orientation = UnityEngine.Random.Range(0, 3);
+                //0 : vers la droite
+                //1 : vers le bas
+                //2 : vers la gauche
+                //3 : vers le haut
                 
-                else if (orientation == 2)
-                    for (int i = 1; i < b.Longueur; i++)
-                        colonneFinale--;
+                switch (orientation)
+                {
+                    case 0:
+                        colonneFinale += b.Longueur - 1;
+                        break;
+                    case 1:
+                        rangéeFinale += b.Longueur - 1;
+                        break;
+                    case 2:
+                        colonneFinale -= b.Longueur + 1;
+                        break;
+                    case 3:
+                        rangéeFinale -= b.Longueur + 1;
+                        break;
+                }
+                paneauxUtilisés = PaneauJeu.Cases.Range(rangéeInitiale, colonneInitiale, rangéeFinale, colonneFinale);
+
+                //if (orientation == 0)
+                //    for (int i = 1; 1 < b.Longueur; i++)
+                //        rangéeFinale++;
+
+                //else if (orientation == 1)
+                //    for (int i = 1; i < b.Longueur; i++)
+                //        colonneFinale++;
                 
-                else if (orientation == 3)
-                    for (int i = 1; i < b.Longueur; i++)
-                        colonneFinale--;
+                //else if (orientation == 2)
+                //    for (int i = 1; i < b.Longueur; i++)
+                //        colonneFinale--;
+                
+                //else if (orientation == 3)
+                //    for (int i = 1; i < b.Longueur; i++)
+                //        rangéeFinale--;
 
-                if (rangéeFinale > 10 || colonneFinale > 10)
+                if (rangéeFinale >= 0 && colonneFinale >= 0 && rangéeFinale < 10 && colonneFinale < 10 /*&& GestionnaireJeu.manager.JoueurActif.PaneauJeu.Cases.Any(x => x.EstOccupé)*/)
                 {
-                    estDisponible = true;
-                    continue;
+                    estPlacer = true;
+                    foreach (var p in paneauxUtilisés)
+                    {
+                        GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(p.Coordonnées).TypeOccupation = TypeOccupation.Occupé;
+                        Debug.Log(p.Coordonnées.ToString());
+                        
+                    }
                 }
-
-                if (paneauxUtilisés.Any(x => x.EstOccupé))
-                {
-                    estDisponible = true;
-                    continue;
-                }
-
-                foreach (var p in paneauxUtilisés)
-                    p.TypeOccupation = b.TypeOccupation;
-
-                estDisponible = false;
-
             }
+            GestionnaireJeu.manager.AfficherBat(b, paneauxUtilisés);
+            GestionnaireJeu.manager.JoueurActif.Arsenal[cpt2].CasesOccupées = paneauxUtilisés;
+            cpt2++;
         }
         GestionnaireJeu.manager.NextPlayer();
+       
     }
 
     public Coordonnées Tirer()

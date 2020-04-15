@@ -117,7 +117,4 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Instantiate(b.PrefabBateau, new Vector3(0,0,0),new Quaternion(0,0,0,0));
     }
-
-
-
 }
