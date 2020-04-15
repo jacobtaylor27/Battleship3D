@@ -62,7 +62,7 @@ public class GestionnaireJeu : MonoBehaviour
     }
     private void CommencerPartie()
     {
-        //Bot.Placer(); // Bot devra appeler NextPlayer()
+        Bot.Placer(); // Bot devra appeler NextPlayer()
         NextPlayer();
         GetComponent<PlacementBateau>().EnterState();
     }
@@ -99,7 +99,7 @@ public class GestionnaireJeu : MonoBehaviour
     {
         for (int i = 0; i < JoueurActif.Arsenal[indiceBateau].Longueur; i++)
         {
-            Coordonnées coordOccupée = new Coordonnées(caseVisée.Coordonnées.Rangée + i * (int)orientation.z, caseVisée.Coordonnées.Colonne + i * (int)orientation.x);
+            Coordonnées coordOccupée = new Coordonnées(caseVisée.Coordonnées.Rangée + i * -(int)orientation.z, caseVisée.Coordonnées.Colonne + i * (int)orientation.x);
             JoueurActif.PaneauJeu.ModifierÉtatCase(coordOccupée, TypeOccupation.Occupé);
             JoueurActif.Arsenal[indiceBateau].CasesOccupées.Add(JoueurActif.PaneauJeu.TrouverCase(coordOccupée));
         }
@@ -113,7 +113,10 @@ public class GestionnaireJeu : MonoBehaviour
         AutreJoueur = tempPlayer;
         Tour++;
     }
-
+    public void AfficherBat(Bateau b,List<Case> pu)
+    {
+        Instantiate(b.PrefabBateau, new Vector3(0,0,0),new Quaternion(0,0,0,0));
+    }
 
 
 
