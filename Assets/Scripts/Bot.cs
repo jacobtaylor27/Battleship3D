@@ -14,7 +14,9 @@ public class Bot : Joueur
                                   GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
     Vector3 OrientationV { get; set; }
     int cpt = 0;//test
+    bool dernierTirCouler = false;
 
+     
     public void Placer()
     {
         int cpt2 = 0;
@@ -177,6 +179,14 @@ public class Bot : Joueur
             ProchainTir = PositionAuHasard();
         else
         {
+            if (dernierTirCouler)
+            {
+                DernierTirs.Clear();
+                ÉtatDerniersTirs.Clear();
+                dernierTirCouler = false;
+                return PositionAuHasard();
+            }
+
             int f = ÉtatDerniersTirs.FindIndex(p);//la première touche
             int l = ÉtatDerniersTirs.FindLastIndex(p);//la dernière touche
             int nt = ÉtatDerniersTirs.FindAll(p).Count();//le nombre de touche
