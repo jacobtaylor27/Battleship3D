@@ -22,12 +22,6 @@ public class InformationTuile : MonoBehaviour
     public void DéfinirInformationTuile(Case newCase)
     {
         Case = newCase;
-        //if(joueur == "NPC")
-        //{
-        //    Case = GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(new Coordonnées(X, Z)); //Inverser JoueurActif et AutreJoueur si on modifie qui commence
-        //}
-        //else if(joueur == "Player")
-        //    Case = GestionnaireJeu.manager.AutreJoueur.PaneauJeu.TrouverCase(new Coordonnées(X, Z));
     }
 
     void OnMouseOver()
