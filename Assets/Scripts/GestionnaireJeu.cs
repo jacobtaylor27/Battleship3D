@@ -62,8 +62,7 @@ public class GestionnaireJeu : MonoBehaviour
     }
     private void CommencerPartie()
     {
-        Bot.Placer(); // Bot devra appeler NextPlayer()
-        NextPlayer();
+        Bot.Placer();
         GetComponent<PlacementBateau>().EnterState();
     }
 
