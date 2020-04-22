@@ -139,7 +139,7 @@ public class GestionAnimation : MonoBehaviour
     private void ExitState()
     {
         enabled = false;
-        GestionnaireJeu.manager.NextPlayer();
+        GestionnaireJeu.manager.ChangerTour();
     }
 
     private void UpdateMatricesRotation()

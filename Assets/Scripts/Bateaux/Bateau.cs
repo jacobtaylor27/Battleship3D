@@ -13,7 +13,7 @@ public class Bateau
     public GameObject PrefabBateau;
     public GameObject PrefabCube;
     public List<Case> CasesOccupées { get; set; }
-    public bool EstCallé { get { return Coups >= Longueur; } }
+    public bool EstCoulé { get { return Coups >= Longueur; } }
     public bool EstPlacé { get; set; }
     public void PerdreVie() => Coups++;
 

@@ -14,7 +14,7 @@ public class Bot : Joueur
                                   GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
     Vector3 OrientationV { get; set; }
     int cpt = 0;//test
-    bool dernierTirCouler = false;
+    public bool dernierTirCouler = false;
 
      
     public void Placer()
@@ -31,7 +31,7 @@ public class Bot : Joueur
                 int rangéeInitiale = UnityEngine.Random.Range(0, 9);
                 int rangéeFinale = rangéeInitiale;
                 int colonneFinale = colonneInitiale;
-                int orientation = /*UnityEngine.Random.Range(0, 3)*/3;
+                int orientation = UnityEngine.Random.Range(0, 3);
                 //0 : vers la droite
                 //1 : vers le bas
                 //2 : vers la gauche
@@ -107,7 +107,7 @@ public class Bot : Joueur
             GestionnaireJeu.manager.JoueurActif.Arsenal[cpt2].CasesOccupées = paneauxUtilisés;
             cpt2++;
         }
-        GestionnaireJeu.manager.NextPlayer();
+        GestionnaireJeu.manager.ChangerTour();
 
     }
 
@@ -157,11 +157,11 @@ public class Bot : Joueur
 
     private Coordonnées DéterminerProchainTir()
     {
-        if (GestionnaireJeu.manager.Tour == 0)
-        {
-            GestionnaireJeu.manager.Tour++;//test seulement
-            return PositionAuHasard();
-        }
+        //if (GestionnaireJeu.manager.Tour == 0)
+        //{
+        //    GestionnaireJeu.manager.Tour++;//test seulement
+        //    return PositionAuHasard();
+        //}
 
 
         bool b = false;

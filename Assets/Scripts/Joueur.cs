@@ -10,7 +10,7 @@ public class Joueur
     public PaneauJeu PaneauJeu { get; set; }
     public PaneauTirs PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
-    public bool aPerdu { get { return Arsenal.All(x => x.EstCallé); } }
+    public bool aPerdu { get { return Arsenal.All(x => x.EstCoulé); } }
 
     public event EventHandler<BateauEventArgs> BateauDétruit;
 
@@ -65,5 +65,14 @@ public class Joueur
     public void SeFaireTouché(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();
+
+        if (Arsenal[Arsenal.FindIndex(x => x == b)].EstCoulé)
+        {
+            onBateauDétruit(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
+
+            //if(aPerdu)
+            //    onPartieTerminée()
+
+        }
     }
 }

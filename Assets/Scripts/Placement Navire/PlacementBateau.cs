@@ -120,8 +120,8 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 
         //Changer occupations dans paneaujeu
         //Ajouter case occupées sur le bateau
-        GestionnaireJeu.manager.UpdateOccupation(IndiceBateauActuel, DéterminerOrientation(CubesÀPlacer.transform.localEulerAngles.y), CaseVisée);
-        b.EstPlacé = true;
+        GestionnaireJeu.manager.PlacerBateauLogique(IndiceBateauActuel, DéterminerOrientation(CubesÀPlacer.transform.localEulerAngles.y), CaseVisée);
+        //b.EstPlacé = true;
 
         if (!SontTousPlacés())
         {
@@ -179,7 +179,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     private void ExitState()
     {
         enabled = false;
-        GestionnaireJeu.manager.NextPlayer();
+        GestionnaireJeu.manager.ChangerTour();
     }
 
 

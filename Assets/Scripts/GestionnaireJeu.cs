@@ -13,26 +13,21 @@ public class GestionnaireJeu : MonoBehaviour
     private Bot Bot { get; set; }//xav:je le mets public car j'ai besoin daller checher son panneau tir dans Bot
     public Joueur JoueurActif { get; private set; }
     public Joueur AutreJoueur { get; private set; }
-    KeyCode Placer { get; set; }
-    KeyCode Tourner { get; set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
-    bool Fait { get; set; }
-    public int Tour { get; set; }//xav:je le mets public car besoin dans bot // remettre private set
+    public int Tour { get; private set; }//xav:je le mets public car besoin dans bot // remettre private set
 
     Button BoutonTirerBot { get; set; }//test
 
     void Start()
     {
 
-        Placer = KeyCode.Mouse0; // CLICK GAUCHE
-        Tourner = KeyCode.R;
-
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
-        //Joueur.BateauDétruit += MéthodeQuelconque; //Trigger un event pour dire que le bateau est détruit, ex: un message s'affiche?
-        //Bot.BateauDétruit += MéthodeQuelconque;
+
+        Joueur.BateauDétruit += SignalerBot;
+        //Bot.BateauDétruit += MéthodeQuelconque; // Afficher un message?
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
@@ -41,6 +36,7 @@ public class GestionnaireJeu : MonoBehaviour
         BoutonTirerBot = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "TirerBot");//test
         BoutonTirerBot.onClick.AddListener(TirerBotTest);//test
     }
+
 
     private void TirerBotTest()//test
     {
@@ -87,33 +83,54 @@ public class GestionnaireJeu : MonoBehaviour
         //Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CoordVisée);
         TypeOccupation tempOccupation;
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
+        {
+            TrouverBateauSurCase(AutreJoueur, CoordVisée).PerdreVie();
             tempOccupation = TypeOccupation.Touché;
-        // Modifier l'état bateau touché ici?
+        }
         else
             tempOccupation = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
     }
 
-    public void UpdateOccupation(int indiceBateau, Vector3 orientation, Case caseVisée)
+    public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
     {
         for (int i = 0; i < JoueurActif.Arsenal[indiceBateau].Longueur; i++)
         {
             Coordonnées coordOccupée = new Coordonnées(caseVisée.Coordonnées.Rangée + i * -(int)orientation.z, caseVisée.Coordonnées.Colonne + i * (int)orientation.x);
             JoueurActif.PaneauJeu.ModifierÉtatCase(coordOccupée, TypeOccupation.Occupé);
+            JoueurActif.Arsenal[indiceBateau].EstPlacé = true;
             JoueurActif.Arsenal[indiceBateau].CasesOccupées.Add(JoueurActif.PaneauJeu.TrouverCase(coordOccupée));
         }
 
     }
 
-    public void NextPlayer()
+    public void ChangerTour()
     {
         Joueur tempPlayer = JoueurActif;
         JoueurActif = AutreJoueur;
         AutreJoueur = tempPlayer;
         Tour++;
     }
-    public void AfficherBat(Bateau b,List<Case> pu)
+    public void AfficherBat(Bateau b, List<Case> pu)
     {
-        Instantiate(b.PrefabBateau, new Vector3(0,0,0),new Quaternion(0,0,0,0));
+        Instantiate(b.PrefabBateau, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+    }
+
+    public Bateau TrouverBateauSurCase(Joueur joueurTouché, Coordonnées coordVoulue)
+    {
+        Bateau bateauSurCase = new Bateau(2, null, null); // bateau null, car la fonction sera forcément appellée sur une case occupée.
+        foreach (Bateau b in joueurTouché.Arsenal)
+        {
+            if (b.CasesOccupées.At(coordVoulue.Rangée, coordVoulue.Colonne) != null)
+            {
+                bateauSurCase = b;
+                break;
+            }
+        }
+        return bateauSurCase;
+    }
+    private void SignalerBot(object sender, BateauEventArgs e)
+    {
+        Bot.dernierTirCouler = true;
     }
 }
