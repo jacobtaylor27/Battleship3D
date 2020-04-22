@@ -10,7 +10,7 @@ public class Joueur
     public PaneauJeu PaneauJeu { get; set; }
     public PaneauTirs PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
-    public bool aPerdu { get { return Arsenal.All(x => x.EstCoulé); } }
+    private bool aPerdu { get { return Arsenal.All(x => x.EstCoulé); } }
 
     public event EventHandler<BateauEventArgs> BateauDétruit;
 
@@ -49,18 +49,6 @@ public class Joueur
     {
         this.BateauDétruit?.Invoke(this, dataBateau);
     }
-    public TypeOccupation DéterminerRésultatTir(Coordonnées emplacementCase)
-    {
-        TypeOccupation valeurRetour;
-
-        if (PaneauJeu.Cases.Find(x => x.Coordonnées.Equals(emplacementCase)).TypeOccupation == TypeOccupation.Occupé)
-            valeurRetour = TypeOccupation.Touché;
-
-        else
-            valeurRetour = TypeOccupation.Manqué;
-
-        return valeurRetour;
-    }
 
     public void SeFaireTouché(Bateau b)
     {
@@ -74,5 +62,10 @@ public class Joueur
             //    onPartieTerminée()
 
         }
+    }
+
+    public virtual void Tirer()
+    {
+        GestionnaireJeu.manager.TirerJoueur();
     }
 }

@@ -16,6 +16,9 @@ public class Bot : Joueur
     int cpt = 0;//test
     public bool dernierTirCouler = false;
 
+    public Bot()
+        : base(){ }
+
      
     public void Placer()
     {
@@ -107,11 +110,11 @@ public class Bot : Joueur
             GestionnaireJeu.manager.JoueurActif.Arsenal[cpt2].CasesOccupées = paneauxUtilisés;
             cpt2++;
         }
-        GestionnaireJeu.manager.ChangerTour();
+        GestionnaireJeu.manager.PasserAuProchainTour();
 
     }
 
-    public Coordonnées Tirer()
+    public override void Tirer()
     {
 
         Coordonnées tir = DéterminerProchainTir();
@@ -138,7 +141,11 @@ public class Bot : Joueur
         if (ÉtatDerniersTirs.Count > 5)
             ÉtatDerniersTirs.RemoveAt(0);
         cpt++;//test
-        return tir;
+
+        GestionnaireJeu.manager.CoordVisée = tir;
+
+        //GestionnaireJeu.manager.TrouverPositionCase();
+        GestionnaireJeu.manager.DéterminerRésultatTir();
     }
 
     private Coordonnées PositionAuHasard()
@@ -157,11 +164,11 @@ public class Bot : Joueur
 
     private Coordonnées DéterminerProchainTir()
     {
-        //if (GestionnaireJeu.manager.Tour == 0)
-        //{
-        //    GestionnaireJeu.manager.Tour++;//test seulement
-        //    return PositionAuHasard();
-        //}
+        if (GestionnaireJeu.manager.Tour == 2)
+        {
+           //GestionnaireJeu.manager.Tour++;//test seulement
+           return PositionAuHasard();
+        }
 
 
         bool b = false;
