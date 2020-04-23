@@ -179,7 +179,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     private void ExitState()
     {
         enabled = false;
-        GestionnaireJeu.manager.ChangerTour();
+        GestionnaireJeu.manager.PasserAuProchainTour();
     }
 
 

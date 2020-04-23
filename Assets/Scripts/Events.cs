@@ -20,7 +20,7 @@ public class BateauEventArgs : EventArgs
 
     public BateauEventArgs(Bateau bat)
     {
+        Bateau = new Bateau(bat.Longueur, bat.PrefabBateau, bat.PrefabCube);
         Bateau.Coups = bat.Coups;
-        Bateau.Longueur = bat.Longueur;
     }
 }

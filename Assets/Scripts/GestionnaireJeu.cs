@@ -17,7 +17,7 @@ public class GestionnaireJeu : MonoBehaviour
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
     public int Tour { get; private set; }//xav:je le mets public car besoin dans bot // remettre private set
-
+    private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
     Button BoutonTirerBot { get; set; }//test
 
     void Start()
@@ -34,17 +34,17 @@ public class GestionnaireJeu : MonoBehaviour
         BoutonGameStart.onClick.AddListener(CommencerPartie);//Test seulement
 
         BoutonTirerBot = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "TirerBot");//test
-        BoutonTirerBot.onClick.AddListener(TirerBotTest);//test
+        BoutonTirerBot.onClick.AddListener(TirerJoueur);//test
     }
 
 
-    private void TirerBotTest()//test
-    {
-        CoordVisée = Bot.Tirer();
-        Debug.Log(Joueur.PaneauJeu.TrouverCase(CoordVisée).ToString());
-        DéterminerRésultatTir();
-        Bot.PaneauTirs.TrouverCase(CoordVisée).TypeOccupation = TypeOccupation.Touché;
-    }
+    //private void TirerBotTest()//test
+    //{
+    //    CoordVisée = Bot.Tirer();
+    //    Debug.Log(Joueur.PaneauJeu.TrouverCase(CoordVisée).ToString());
+    //    DéterminerRésultatTir();
+    //    Bot.PaneauTirs.TrouverCase(CoordVisée).TypeOccupation = TypeOccupation.Touché;
+    //}
     void Awake()
     {
         Tour = 0;//xav: pour test bot
@@ -62,7 +62,7 @@ public class GestionnaireJeu : MonoBehaviour
         GetComponent<PlacementBateau>().EnterState();
     }
 
-    private void CommencerPhaseTirs()
+    public void TirerJoueur()
     {
         GetComponent<GestionTirs>().EnterState();
     }
@@ -84,12 +84,16 @@ public class GestionnaireJeu : MonoBehaviour
         TypeOccupation tempOccupation;
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
         {
-            TrouverBateauSurCase(AutreJoueur, CoordVisée).PerdreVie();
+            if (AutreJoueur == Joueur)
+                AutreJoueur.SeFaireTouché(TrouverBateauSurCase(AutreJoueur, CoordVisée));
+
             tempOccupation = TypeOccupation.Touché;
         }
         else
             tempOccupation = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
+        PasserAuProchainTour();
+
     }
 
     public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
@@ -104,12 +108,17 @@ public class GestionnaireJeu : MonoBehaviour
 
     }
 
-    public void ChangerTour()
+    public void PasserAuProchainTour()
     {
         Joueur tempPlayer = JoueurActif;
         JoueurActif = AutreJoueur;
         AutreJoueur = tempPlayer;
         Tour++;
+        if (EstEnPhaseDeTirs)
+        {
+            CoordVisée = null;
+            JoueurActif.Tirer();
+        }
     }
     public void AfficherBat(Bateau b, List<Case> pu)
     {
@@ -128,6 +137,10 @@ public class GestionnaireJeu : MonoBehaviour
             }
         }
         return bateauSurCase;
+    }
+    public void TrouverPositionViséeCase()
+    {
+        //À trouver avec InfoTuile, définir une coordonnée à Case?
     }
     private void SignalerBot(object sender, BateauEventArgs e)
     {
