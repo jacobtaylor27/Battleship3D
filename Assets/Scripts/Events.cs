@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 public class OccupationEventArgs : EventArgs
 {
-    Coordonnées nouvelleCoord { get; set; }
+    Coordonnées NouvelleCoord { get; set; }
 
-    TypeOccupation nouvelleOccupation { get; set; }
+    TypeOccupation NouvelleOccupation { get; set; }
 
     public OccupationEventArgs(Case caseJeu)
     {
-        nouvelleCoord = caseJeu.Coordonnées;
-        nouvelleOccupation = caseJeu.TypeOccupation;
+        NouvelleCoord = caseJeu.Coordonnées;
+        NouvelleOccupation = caseJeu.TypeOccupation;
     }
 }
 

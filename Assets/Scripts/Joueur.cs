@@ -10,7 +10,7 @@ public class Joueur
     public PaneauJeu PaneauJeu { get; set; }
     public PaneauTirs PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
-    private bool aPerdu { get { return Arsenal.All(x => x.EstCoulé); } }
+    private bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
 
     public event EventHandler<BateauEventArgs> BateauDétruit;
 
@@ -50,7 +50,7 @@ public class Joueur
         this.BateauDétruit?.Invoke(this, dataBateau);
     }
 
-    public void SeFaireTouché(Bateau b)
+    public void SeFaireToucher(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();
 

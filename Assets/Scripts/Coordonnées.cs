@@ -6,7 +6,8 @@ public class Coordonnées
 {
     // ajouter vérification
     public int Rangée { get; set; }
-    public int Colonne { get; set; }
+    public int Colonne { get;
+ set; }
 
     public Coordonnées()
     {
@@ -20,7 +21,7 @@ public class Coordonnées
         Colonne = colonne;
     }
 
-    public bool Equals(Coordonnées obj)
+    public bool Equals(Coordonnées obj)//aucune référence (26 avril)
     {
         return Colonne == obj.Colonne && Rangée == obj.Rangée;
     }

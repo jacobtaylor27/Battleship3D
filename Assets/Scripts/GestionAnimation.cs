@@ -10,7 +10,7 @@ public class GestionAnimation : MonoBehaviour
     const float HauteurMax = 500f;
     const float VitesseInit = 100f;
 
-    GameObject lol { get; set; }
+    GameObject Missile { get; set; }
     public GameObject projectile;
     GameObject[] Canons { get; set; }
     GameObject Affut { get; set; }
@@ -19,7 +19,7 @@ public class GestionAnimation : MonoBehaviour
     float AngleX { get; set; }
     float AngleY { get; set; }
     float VitesseI { get; set; }
-    int test { get; set; }
+    int CptFrame { get; set; }
     float[,] MatriceRotationY { get; set; }
     float[,] MatriceRotationX { get; set; }
 
@@ -62,7 +62,7 @@ public class GestionAnimation : MonoBehaviour
 
         CalculerVitesseEtAngleX(portée);
 
-        test = 0;
+        CptFrame = 0;
 
 
     }
@@ -85,7 +85,6 @@ public class GestionAnimation : MonoBehaviour
         enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //if (test < 60)
@@ -97,38 +96,37 @@ public class GestionAnimation : MonoBehaviour
         //    ExitState();
         //}
 
-        if (test < 30)
+        if (CptFrame < 30)
         {
             Affut.transform.Rotate(Vector3.up, AngleY /** Mathf.Rad2Deg*/ / 30f, Space.Self);
         }
-        else if(test >= 30 && test < 60)
+        else if(CptFrame >= 30 && CptFrame < 60)
         {
             Affut.transform.Rotate(Vector3.left, AngleX  /** Mathf.Rad2Deg*/ / 30f, Space.Self);
         }
-        else if(test >= 60 && test < 240)
+        else if(CptFrame >= 60 && CptFrame < 240)
         {
-            if (test == 60)
+            if (CptFrame == 60)
             {
-                lol = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
-                //lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
-                //lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
-                lol.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward )* VitesseI,ForceMode.VelocityChange);
-                //lol.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
+                Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
+                //Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
+                //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
+                Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward )* VitesseI,ForceMode.VelocityChange);
+                //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
             }
         }
-        else if (test >= 240 && test < 270)
+        else if (CptFrame >= 240 && CptFrame < 270)
         {
            Affut.transform.Rotate(Vector3.left, -AngleX / 30f, Space.Self);
         }
-        else if (test >= 270 && test < 300)
+        else if (CptFrame >= 270 && CptFrame < 300)
         {
            Affut.transform.Rotate(Vector3.up, -AngleY / 30f, Space.Self);
         }
         else
             ExitState();
 
-
-        test++;
+        CptFrame++;
     }
 
     public void EnterState()

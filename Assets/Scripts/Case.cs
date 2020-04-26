@@ -6,7 +6,9 @@ using System.Linq;
 public class Case
 {
     public TypeOccupation TypeOccupation { get; set; }
-    public Coordonnées Coordonnées { get; set; }
+    public Coordonnées Coordonnées { get; private set; }
+    static public bool EstTiréRaté(Coordonnées coord) => GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
+                                 GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
 
     public Case(int rangée, int colonne)
     {

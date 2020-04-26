@@ -10,13 +10,13 @@ public class GestionnaireJeu : MonoBehaviour
 {
     public static GestionnaireJeu manager;
     private Joueur Joueur { get; set; }
-    private Bot Bot { get; set; }//xav:je le mets public car j'ai besoin daller checher son panneau tir dans Bot
+    private Bot Bot { get; set; }
     public Joueur JoueurActif { get; private set; }
     public Joueur AutreJoueur { get; private set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
-    public int Tour { get; private set; }//xav:je le mets public car besoin dans bot // remettre private set
+    public int Tour { get; private set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
     Button BoutonTirerBot { get; set; }//test
 
@@ -47,7 +47,7 @@ public class GestionnaireJeu : MonoBehaviour
     //}
     void Awake()
     {
-        Tour = 0;//xav: pour test bot
+        Tour = 0;//xav: pour test bot //si on le laisse comme ca enlever le commentaire
         manager = this;
 
         Joueur = new Joueur();
@@ -85,7 +85,7 @@ public class GestionnaireJeu : MonoBehaviour
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
         {
             if (AutreJoueur == Joueur)
-                AutreJoueur.SeFaireTouché(TrouverBateauSurCase(AutreJoueur, CoordVisée));
+                AutreJoueur.SeFaireToucher(TrouverBateauSurCase(AutreJoueur, CoordVisée));
 
             tempOccupation = TypeOccupation.Touché;
         }
@@ -93,7 +93,6 @@ public class GestionnaireJeu : MonoBehaviour
             tempOccupation = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
         PasserAuProchainTour();
-
     }
 
     public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
@@ -105,7 +104,6 @@ public class GestionnaireJeu : MonoBehaviour
             JoueurActif.Arsenal[indiceBateau].EstPlacé = true;
             JoueurActif.Arsenal[indiceBateau].CasesOccupées.Add(JoueurActif.PaneauJeu.TrouverCase(coordOccupée));
         }
-
     }
 
     public void PasserAuProchainTour()
@@ -120,7 +118,7 @@ public class GestionnaireJeu : MonoBehaviour
             JoueurActif.Tirer();
         }
     }
-    public void AfficherBat(Bateau b, List<Case> pu)
+    public void AfficherBat(Bateau b, List<Case> pu)//test
     {
         Instantiate(b.PrefabBateau, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
     }
@@ -144,6 +142,6 @@ public class GestionnaireJeu : MonoBehaviour
     }
     private void SignalerBot(object sender, BateauEventArgs e)
     {
-        Bot.dernierTirCouler = true;
+        Bot.dernierTirCoulé = true;
     }
 }

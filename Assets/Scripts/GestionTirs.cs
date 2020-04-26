@@ -7,10 +7,10 @@ public class GestionTirs : MonoBehaviour
 {
     Coordonnées CoordVisée { get; set; }
     public Vector3 PositionVisée { get; set; }
-    Camera CamBot { get; set; }
+    private Camera CamBot { get; set; }
     Vector3 Origine { get; set; }
     float Delta { get; set; }
-    KeyCode Tirer { get; set; }
+    private KeyCode Tirer { get; set; }
     Vector3 mousePosition;
     RaycastHit hit;
     Ray ray;
