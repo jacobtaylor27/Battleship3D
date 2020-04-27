@@ -24,10 +24,7 @@ public class Case
 
     public bool EstOccupé
     {
-        get
-        {
-            return TypeOccupation == TypeOccupation.Occupé;
-        }
+        get { return TypeOccupation == TypeOccupation.Occupé; }
     }
 
     public override string ToString()
