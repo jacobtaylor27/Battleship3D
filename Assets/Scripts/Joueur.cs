@@ -7,8 +7,8 @@ using System;
 
 public class Joueur
 {
-    public PaneauJeu PaneauJeu { get; set; }
-    public PaneauTirs PaneauTirs { get; set; }
+    public Paneau PaneauJeu { get; set; }
+    public Paneau PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
     private bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
 
@@ -16,8 +16,8 @@ public class Joueur
 
     public Joueur()
     {
-        PaneauJeu = new PaneauJeu();
-        PaneauTirs = new PaneauTirs();
+        PaneauJeu = new Paneau();
+        PaneauTirs = new Paneau();
         Arsenal = new List<Bateau>()
         {
             new Bateau(2,ChercherPrefab("Carrier(2)",0),ChercherPrefab("BateauCube2",1)),
