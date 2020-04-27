@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 8936493196347788610}
   - component: {fileID: 2117231452409187639}
   - component: {fileID: 7726831993630491370}
+  - component: {fileID: 1786623835039504851}
   m_Layer: 8
   m_Name: Carrier
   m_TagString: Untagged
@@ -580,6 +581,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1786623835039504851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091103330823433361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3ad4b3d9e6cb5f4b87c180cc51b036a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AmplitudeMouvement: 20
+  VitesseExecution: 0.5
 --- !u!1 &8718128725991693193
 GameObject:
   m_ObjectHideFlags: 0
