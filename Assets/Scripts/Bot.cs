@@ -100,7 +100,7 @@ public class Bot : Joueur
                     }
                 }
             }
-            GestionnaireJeu.manager.AfficherBat(b, paneauxUtilisés);//test
+            //GestionnaireJeu.manager.AfficherBat(b, paneauxUtilisés);//test
             GestionnaireJeu.manager.JoueurActif.Arsenal[indiceBateau].CasesOccupées = paneauxUtilisés;
             indiceBateau++;
         }
@@ -113,22 +113,11 @@ public class Bot : Joueur
 
         Coordonnées tir = DéterminerProchainTir();
 
-        DernierTirs.Add(tir);
+        GestionnaireJeu.manager.CoordVisée = tir;
+        GestionnaireJeu.manager.DéterminerRésultatTir();
 
-        ////test
-        //if (cpt == 0)
-        //    ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
-        //if (cpt == 1)
-        //    ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
-        //if (cpt == 2)
-        //    ÉtatDerniersTirs.Add(TypeOccupation.Manqué); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Manqué;
-        //if (cpt == 3)
-        //    ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
-        //if (cpt == 4)
-        //    ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
-        //if (cpt == 5)
-        //    ÉtatDerniersTirs.Add(TypeOccupation.Touché); GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(tir).TypeOccupation = TypeOccupation.Touché;
-        ////test
+        DernierTirs.Add(tir);
+        ÉtatDerniersTirs.Add(GestionnaireJeu.manager.OccupÀCoordVisée);
 
         if (DernierTirs.Count > 5)
             DernierTirs.RemoveAt(0);
@@ -136,10 +125,8 @@ public class Bot : Joueur
             ÉtatDerniersTirs.RemoveAt(0);
         //cpt++;//test
 
-        GestionnaireJeu.manager.CoordVisée = tir;
 
         //GestionnaireJeu.manager.TrouverPositionCase();
-        GestionnaireJeu.manager.DéterminerRésultatTir();
     }
 
     private Coordonnées PositionAuHasard()

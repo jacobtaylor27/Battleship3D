@@ -40,7 +40,10 @@ public static class CaseExtensions
 {
     public static Case At(this List<Case> paneaux, int rangée, int colonne)
     {
-        return paneaux.Where(x => x.Coordonnées.Rangée == rangée && x.Coordonnées.Colonne == colonne).First();
+        if (paneaux.Where(x => x.Coordonnées.Rangée == rangée && x.Coordonnées.Colonne == colonne).Count() != 0)
+            return paneaux.Where(x => x.Coordonnées.Rangée == rangée && x.Coordonnées.Colonne == colonne).First();
+        else
+            return null;
     }
 
     public static List<Case> Range(this List<Case> paneaux, int rangéeI, int colonneI, int rangéeF, int colonneF)

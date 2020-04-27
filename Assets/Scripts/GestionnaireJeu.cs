@@ -16,6 +16,7 @@ public class GestionnaireJeu : MonoBehaviour
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
+    public TypeOccupation OccupÀCoordVisée { get; private set; }
     public int Tour { get; private set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
     Button BoutonTirerBot { get; set; }//test
@@ -81,18 +82,17 @@ public class GestionnaireJeu : MonoBehaviour
     public void DéterminerRésultatTir()
     {
         //Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CoordVisée);
-        TypeOccupation tempOccupation;
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
         {
-            if (AutreJoueur == Joueur)
-                AutreJoueur.SeFaireToucher(TrouverBateauSurCase(AutreJoueur, CoordVisée));
+            //if (AutreJoueur == Joueur)
+            AutreJoueur.SeFaireToucher(TrouverBateauSurCase(AutreJoueur, CoordVisée));
 
-            tempOccupation = TypeOccupation.Touché;
+            OccupÀCoordVisée = TypeOccupation.Touché;
         }
         else
-            tempOccupation = TypeOccupation.Manqué;
-        JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, tempOccupation);
-        PasserAuProchainTour();
+            OccupÀCoordVisée = TypeOccupation.Manqué;
+        JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
+        //PasserAuProchainTour();
     }
 
     public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
@@ -128,6 +128,7 @@ public class GestionnaireJeu : MonoBehaviour
         Bateau bateauSurCase = new Bateau(2, null, null); // bateau null, car la fonction sera forcément appellée sur une case occupée.
         foreach (Bateau b in joueurTouché.Arsenal)
         {
+            Case temp = b.CasesOccupées.At(coordVoulue.Rangée, coordVoulue.Colonne);
             if (b.CasesOccupées.At(coordVoulue.Rangée, coordVoulue.Colonne) != null)
             {
                 bateauSurCase = b;
