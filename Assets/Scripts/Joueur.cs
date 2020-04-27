@@ -10,8 +10,7 @@ public class Joueur
     public Paneau PaneauJeu { get; set; }
     public Paneau PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
-    private bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
-
+    bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
     public event EventHandler<BateauEventArgs> BateauDétruit;
 
     public Joueur()
@@ -31,24 +30,16 @@ public class Joueur
     GameObject ChercherPrefab(string nom, int val)
     {
         if (val == 0)
-        {
-            string chemin = "Prefabs/PrefabNavires/";
-            return (GameObject)Resources.Load(chemin + nom);
+            return (GameObject)Resources.Load("Prefabs/PrefabNavires/" + nom);
 
-        }
         else if (val == 1)
-        {
-            string chemin = "Prefabs/";
-            return (GameObject)Resources.Load(chemin + nom);
-        }
+            return (GameObject)Resources.Load("Prefabs/" + nom);
+
         else
             return null;
     }
 
-    private void onBateauDétruit(BateauEventArgs dataBateau)
-    {
-        this.BateauDétruit?.Invoke(this, dataBateau);
-    }
+    void onBateauDétruit(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
 
     public void SeFaireToucher(Bateau b)
     {
@@ -64,8 +55,5 @@ public class Joueur
         }
     }
 
-    public virtual void Tirer()
-    {
-        GestionnaireJeu.manager.TirerJoueur();
-    }
+    public virtual void Tirer() => GestionnaireJeu.manager.TirerJoueur();
 }
