@@ -4,9 +4,9 @@ using UnityEngine;
 public class Vagues : MonoBehaviour
 {
     [SerializeField]
-    float Grandeur = 0.1f;
+    float Grandeur;
     [SerializeField]
-    float Vitesse = 1.0f;
+    float Vitesse;
     Vector3[] HauteuDeBase;
 
     void Update()
