@@ -44,13 +44,14 @@ public class Joueur
     public void SeFaireToucher(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();
-
+        Debug.Log("touché");
         if (Arsenal[Arsenal.FindIndex(x => x == b)].EstCoulé)
         {
             onBateauDétruit(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
-
-            //if(aPerdu)
-            //    onPartieTerminée()
+            Debug.Log("coulé");
+            if (APerdu)
+                Debug.Log("perdu");
+                //onPartieTerminée();
 
         }
     }
