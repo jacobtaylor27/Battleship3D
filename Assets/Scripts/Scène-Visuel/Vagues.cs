@@ -1,24 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; 
+using UnityEngine;
 public class Vagues : MonoBehaviour
 {
-
-    public float Grandeur =0.1f;
-    public float Vitesse = 1.0f;
-    private Vector3[] HauteuDeBase;
+    [SerializeField]
+    float Grandeur = 0.1f;
+    [SerializeField]
+    float Vitesse = 1.0f;
+    Vector3[] HauteuDeBase;
 
     void Update()
     {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
 
         if (HauteuDeBase == null)
-        {
             HauteuDeBase = mesh.vertices;
-        }
-            
 
         Vector3[] Sommets = new Vector3[HauteuDeBase.Length];
+        
         for (int i = 0; i < Sommets.Length; i++)
         {
             Vector3 Hauteur = HauteuDeBase[i];
@@ -26,7 +25,6 @@ public class Vagues : MonoBehaviour
             Sommets[i] = Hauteur;
         }
         mesh.vertices = Sommets;
-        
     }
 
 }

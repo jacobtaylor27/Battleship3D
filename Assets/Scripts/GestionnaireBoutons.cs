@@ -1,22 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
-using System.Collections.Generic;
 
 public class GestionnaireBoutons : MonoBehaviour
 {
     Vector3 VecteurAgrandi { get; set; }
     Color CouleurDefault { get; set; }
     Vector3 ScaleInitial { get; set; }
-    List<string> Scènes { get; set; }
 
     void Start()
     {
-        Scènes = new List<string>();
         VecteurAgrandi = new Vector3(3.5f, 3.5f, 3.5f);
         ScaleInitial = transform.localScale;
-        CouleurDefault = GetComponent<Image>().color;
+        CouleurDefault = new Color(255, 255, 255);
     }
 
     public void AgrandirBouton() => transform.localScale = VecteurAgrandi;
@@ -38,15 +34,5 @@ public class GestionnaireBoutons : MonoBehaviour
 
     public void ChangerCouleurDefault() => GetComponent<Image>().color = CouleurDefault;
 
-    public void ChangerScenePrecedente()
-    {
-        Scènes.RemoveAt(Scènes.Count - 1);
-        SceneManager.LoadScene(Scènes[Scènes.Count - 1]);
-    }
-
-    public void ChangerScène(string nomScene)
-    {
-        Scènes.Add(nomScene);
-        SceneManager.LoadScene(nomScene);
-    }
+    public void ChangerScène(string nomScene) => SceneManager.LoadScene(nomScene);
 }

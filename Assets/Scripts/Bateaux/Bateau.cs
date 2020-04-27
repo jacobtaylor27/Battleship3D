@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 public class Bateau
 {
-    //public string Nom { get; set; }
     public TypeOccupation TypeOccupation { get; set; }
     public int Longueur { get; set; }
     public int Coups { get; set; }
@@ -24,5 +22,15 @@ public class Bateau
         PrefabCube = cube;
         EstPlacé = false;
         CasesOccupées = new List<Case>(n);
+    }
+
+    public Bateau()
+    {
+        Longueur = 2;
+        Coups = 0;
+        PrefabBateau = null;
+        PrefabCube = null;
+        CasesOccupées = new List<Case>(2);
+        EstPlacé = false;
     }
 }

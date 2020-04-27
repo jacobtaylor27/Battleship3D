@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class OccupationEventArgs : EventArgs
 {
     Coordonnées NouvelleCoord { get; set; }
-
     TypeOccupation NouvelleOccupation { get; set; }
 
     public OccupationEventArgs(Case caseJeu)
@@ -20,7 +19,9 @@ public class BateauEventArgs : EventArgs
 
     public BateauEventArgs(Bateau bat)
     {
-        Bateau = new Bateau(bat.Longueur, bat.PrefabBateau, bat.PrefabCube);
-        Bateau.Coups = bat.Coups;
+        Bateau = new Bateau(bat.Longueur, bat.PrefabBateau, bat.PrefabCube)
+        {
+            Coups = bat.Coups
+        };
     }
 }
