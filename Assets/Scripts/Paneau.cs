@@ -36,5 +36,6 @@ public class Paneau
     {
         TrouverCase(coord).TypeOccupation = occup;
         OnOccupationModifiée(new OccupationEventArgs(new Case(coord, occup)));
+       
     }
 }

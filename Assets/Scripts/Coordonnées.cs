@@ -20,4 +20,13 @@ public class Coordonnées
     }
 
     public override string ToString() => $"{Rangée},{Colonne}";
+
+    public static bool operator !=(Coordonnées coord1,Coordonnées coord2)
+    {
+        return (coord1.Rangée != coord2.Rangée && coord1.Colonne != coord2.Colonne);
+    }
+    public static bool operator ==(Coordonnées coord1, Coordonnées coord2)
+    {
+        return (coord1.Rangée == coord2.Rangée && coord1.Colonne == coord2.Colonne);
+    }
 }
