@@ -94,7 +94,7 @@ public class GestionnaireJeu : MonoBehaviour
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
         //PasserAuProchainTour();
         if (JoueurActif == Joueur)
-            ModifierCouleur();
+            GestionnaireCouleur.ModifierCouleur();
         
     }
 
@@ -148,14 +148,14 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Bot.dernierTirCoulé = true;
     }
-    public void ModifierCouleur()
-    {
+    //public void ModifierCouleur()
+    //{
         
-        if (OccupÀCoordVisée == TypeOccupation.Touché)
-            GetComponents<InformationTuile>().First(x => AutreJoueur.PaneauJeu.Cases.At(x.Case.Coordonnées.Rangée, x.Case.Coordonnées.Colonne).Coordonnées == CoordVisée)
-                    .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/TestProjectile");
-        else
-            GetComponents<InformationTuile>().First(x => x.Case.Coordonnées == CoordVisée)
-                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
-    }
+    //    if (OccupÀCoordVisée == TypeOccupation.Touché)
+    //        GetComponents<InformationTuile>().First(x => AutreJoueur.PaneauJeu.Cases.At(x.Case.Coordonnées.Rangée, x.Case.Coordonnées.Colonne).Coordonnées == CoordVisée)
+    //                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/TestProjectile");
+    //    else
+    //        GetComponents<InformationTuile>().First(x => x.Case.Coordonnées == CoordVisée)
+    //            .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
+    //}
 }

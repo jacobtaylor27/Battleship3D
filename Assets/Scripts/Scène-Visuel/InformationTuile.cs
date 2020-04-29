@@ -17,4 +17,6 @@ public class InformationTuile : MonoBehaviour
     void OnMouseExit() => SurlignierTuile(0); // Affiche le périmètre
 
     void OnMouseDown() => Debug.Log(Case.ToString()); // Pour tests seulement
+
+
 }
