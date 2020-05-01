@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GestionnaireCouleur : MonoBehaviour
+static public class GestionnaireCouleur 
 {
-    //static public void ModifierCouleur()
-    //{
-    //    if (InformationTuile.infoTuile.GetComponent<InformationTuile>().Case.Coordonnées == GestionnaireJeu.manager.CoordVisée)
-    //    {
-    //        if (GestionnaireJeu.manager.OccupÀCoordVisée == TypeOccupation.Touché)
-    //            InformationTuile.infoTuile.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/TestProjectile");
-    //        else if (GestionnaireJeu.manager.OccupÀCoordVisée == TypeOccupation.Manqué)
-    //            InformationTuile.infoTuile.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
-    //    }
-    //}
+    static public void ModifierCouleur()
+    {
+        List<InformationTuile> infoTuile = new List<InformationTuile>(GameObject.Find("ListeTuile").GetComponentsInChildren<InformationTuile>());
+
+        if(GestionnaireJeu.manager.OccupÀCoordVisée == TypeOccupation.Occupé)
+            infoTuile.FindAll(x => x.Case.Coordonnées == GestionnaireJeu.manager.CoordVisée).Find(x=>x.Case.PositionMonde == GestionnaireJeu.manager.PositionVisée)
+                .GetComponent<MeshRenderer>().material = (Material) Resources.Load("Material/TestProjectile");
+        else if (GestionnaireJeu.manager.OccupÀCoordVisée == TypeOccupation.Manqué)
+            infoTuile.FindAll(x => x.Case.Coordonnées == GestionnaireJeu.manager.CoordVisée).Find(x => x.Case.PositionMonde == GestionnaireJeu.manager.PositionVisée)
+                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
+
+    }
+
+    
+
+
+
+
 }

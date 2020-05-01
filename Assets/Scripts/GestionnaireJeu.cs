@@ -93,8 +93,8 @@ public class GestionnaireJeu : MonoBehaviour
             OccupÀCoordVisée = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
         //PasserAuProchainTour();
-        //if (JoueurActif == Joueur)
-            //GestionnaireCouleur.ModifierCouleur();
+        if (JoueurActif == Joueur)
+            GestionnaireCouleur.ModifierCouleur();
         
     }
 
