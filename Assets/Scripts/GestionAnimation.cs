@@ -26,14 +26,15 @@ public class GestionAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        Canons = GameObject.FindGameObjectsWithTag("Canon");
+        //Canons = GameObject.FindGameObjectsWithTag("Canon");
         Debug.Log(GestionnaireJeu.manager.JoueurActif);
         Debug.Log(GestionnaireJeu.manager.Tour);
 
-        if (GestionnaireJeu.manager.Tour % 2 == 0)
-            Affut = Canons[0].GetComponentsInChildren<Transform>()[1].gameObject;
-        else
-            Affut = Canons[1].GetComponentsInChildren<Transform>()[1].gameObject;
+        Affut = GestionnaireJeu.manager.CanonActif;
+        //if (GestionnaireJeu.manager.Tour % 2 == 0)
+        //    Affut = Canons[0].GetComponentsInChildren<Transform>()[1].gameObject;
+        //else
+        //    Affut = Canons[1].GetComponentsInChildren<Transform>()[1].gameObject;
 
         VCanonInit = Affut.GetComponentsInChildren<Transform>()[4].position - Affut.transform.position;
         VCanonInit = new Vector3(VCanonInit.x, 0, VCanonInit.z);

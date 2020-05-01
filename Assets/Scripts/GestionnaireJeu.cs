@@ -13,6 +13,10 @@ public class GestionnaireJeu : MonoBehaviour
     private Bot Bot { get; set; }
     public Joueur JoueurActif { get; private set; }
     public Joueur AutreJoueur { get; private set; }
+    private GameObject CanonJoueur { get; set; }
+    private GameObject CanonBot { get; set; }
+    public GameObject CanonActif { get; private set; }
+    public GameObject AutreCanon { get; private set; }
     Button BoutonGameStart { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
@@ -36,6 +40,14 @@ public class GestionnaireJeu : MonoBehaviour
 
         BoutonTirerBot = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "TirerBot");//test
         BoutonTirerBot.onClick.AddListener(TirerJoueur);//test
+
+        GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
+
+        CanonBot = GameObject.Find("NPCCanon").GetComponentsInChildren<Transform>()[1].gameObject;
+        CanonJoueur = GameObject.Find("PlayerCanon").GetComponentsInChildren<Transform>()[1].gameObject;
+
+        CanonActif = CanonBot;
+        AutreCanon = CanonJoueur;
     }
 
 
@@ -111,9 +123,7 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void PasserAuProchainTour()
     {
-        Joueur tempPlayer = JoueurActif;
-        JoueurActif = AutreJoueur;
-        AutreJoueur = tempPlayer;
+        InverserJoueursEtCanons();
         Tour++;
         if (EstEnPhaseDeTirs)
         {
@@ -147,6 +157,17 @@ public class GestionnaireJeu : MonoBehaviour
     private void SignalerBot(object sender, BateauEventArgs e)
     {
         Bot.dernierTirCoulé = true;
+    }
+
+    private void InverserJoueursEtCanons()
+    {
+        Joueur tempPlayer = JoueurActif;
+        JoueurActif = AutreJoueur;
+        AutreJoueur = tempPlayer;
+
+        GameObject tempCanon = CanonActif;
+        CanonActif = AutreCanon;
+        AutreCanon = tempCanon;
     }
     //public void ModifierCouleur()
     //{
