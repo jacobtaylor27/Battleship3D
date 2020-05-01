@@ -113,6 +113,7 @@ public class Bot : Joueur
 
         Coordonnées tir = DéterminerProchainTir();
 
+        GestionnaireJeu.manager.PositionVisée = GestionnaireJeu.manager.AutreJoueur.PaneauJeu.TrouverCase(tir).PositionMonde;
         GestionnaireJeu.manager.CoordVisée = tir;
         GestionnaireJeu.manager.DéterminerRésultatTir();
 
