@@ -63,6 +63,5 @@ public class GestionTirs : MonoBehaviour
         GestionnaireJeu.manager.CoordVisée = CoordVisée;
 
         GestionnaireJeu.manager.DéterminerRésultatTir();
-        // a verifier
     }
 }

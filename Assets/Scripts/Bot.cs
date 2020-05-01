@@ -12,7 +12,6 @@ public class Bot : Joueur
     int AxeAuHasard() => UnityEngine.Random.Range(0, 10);
    
     Vector3 OrientationV { get; set; }
-    //int cpt = 0;//test
     public bool dernierTirCoulé = false;
 
     public Bot()
@@ -100,7 +99,6 @@ public class Bot : Joueur
                     }
                 }
             }
-            //GestionnaireJeu.manager.AfficherBat(b, paneauxUtilisés);//test
             GestionnaireJeu.manager.JoueurActif.Arsenal[indiceBateau].CasesOccupées = paneauxUtilisés;
             indiceBateau++;
         }
@@ -124,10 +122,6 @@ public class Bot : Joueur
             DernierTirs.RemoveAt(0);
         if (ÉtatDerniersTirs.Count > 5)
             ÉtatDerniersTirs.RemoveAt(0);
-        //cpt++;//test
-
-
-        //GestionnaireJeu.manager.TrouverPositionCase();
     }
 
     private Coordonnées PositionAuHasard()
@@ -148,7 +142,6 @@ public class Bot : Joueur
     {
         if (GestionnaireJeu.manager.Tour == 2)//premier tir au hasard
         {
-           //GestionnaireJeu.manager.Tour++;//test seulement
            return PositionAuHasard();
         }
 

@@ -23,7 +23,6 @@ public class GestionnaireJeu : MonoBehaviour
     public TypeOccupation OccupÀCoordVisée { get; private set; }
     public int Tour { get; private set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
-    Button BoutonTirerBot { get; set; }//test
 
     void Start()
     {
@@ -35,11 +34,8 @@ public class GestionnaireJeu : MonoBehaviour
         //Bot.BateauDétruit += MéthodeQuelconque; // Afficher un message?
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
-        //BoutonGameStart.onClick.AddListener(CommencerPartie); A GARDER
-        BoutonGameStart.onClick.AddListener(CommencerPartie);//Test seulement
+        BoutonGameStart.onClick.AddListener(CommencerPartie);
 
-        BoutonTirerBot = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "TirerBot");//test
-        BoutonTirerBot.onClick.AddListener(TirerJoueur);//test
 
         GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
 
@@ -50,17 +46,9 @@ public class GestionnaireJeu : MonoBehaviour
         AutreCanon = CanonJoueur;
     }
 
-
-    //private void TirerBotTest()//test
-    //{
-    //    CoordVisée = Bot.Tirer();
-    //    Debug.Log(Joueur.PaneauJeu.TrouverCase(CoordVisée).ToString());
-    //    DéterminerRésultatTir();
-    //    Bot.PaneauTirs.TrouverCase(CoordVisée).TypeOccupation = TypeOccupation.Touché;
-    //}
     void Awake()
     {
-        Tour = 0;//xav: pour test bot //si on le laisse comme ca enlever le commentaire
+        Tour = 0;
         manager = this;
 
         Joueur = new Joueur();
@@ -82,21 +70,17 @@ public class GestionnaireJeu : MonoBehaviour
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
         GetComponent<GestionAnimation>().EnterState();
-        //Debug.Log("animBot");
     }
 
     private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
     {
         GetComponent<GestionAnimation>().EnterState();
-        //Debug.Log("animJoueur");
     }
 
     public void DéterminerRésultatTir()
     {
-        //Case CaseÀChanger = JoueurActif.PaneauJeu.TrouverCase(CoordVisée);
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
         {
-            //if (AutreJoueur == Joueur)
             AutreJoueur.SeFaireToucher(TrouverBateauSurCase(AutreJoueur, CoordVisée));
 
             OccupÀCoordVisée = TypeOccupation.Touché;
@@ -104,9 +88,8 @@ public class GestionnaireJeu : MonoBehaviour
         else
             OccupÀCoordVisée = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
-        //PasserAuProchainTour();
-        if (JoueurActif == Joueur)
-            GestionnaireCouleur.ModifierCouleur();
+
+        GestionnaireCouleur.ModifierCouleur();
         
     }
 
@@ -131,10 +114,7 @@ public class GestionnaireJeu : MonoBehaviour
             JoueurActif.Tirer();
         }
     }
-    public void AfficherBat(Bateau b, List<Case> pu)//test
-    {
-        Instantiate(b.PrefabBateau, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-    }
+    
 
     public Bateau TrouverBateauSurCase(Joueur joueurTouché, Coordonnées coordVoulue)
     {
@@ -150,10 +130,7 @@ public class GestionnaireJeu : MonoBehaviour
         }
         return bateauSurCase;
     }
-    public void TrouverPositionViséeCase()
-    {
-        //À trouver avec InfoTuile, définir une coordonnée à Case?
-    }
+    
     private void SignalerBot(object sender, BateauEventArgs e)
     {
         Bot.dernierTirCoulé = true;
@@ -169,14 +146,5 @@ public class GestionnaireJeu : MonoBehaviour
         CanonActif = AutreCanon;
         AutreCanon = tempCanon;
     }
-    //public void ModifierCouleur()
-    //{
-        
-    //    if (OccupÀCoordVisée == TypeOccupation.Touché)
-    //        GetComponents<InformationTuile>().First(x => AutreJoueur.PaneauJeu.Cases.At(x.Case.Coordonnées.Rangée, x.Case.Coordonnées.Colonne).Coordonnées == CoordVisée)
-    //                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/TestProjectile");
-    //    else
-    //        GetComponents<InformationTuile>().First(x => x.Case.Coordonnées == CoordVisée)
-    //            .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
-    //}
+    
 }
