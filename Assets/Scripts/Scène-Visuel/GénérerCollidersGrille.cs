@@ -8,7 +8,11 @@ public class GénérerCollidersGrille : MonoBehaviour
     const float Dimensions = 10f;
     Transform[] CoinsNPC;
     Transform[] CoinsPlayer;
-    public GameObject ColliderBox;
+    public GameObject Tuile;
+
+    [SerializeField]
+    GameObject ListeTuiles;
+
     public float Delta { get; set; }
     float Distance { get; set; }
     public Vector3 OrigineNPC { get; set; }
@@ -29,8 +33,10 @@ public class GénérerCollidersGrille : MonoBehaviour
         {
             for (int j = 0; j < Dimensions; j++)
             {
-                Instantiate(ColliderBox, new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(new Coordonnées(i, j)));
-                Instantiate(ColliderBox, new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage), Quaternion.identity).GetComponent<InformationTuile>().DéfinirInformationTuile(GestionnaireJeu.manager.AutreJoueur.PaneauJeu.TrouverCase(new Coordonnées(i, j)));
+                Vector3 positionNPC = new Vector3(CoinsNPC[1].position.x + -j * Delta - Décalage, CoinsNPC[1].position.y, CoinsNPC[1].position.z + Décalage + i * Delta);
+                Vector3 positionJoueur = new Vector3(CoinsPlayer[1].position.x + j * Delta + Décalage, CoinsPlayer[1].position.y, CoinsPlayer[1].position.z + -i * Delta - Décalage);
+                Instantiate(Tuile, positionNPC, Quaternion.identity, ListeTuiles.transform).GetComponent<InformationTuile>().DéfinirInformationTuile(GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(new Coordonnées(i, j)).ChangerPosition(positionNPC));
+                Instantiate(Tuile, positionJoueur, Quaternion.identity, ListeTuiles.transform).GetComponent<InformationTuile>().DéfinirInformationTuile(GestionnaireJeu.manager.AutreJoueur.PaneauJeu.TrouverCase(new Coordonnées(i, j)).ChangerPosition(positionJoueur));
             }
         }
 

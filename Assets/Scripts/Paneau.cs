@@ -35,7 +35,7 @@ public class Paneau
     public void ModifierÉtatCase(Coordonnées coord, TypeOccupation occup)
     {
         TrouverCase(coord).TypeOccupation = occup;
-        OnOccupationModifiée(new OccupationEventArgs(new Case(coord, occup)));
+        OnOccupationModifiée(new OccupationEventArgs(new Case(coord, occup, TrouverCase(coord).PositionMonde)));
        
     }
 }
