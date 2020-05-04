@@ -40,6 +40,7 @@ public class GestionnaireJeu : MonoBehaviour
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         BoutonGameStart.onClick.AddListener(CommencerPartie);
+        
 
         CptTourUI = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "CptToursINT");
         TourChangé += IncrémenterTourUI;
@@ -86,6 +87,7 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Bot.Placer();
         GetComponent<PlacementBateau>().EnterState();
+        BoutonGameStart.enabled = false;
     }
 
     void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
