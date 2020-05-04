@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 using UnityEngine.Events;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GestionnaireJeu : MonoBehaviour
 {
@@ -22,11 +24,14 @@ public class GestionnaireJeu : MonoBehaviour
     public Coordonnées CoordVisée { get; set; }
     public TypeOccupation OccupÀCoordVisée { get; private set; }
     public int Tour { get; private set; }
+    public EventHandler<TourEventArgs> TourChangé;
+    TextMeshProUGUI CptBateauxRestants { get; set; }
+    TextMeshProUGUI CptTourUI { get; set; }
+    TextMeshProUGUI TexteMessages { get; set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
 
     void Start()
     {
-
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
 
@@ -36,6 +41,16 @@ public class GestionnaireJeu : MonoBehaviour
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         BoutonGameStart.onClick.AddListener(CommencerPartie);
 
+        CptTourUI = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "CptToursINT");
+        TourChangé += IncrémenterTourUI;
+        TourChangé += RetirerTexte;
+
+        CptBateauxRestants = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "BateauxRestantsINT");
+        TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TouchéCouléTxt");
+        Bot.BateauDétruit += IncrémenterBateauxRestantsUI;
+        Bot.BateauDétruit += ÉcrireMessage;
+        Joueur.PartieTerminée += ÉcrireMessageFinPartieBot;
+        Joueur.PartieTerminée += TerminerJeu;
 
         GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
 
@@ -44,6 +59,15 @@ public class GestionnaireJeu : MonoBehaviour
 
         CanonActif = CanonBot;
         AutreCanon = CanonJoueur;
+        foreach (Bateau b in Bot.Arsenal)
+        {
+            foreach (Case c in b.CasesOccupées)
+            {
+                Debug.Log(c.Coordonnées);
+
+            }
+        }
+
     }
 
     void Awake()
@@ -57,10 +81,49 @@ public class GestionnaireJeu : MonoBehaviour
         JoueurActif = Bot;
         AutreJoueur = Joueur;
     }
-    private void CommencerPartie()
+
+    public void CommencerPartie()
     {
         Bot.Placer();
         GetComponent<PlacementBateau>().EnterState();
+    }
+
+    void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
+
+    public void IncrémenterTourUI(object sender, TourEventArgs e)
+    {
+        if (Tour % 2 == 0)
+            CptTourUI.text = Tour.ToString() + " (Ordinateur)";
+        else if (Tour % 2 == 1)
+            CptTourUI.text = Tour.ToString() + " (Joueur)";
+    }
+
+    void IncrémenterBateauxRestantsUI(object sender, BateauEventArgs e)
+    {
+        CptBateauxRestants.text = Bot.BateauxRestants.ToString();
+    }
+
+    void ÉcrireMessage(object sender, BateauEventArgs e)
+    {
+        if (!Bot.Arsenal.All(x => x.EstCoulé))
+            TexteMessages.text = "Touché coulé !";
+        else if (Bot.Arsenal.All(x => x.EstCoulé))
+            TexteMessages.text = "Vous avez gagné la partie !";
+    }
+
+    void RetirerTexte(object sender, TourEventArgs e)
+    {
+        TexteMessages.text = "";
+    }
+
+    void ÉcrireMessageFinPartieBot(object sender, BateauEventArgs e)
+    {
+        TexteMessages.text = "Vous avez perdu la partie :(";
+    }
+
+    void TerminerJeu(object sender, BateauEventArgs e)
+    {
+        SceneManager.LoadScene("Accueil");
     }
 
     public void TirerJoueur()
@@ -90,7 +153,7 @@ public class GestionnaireJeu : MonoBehaviour
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
 
         GestionnaireCouleur.ModifierCouleur();
-        
+
     }
 
     public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
@@ -108,13 +171,14 @@ public class GestionnaireJeu : MonoBehaviour
     {
         InverserJoueursEtCanons();
         Tour++;
+        onTourChangé(new TourEventArgs(Tour));
         if (EstEnPhaseDeTirs)
         {
             CoordVisée = null;
             JoueurActif.Tirer();
         }
     }
-    
+
 
     public Bateau TrouverBateauSurCase(Joueur joueurTouché, Coordonnées coordVoulue)
     {
@@ -130,7 +194,7 @@ public class GestionnaireJeu : MonoBehaviour
         }
         return bateauSurCase;
     }
-    
+
     private void SignalerBot(object sender, BateauEventArgs e)
     {
         Bot.dernierTirCoulé = true;
@@ -146,5 +210,5 @@ public class GestionnaireJeu : MonoBehaviour
         CanonActif = AutreCanon;
         AutreCanon = tempCanon;
     }
-    
+
 }

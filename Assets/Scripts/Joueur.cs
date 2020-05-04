@@ -10,11 +10,14 @@ public class Joueur
     public Paneau PaneauJeu { get; set; }
     public Paneau PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
+    public int BateauxRestants { get; set; }
     bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
     public event EventHandler<BateauEventArgs> BateauDétruit;
+    public event EventHandler<BateauEventArgs> PartieTerminée;
 
     public Joueur()
     {
+        BateauxRestants = 5;
         PaneauJeu = new Paneau();
         PaneauTirs = new Paneau();
         Arsenal = new List<Bateau>()
@@ -40,6 +43,7 @@ public class Joueur
     }
 
     void onBateauDétruit(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
+    void onPartieTerminée(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
 
     public void SeFaireToucher(Bateau b)
     {
@@ -47,11 +51,10 @@ public class Joueur
         Debug.Log("touché");
         if (Arsenal[Arsenal.FindIndex(x => x == b)].EstCoulé)
         {
+            BateauxRestants--;
             onBateauDétruit(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
-            Debug.Log("coulé");
             if (APerdu)
-                Debug.Log("perdu");
-                //onPartieTerminée();
+                onPartieTerminée(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
 
         }
     }
