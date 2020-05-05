@@ -15,6 +15,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     Ray ray;
     GameObject CubesÀPlacer;
     Case CaseVisée;
+    Camera CaméraJoueur { get; set; }
 
     private void Awake()
     {
@@ -22,22 +23,23 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
     }
     void Start()
     {
-        ValeursInitiales();
-        CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, Input.mousePosition, Quaternion.identity);
+        InitialiserValeurs();
+        CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, PtCollision, Quaternion.identity);
     }
 
-    void ValeursInitiales()
+    void InitialiserValeurs()
     {
+        CaméraJoueur = Camera.allCameras[1];
         Bateaux = GestionnaireJeu.manager.JoueurActif.Arsenal;
         IndiceBateauActuel = 0;
         PeutÊtrePlacé = true;
-        PtCollision = new Vector3();
+        PtCollision = GestionnaireJeu.manager.JoueurActif.PaneauJeu.Cases[0].PositionMonde;
+        CaseVisée = GestionnaireJeu.manager.JoueurActif.PaneauJeu.Cases[0];
     }
 
     void Update()
     {
-        Camera cameraJoueur = Camera.allCameras[1]; // vérfier indice
-        ray = cameraJoueur.ScreenPointToRay(Input.mousePosition);
+        ray = CaméraJoueur.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity,LayerMask.GetMask(new string[] { "Tuile" })) && hit.collider.gameObject.layer == Layer)
         {

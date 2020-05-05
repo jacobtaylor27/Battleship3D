@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GestionAnimation : MonoBehaviour
 {
-    const float TempsAnimation = 6f;
+    const float TempsAnimation = 5f;
     const float AccélérationGravitationnelle = -9.80f;
     const float HauteurMax = 500f;
     const float VitesseInit = 100f;
@@ -101,28 +101,28 @@ public class GestionAnimation : MonoBehaviour
         {
             Affut.transform.Rotate(Vector3.up, AngleY /** Mathf.Rad2Deg*/ / 30f, Space.Self);
         }
-        else if(CptFrame >= 30 && CptFrame < 60)
+        else if (CptFrame >= 30 && CptFrame < 60)
         {
             Affut.transform.Rotate(Vector3.left, AngleX  /** Mathf.Rad2Deg*/ / 30f, Space.Self);
         }
-        else if(CptFrame >= 60 && CptFrame < 240)
+        else if (CptFrame >= 60 && CptFrame < 240)
         {
             if (CptFrame == 60)
             {
                 Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
                 //Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
                 //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
-                Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward )* VitesseI,ForceMode.VelocityChange);
+                Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
                 //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
             }
         }
         else if (CptFrame >= 240 && CptFrame < 270)
         {
-           Affut.transform.Rotate(Vector3.left, -AngleX / 30f, Space.Self);
+            Affut.transform.Rotate(Vector3.left, -AngleX / 30f, Space.Self);
         }
         else if (CptFrame >= 270 && CptFrame < 300)
         {
-           Affut.transform.Rotate(Vector3.up, -AngleY / 30f, Space.Self);
+            Affut.transform.Rotate(Vector3.up, -AngleY / 30f, Space.Self);
         }
         else
             ExitState();

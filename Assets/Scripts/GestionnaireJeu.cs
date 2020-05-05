@@ -85,9 +85,9 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void CommencerPartie()
     {
+        BoutonGameStart.onClick.RemoveAllListeners();
         Bot.Placer();
         GetComponent<PlacementBateau>().EnterState();
-        BoutonGameStart.enabled = false;
     }
 
     void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
