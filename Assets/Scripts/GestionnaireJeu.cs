@@ -34,9 +34,10 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
-
+        Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;
+        
         Joueur.BateauDétruit += SignalerBot;
-        //Bot.BateauDétruit += MéthodeQuelconque; // Afficher un message?
+        Bot.BateauDétruit += AfficherBateau; // Afficher un message?
 
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         BoutonGameStart.onClick.AddListener(CommencerPartie);
@@ -141,6 +142,12 @@ public class GestionnaireJeu : MonoBehaviour
     {
         GetComponent<GestionAnimation>().EnterState();
     }
+    public void RetirerCollider(object sender, OccupationEventArgs e)
+    {
+        List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
+        Destroy(infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
+                .GetComponent<BoxCollider>());
+    }
 
     public void DéterminerRésultatTir()
     {
@@ -154,7 +161,7 @@ public class GestionnaireJeu : MonoBehaviour
             OccupÀCoordVisée = TypeOccupation.Manqué;
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
 
-        GestionnaireCouleur.ModifierCouleur();
+        ModifierCouleur();
 
     }
 
@@ -201,6 +208,31 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Bot.dernierTirCoulé = true;
     }
+    private void AfficherBateau(object sender, BateauEventArgs e)
+    {
+        int direction = 0;//0:horizontal
+                          //1:vertical
+        Bateau bateauCouler = TrouverBateauSurCase(AutreJoueur, CoordVisée);
+        if (bateauCouler.CasesOccupées[0].Coordonnées.Rangée == bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count-1].Coordonnées.Rangée)
+        {
+            direction = 1;
+        }
+        if(direction == 0)
+        {
+            if (bateauCouler.CasesOccupées[0].Coordonnées.Rangée > bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Rangée)
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation *Quaternion.Euler(0f,90f,0f));
+            else
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, -90, 0f));
+        }
+        if (direction == 1)
+        {
+            if(bateauCouler.CasesOccupées[0].Coordonnées.Colonne > bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Colonne)
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation);
+            else
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+        }
+
+    }
 
     private void InverserJoueursEtCanons()
     {
@@ -211,6 +243,17 @@ public class GestionnaireJeu : MonoBehaviour
         GameObject tempCanon = CanonActif;
         CanonActif = AutreCanon;
         AutreCanon = tempCanon;
+    }
+    private void ModifierCouleur()
+    {
+        List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
+
+        if (OccupÀCoordVisée == TypeOccupation.Touché)
+            infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
+                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/Touché");
+        else if (OccupÀCoordVisée == TypeOccupation.Manqué)
+            infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
+                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
     }
 
 }

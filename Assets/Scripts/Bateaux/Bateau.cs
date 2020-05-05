@@ -24,7 +24,7 @@ public class Bateau
         CasesOccupées = new List<Case>(n);
     }
 
-    public Bateau()
+    public Bateau()//aucune référence on l'enlève?
     {
         Longueur = 2;
         Coups = 0;

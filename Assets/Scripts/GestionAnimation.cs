@@ -88,15 +88,6 @@ public class GestionAnimation : MonoBehaviour
 
     void Update()
     {
-        //if (test < 60)
-        //    Affut.transform.Rotate(-AngleX / 60f, AngleY / 60f, 0);
-        //else
-        //{
-        //    GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]);
-        //    GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4]).GetComponent<Rigidbody>().velocity = VitesseInitiale;
-        //    ExitState();
-        //}
-
         if (CptFrame < 30)
         {
             Affut.transform.Rotate(Vector3.up, AngleY /** Mathf.Rad2Deg*/ / 30f, Space.Self);
@@ -105,7 +96,7 @@ public class GestionAnimation : MonoBehaviour
         {
             Affut.transform.Rotate(Vector3.left, AngleX  /** Mathf.Rad2Deg*/ / 30f, Space.Self);
         }
-        else if (CptFrame >= 60 && CptFrame < 240)
+        else if (CptFrame >= 60 && CptFrame < 120)
         {
             if (CptFrame == 60)
             {
@@ -114,13 +105,14 @@ public class GestionAnimation : MonoBehaviour
                 //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
                 Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
                 //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
+                
             }
         }
-        else if (CptFrame >= 240 && CptFrame < 270)
+        else if (CptFrame >= 120 && CptFrame < 150)
         {
             Affut.transform.Rotate(Vector3.left, -AngleX / 30f, Space.Self);
         }
-        else if (CptFrame >= 270 && CptFrame < 300)
+        else if (CptFrame >= 150 && CptFrame < 170)
         {
             Affut.transform.Rotate(Vector3.up, -AngleY / 30f, Space.Self);
         }
@@ -138,6 +130,7 @@ public class GestionAnimation : MonoBehaviour
     private void ExitState()
     {
         enabled = false;
+        Destroy(Missile,2);
         GestionnaireJeu.manager.PasserAuProchainTour();
     }
 
