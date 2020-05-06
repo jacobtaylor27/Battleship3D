@@ -93,7 +93,7 @@ public class Bot : Joueur
                         foreach (var panneau in paneauxUtilisés)
                         {
                             GestionnaireJeu.manager.JoueurActif.PaneauJeu.TrouverCase(panneau.Coordonnées).TypeOccupation = TypeOccupation.Occupé;
-                            //Debug.Log(panneau.ToString());
+                            Debug.Log(panneau.ToString());
 
                         }
                     }

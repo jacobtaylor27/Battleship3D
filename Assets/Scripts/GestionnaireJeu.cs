@@ -20,6 +20,7 @@ public class GestionnaireJeu : MonoBehaviour
     public GameObject CanonActif { get; private set; }
     public GameObject AutreCanon { get; private set; }
     Button BoutonGameStart { get; set; }
+    Button Button { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
     public TypeOccupation OccupÀCoordVisée { get; private set; }
@@ -47,6 +48,8 @@ public class GestionnaireJeu : MonoBehaviour
         TourChangé += IncrémenterTourUI;
         TourChangé += RetirerTexte;
 
+        
+
         CptBateauxRestants = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "BateauxRestantsINT");
         TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TouchéCouléTxt");
         Bot.BateauDétruit += IncrémenterBateauxRestantsUI;
@@ -61,15 +64,15 @@ public class GestionnaireJeu : MonoBehaviour
 
         CanonActif = CanonBot;
         AutreCanon = CanonJoueur;
-        foreach (Bateau b in Bot.Arsenal)
-        {
-            foreach (Case c in b.CasesOccupées)
-            {
-                Debug.Log(c.Coordonnées);
+        //foreach (Bateau b in Bot.Arsenal)
+        //{
+        //    foreach (Case c in b.CasesOccupées)
+        //    {
 
-            }
-        }
+        //        Debug.Log(" DEBUG "+c.Coordonnées);
 
+        //    }
+        //} 
     }
 
     void Awake()
@@ -111,24 +114,23 @@ public class GestionnaireJeu : MonoBehaviour
         if (!Bot.Arsenal.All(x => x.EstCoulé))
             TexteMessages.text = "Touché coulé !";
         else if (Bot.Arsenal.All(x => x.EstCoulé))
-            TexteMessages.text = "Vous avez gagné la partie !";
-    }
-
+            TexteMessages.text = "Vous avez gagné la partie !";        
+    }                                                          
     void RetirerTexte(object sender, TourEventArgs e)
     {
         TexteMessages.text = "";
-    }
-
+    }                                                          
     void ÉcrireMessageFinPartieBot(object sender, BateauEventArgs e)
     {
         TexteMessages.text = "Vous avez perdu la partie :(";
-    }
-
+    }                                                          
     void TerminerJeu(object sender, BateauEventArgs e)
     {
-        SceneManager.LoadScene("Accueil");
+        SceneManager.LoadScene("FinDePartie");
+        SceneManager.UnloadSceneAsync("GameScene");
+        //if((Joueur)sender == Bot)
+           
     }
-
     public void TirerJoueur()
     {
         GetComponent<GestionTirs>().EnterState();
