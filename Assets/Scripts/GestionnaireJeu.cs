@@ -52,7 +52,7 @@ public class GestionnaireJeu : MonoBehaviour
         
 
         CptBateauxRestants = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "BateauxRestantsINT");
-        TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TouchéCouléTxt");
+        TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
         Bot.BateauDétruit += IncrémenterBateauxRestantsUI;
         Bot.BateauDétruit += ÉcrireMessage;
         Joueur.PartieTerminée += ÉcrireMessageFinPartieBot;
