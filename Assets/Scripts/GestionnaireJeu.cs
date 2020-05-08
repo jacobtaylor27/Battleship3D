@@ -52,7 +52,7 @@ public class GestionnaireJeu : MonoBehaviour
         
 
         CptBateauxRestants = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "BateauxRestantsINT");
-        TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TouchéCouléTxt");
+        TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
         Bot.BateauDétruit += IncrémenterBateauxRestantsUI;
         Bot.BateauDétruit += ÉcrireMessage;
         Joueur.PartieTerminée += ÉcrireMessageFinPartieBot;
@@ -73,7 +73,8 @@ public class GestionnaireJeu : MonoBehaviour
         //        Debug.Log(" DEBUG "+c.Coordonnées);
 
         //    }
-        //} 
+        //}
+        Debug.Log(DéterminerJoueurActif());
     }
 
     void Awake()
@@ -264,4 +265,8 @@ public class GestionnaireJeu : MonoBehaviour
                 .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
     }
 
+    public string DéterminerJoueurActif()
+    {
+        return JoueurActif.ToString();
+    }
 }
