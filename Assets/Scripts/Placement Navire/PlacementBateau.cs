@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 {
@@ -29,7 +30,7 @@ public class PlacementBateau : MonoBehaviour, IPointerClickHandler
 
     void InitialiserValeurs()
     {
-        CaméraJoueur = Camera.allCameras[1];
+        CaméraJoueur = Camera.allCameras.ToList<Camera>().Find(x => x.name == "PlayerGridCam");
         Bateaux = GestionnaireJeu.manager.JoueurActif.Arsenal;
         IndiceBateauActuel = 0;
         PeutÊtrePlacé = true;
