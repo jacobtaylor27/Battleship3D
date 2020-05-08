@@ -73,7 +73,8 @@ public class GestionnaireJeu : MonoBehaviour
         //        Debug.Log(" DEBUG "+c.Coordonnées);
 
         //    }
-        //} 
+        //}
+        Debug.Log(DéterminerJoueurActif());
     }
 
     void Awake()
@@ -264,4 +265,8 @@ public class GestionnaireJeu : MonoBehaviour
                 .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
     }
 
+    public string DéterminerJoueurActif()
+    {
+        return JoueurActif.ToString();
+    }
 }
