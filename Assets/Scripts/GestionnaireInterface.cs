@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GestionnaireInterface : MonoBehaviour
 {
@@ -14,9 +15,8 @@ public class GestionnaireInterface : MonoBehaviour
     TextMeshProUGUI CompteurBateauxRestants { get; set; }
     TextMeshProUGUI CompteurTours { get; set; }
     TextMeshProUGUI Messages { get; set; }
-    EventHandler<TourEventArgs> TourChangé;
-
-    void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
+    TextMeshProUGUI TitreFinDePartie { get; set; }
+    public EventHandler<TourEventArgs> TourChangé;
 
     void Start()
     {
@@ -26,13 +26,21 @@ public class GestionnaireInterface : MonoBehaviour
 
     void AssignerCallback()
     {
-        // Tour 
+        // Gestion tour 
         TourChangé += IncrémenterTourUI;
         TourChangé += RetirerTexte;
 
-        // Messages
-        GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
-        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageVictoire;
+        // Gestion messages
+        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
+        {
+            GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
+            GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageVictoire;
+            GestionnaireJeu.manager.JoueurActif.BateauDétruit += DécrémenterBateauxRestants;
+        }
+        else
+        {
+            GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageDéfaite;
+        }
     }
 
     void AssignerVariables()
@@ -53,6 +61,9 @@ public class GestionnaireInterface : MonoBehaviour
 
         // Messages 
         Messages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
+
+        // Titre de la scène fin de partie
+        //TitreFinDePartie = SceneManager.GetSceneAt(2).GetRootGameObjects().First(x => x.name == "Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TitleTxt");
     }
 
     void IncrémenterTourUI(object sender, TourEventArgs e)
@@ -70,16 +81,25 @@ public class GestionnaireInterface : MonoBehaviour
 
     void ÉcrireMessageDéfaite(object sender, BateauEventArgs e)
     {
-        Messages.text = "Vous avez perdu la partie :(";
+        string message = "Vous avez perdu :(";
+        TitreFinDePartie.text = message;
+        Messages.text = message;
     }
 
     void ÉcrireMessageVictoire(object sender, BateauEventArgs e)
     {
-        Messages.text = "Vous avez gagné la partie !";
+        string message = "Vous avez gagné !";
+        Messages.text = message;
+        TitreFinDePartie.text = message;
     }
 
     void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e)
     {
         Messages.text = "Touché coulé !";
+    }
+
+    void DécrémenterBateauxRestants(object sender, BateauEventArgs e)
+    {
+        CompteurBateauxRestants.text = GestionnaireJeu.manager.JoueurActif.BateauxRestants.ToString();
     }
 }

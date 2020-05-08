@@ -32,31 +32,20 @@ public class GestionnaireJeu : MonoBehaviour
     TextMeshProUGUI TexteMessages { get; set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
 
+    void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
+
     void Start()
     {
+        BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
+
+
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
         Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;
-        
+
         Joueur.BateauDétruit += SignalerBot;
-        Bot.BateauDétruit += AfficherBateau; // Afficher un message?
-
-        BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
-        BoutonGameStart.onClick.AddListener(CommencerPartie);
-        
-
-        CptTourUI = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "CptToursINT");
-        TourChangé += IncrémenterTourUI;
-        TourChangé += RetirerTexte;
-
-        
-
-        CptBateauxRestants = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "BateauxRestantsINT");
-        TexteMessages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
-        Bot.BateauDétruit += IncrémenterBateauxRestantsUI;
-        Bot.BateauDétruit += ÉcrireMessage;
-        Joueur.PartieTerminée += ÉcrireMessageFinPartieBot;
-        Joueur.PartieTerminée += TerminerJeu;
+        Bot.BateauDétruit += AfficherBateau;
+        JoueurActif.PartieTerminée += TerminerJeu;
 
         GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
 
@@ -65,16 +54,6 @@ public class GestionnaireJeu : MonoBehaviour
 
         CanonActif = CanonBot;
         AutreCanon = CanonJoueur;
-        //foreach (Bateau b in Bot.Arsenal)
-        //{
-        //    foreach (Case c in b.CasesOccupées)
-        //    {
-
-        //        Debug.Log(" DEBUG "+c.Coordonnées);
-
-        //    }
-        //}
-        Debug.Log(DéterminerJoueurActif());
     }
 
     void Awake()
@@ -89,6 +68,7 @@ public class GestionnaireJeu : MonoBehaviour
         AutreJoueur = Joueur;
     }
 
+    #region Callbacks
     public void CommencerPartie()
     {
         BoutonGameStart.onClick.RemoveAllListeners();
@@ -101,47 +81,17 @@ public class GestionnaireJeu : MonoBehaviour
         UnityEngine.Application.Quit();
     }
 
-    void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
-
-    public void IncrémenterTourUI(object sender, TourEventArgs e)
-    {
-        if (Tour % 2 == 0)
-            CptTourUI.text = Tour.ToString() + " (Ordinateur)";
-        else if (Tour % 2 == 1)
-            CptTourUI.text = Tour.ToString() + " (Joueur)";
-    }
-
-    void IncrémenterBateauxRestantsUI(object sender, BateauEventArgs e)
-    {
-        CptBateauxRestants.text = Bot.BateauxRestants.ToString();
-    }
-
-    void ÉcrireMessage(object sender, BateauEventArgs e)
-    {
-        if (!Bot.Arsenal.All(x => x.EstCoulé))
-            TexteMessages.text = "Touché coulé !";
-        else if (Bot.Arsenal.All(x => x.EstCoulé))
-            TexteMessages.text = "Vous avez gagné la partie !";        
-    }                                                          
-    void RetirerTexte(object sender, TourEventArgs e)
-    {
-        TexteMessages.text = "";
-    }                                                          
-    void ÉcrireMessageFinPartieBot(object sender, BateauEventArgs e)
-    {
-        TexteMessages.text = "Vous avez perdu la partie :(";
-    }                                                          
-    void TerminerJeu(object sender, BateauEventArgs e)
+    public void TerminerJeu(object sender, BateauEventArgs e)
     {
         SceneManager.LoadScene("FinDePartie");
         SceneManager.UnloadSceneAsync("GameScene");
-        //if((Joueur)sender == Bot)
-           
     }
+
     public void TirerJoueur()
     {
         GetComponent<GestionTirs>().EnterState();
     }
+
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
         GetComponent<GestionAnimation>().EnterState();
@@ -151,6 +101,7 @@ public class GestionnaireJeu : MonoBehaviour
     {
         GetComponent<GestionAnimation>().EnterState();
     }
+
     public void RetirerCollider(object sender, OccupationEventArgs e)
     {
         List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
@@ -158,20 +109,54 @@ public class GestionnaireJeu : MonoBehaviour
                 .GetComponent<BoxCollider>());
     }
 
+    void AfficherBateau(object sender, BateauEventArgs e)
+    {
+        // 0 = horizontal
+        // 1 = vertical
+        int direction = 0;
+
+        Bateau bateauCouler = TrouverBateauSurCase(AutreJoueur, CoordVisée);
+        if (bateauCouler.CasesOccupées[0].Coordonnées.Rangée == bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Rangée)
+        {
+            direction = 1;
+        }
+
+        if (direction == 0)
+        {
+            if (bateauCouler.CasesOccupées[0].Coordonnées.Rangée > bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Rangée)
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, 90f, 0f));
+            else
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, -90, 0f));
+        }
+
+        if (direction == 1)
+        {
+            if (bateauCouler.CasesOccupées[0].Coordonnées.Colonne > bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Colonne)
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation);
+            else
+                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+        }
+    }
+
+    void SignalerBot(object sender, BateauEventArgs e)
+    {
+        Bot.dernierTirCoulé = true;
+    }
+    #endregion
+
+    #region Méthodes
     public void DéterminerRésultatTir()
     {
         if (AutreJoueur.PaneauJeu.TrouverCase(CoordVisée).EstOccupé)
         {
             AutreJoueur.SeFaireToucher(TrouverBateauSurCase(AutreJoueur, CoordVisée));
-
             OccupÀCoordVisée = TypeOccupation.Touché;
         }
         else
             OccupÀCoordVisée = TypeOccupation.Manqué;
+
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
-
         ModifierCouleur();
-
     }
 
     public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
@@ -197,10 +182,10 @@ public class GestionnaireJeu : MonoBehaviour
         }
     }
 
-
     public Bateau TrouverBateauSurCase(Joueur joueurTouché, Coordonnées coordVoulue)
     {
-        Bateau bateauSurCase = new Bateau(2, null, null); // bateau null, car la fonction sera forcément appellée sur une case occupée.
+        // Bateau null, car la fonction sera forcément appellée sur une case occupée.
+        Bateau bateauSurCase = new Bateau(2, null, null); 
         foreach (Bateau b in joueurTouché.Arsenal)
         {
             Case temp = b.CasesOccupées.At(coordVoulue.Rangée, coordVoulue.Colonne);
@@ -213,37 +198,7 @@ public class GestionnaireJeu : MonoBehaviour
         return bateauSurCase;
     }
 
-    private void SignalerBot(object sender, BateauEventArgs e)
-    {
-        Bot.dernierTirCoulé = true;
-    }
-    private void AfficherBateau(object sender, BateauEventArgs e)
-    {
-        int direction = 0;//0:horizontal
-                          //1:vertical
-        Bateau bateauCouler = TrouverBateauSurCase(AutreJoueur, CoordVisée);
-        if (bateauCouler.CasesOccupées[0].Coordonnées.Rangée == bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count-1].Coordonnées.Rangée)
-        {
-            direction = 1;
-        }
-        if(direction == 0)
-        {
-            if (bateauCouler.CasesOccupées[0].Coordonnées.Rangée > bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Rangée)
-                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation *Quaternion.Euler(0f,90f,0f));
-            else
-                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, -90, 0f));
-        }
-        if (direction == 1)
-        {
-            if(bateauCouler.CasesOccupées[0].Coordonnées.Colonne > bateauCouler.CasesOccupées[bateauCouler.CasesOccupées.Count - 1].Coordonnées.Colonne)
-                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation);
-            else
-                Instantiate(bateauCouler.PrefabBateau, bateauCouler.CasesOccupées[0].PositionMonde, bateauCouler.PrefabBateau.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
-        }
-
-    }
-
-    private void InverserJoueursEtCanons()
+    void InverserJoueursEtCanons()
     {
         Joueur tempPlayer = JoueurActif;
         JoueurActif = AutreJoueur;
@@ -253,7 +208,8 @@ public class GestionnaireJeu : MonoBehaviour
         CanonActif = AutreCanon;
         AutreCanon = tempCanon;
     }
-    private void ModifierCouleur()
+
+    void ModifierCouleur()
     {
         List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
 
@@ -265,8 +221,6 @@ public class GestionnaireJeu : MonoBehaviour
                 .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
     }
 
-    public string DéterminerJoueurActif()
-    {
-        return JoueurActif.ToString();
-    }
+    public string DéterminerJoueurActif() => JoueurActif.ToString();
+#endregion
 }

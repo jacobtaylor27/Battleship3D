@@ -43,12 +43,12 @@ public class Joueur
     }
 
     void onBateauDétruit(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
+
     void onPartieTerminée(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
 
     public void SeFaireToucher(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();
-        Debug.Log("touché");
         if (Arsenal[Arsenal.FindIndex(x => x == b)].EstCoulé)
         {
             BateauxRestants--;

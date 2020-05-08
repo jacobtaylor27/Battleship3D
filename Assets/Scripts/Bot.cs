@@ -46,7 +46,7 @@ public class Bot : Joueur
                         }
                     case 1:
                         {
-                            OrientationV = Vector3.up;
+                            OrientationV = Vector3.forward;
                             rangéeFinale += b.Longueur - 1;
                             break;
                         }
