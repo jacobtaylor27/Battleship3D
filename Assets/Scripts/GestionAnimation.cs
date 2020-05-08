@@ -10,6 +10,11 @@ public class GestionAnimation : MonoBehaviour
     const float HauteurMax = 500f;
     const float VitesseInit = 100f;
 
+
+    [SerializeField]Camera animationBot;
+    [SerializeField]Camera animationJoueur;
+    [SerializeField]Camera camTir;
+    [SerializeField]Camera camJoueur;
     GameObject Missile { get; set; }
     public GameObject projectile;
     GameObject[] Canons { get; set; }
@@ -26,15 +31,19 @@ public class GestionAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        //Canons = GameObject.FindGameObjectsWithTag("Canon");
         Debug.Log(GestionnaireJeu.manager.JoueurActif);
         Debug.Log(GestionnaireJeu.manager.Tour);
 
+        foreach (var Camera in Camera.allCameras)
+        {
+            Camera.enabled = false;
+        }
+        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
+            animationBot.enabled = true;
+        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Joueur")
+            animationJoueur.enabled = true;
+
         Affut = GestionnaireJeu.manager.CanonActif;
-        //if (GestionnaireJeu.manager.Tour % 2 == 0)
-        //    Affut = Canons[0].GetComponentsInChildren<Transform>()[1].gameObject;
-        //else
-        //    Affut = Canons[1].GetComponentsInChildren<Transform>()[1].gameObject;
 
         VCanonInit = Affut.GetComponentsInChildren<Transform>()[4].position - Affut.transform.position;
         VCanonInit = new Vector3(VCanonInit.x, 0, VCanonInit.z);
@@ -88,17 +97,17 @@ public class GestionAnimation : MonoBehaviour
 
     void Update()
     {
-        if (CptFrame < 30)
+        if (CptFrame < 60)
         {
-            Affut.transform.Rotate(Vector3.up, AngleY /** Mathf.Rad2Deg*/ / 30f, Space.Self);
-        }
-        else if (CptFrame >= 30 && CptFrame < 60)
-        {
-            Affut.transform.Rotate(Vector3.left, AngleX  /** Mathf.Rad2Deg*/ / 30f, Space.Self);
+            Affut.transform.Rotate(Vector3.up, AngleY  / 60f, Space.Self);
         }
         else if (CptFrame >= 60 && CptFrame < 120)
         {
-            if (CptFrame == 60)
+            Affut.transform.Rotate(Vector3.left, AngleX / 60f, Space.Self);
+        }
+        else if (CptFrame >= 120 && CptFrame < 300)
+        {
+            if (CptFrame == 200)
             {
                 Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
                 //Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
@@ -108,13 +117,13 @@ public class GestionAnimation : MonoBehaviour
                 
             }
         }
-        else if (CptFrame >= 120 && CptFrame < 150)
+        else if (CptFrame >= 300 && CptFrame < 360)
         {
-            Affut.transform.Rotate(Vector3.left, -AngleX / 30f, Space.Self);
+            Affut.transform.Rotate(Vector3.left, -AngleX / 60f, Space.Self);
         }
-        else if (CptFrame >= 150 && CptFrame < 170)
+        else if (CptFrame >= 360 && CptFrame < 420)
         {
-            Affut.transform.Rotate(Vector3.up, -AngleY / 30f, Space.Self);
+            Affut.transform.Rotate(Vector3.up, -AngleY / 60f, Space.Self);
         }
         else
             ExitState();
@@ -129,8 +138,15 @@ public class GestionAnimation : MonoBehaviour
 
     private void ExitState()
     {
+        foreach (var Camera in Camera.allCameras)
+        {
+            Camera.enabled = false;
+        }
+        camJoueur.enabled = true;
+        camTir.enabled = true;
+
         enabled = false;
-        Destroy(Missile,2);
+        Destroy(Missile,0.5f);
         GestionnaireJeu.manager.PasserAuProchainTour();
     }
 
