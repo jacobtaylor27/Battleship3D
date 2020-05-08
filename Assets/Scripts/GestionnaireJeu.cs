@@ -7,6 +7,7 @@ using System;
 using UnityEngine.Events;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.WSA;
 
 public class GestionnaireJeu : MonoBehaviour
 {
@@ -92,6 +93,11 @@ public class GestionnaireJeu : MonoBehaviour
         BoutonGameStart.onClick.RemoveAllListeners();
         Bot.Placer();
         GetComponent<PlacementBateau>().EnterState();
+    }
+
+    public void QuitterPartie()
+    {
+        UnityEngine.Application.Quit();
     }
 
     void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
