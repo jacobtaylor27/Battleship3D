@@ -24,7 +24,7 @@ public class GestionTirs : MonoBehaviour
         Tirer = KeyCode.Mouse0;//click gauche
 
         plane = GameObject.Find("WaterFloor");
-        CamBot = Camera.allCameras.ToList<Camera>().Find(x=>x.name == "NPCCam"); // Caméra Bot --> trouvée avec Debug donc à changer si on rajoute des cams.
+        CamBot = Camera.allCameras[2]; // Caméra Bot --> trouvée avec Debug donc à changer si on rajoute des cams.
 
         // Trouver gameObjectGrille et set la hauteur voulue par rapport à la grille comme étant yAxis
         float zAxis = plane.transform.position.z;
