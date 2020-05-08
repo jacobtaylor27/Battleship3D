@@ -16,7 +16,6 @@ public class GestionnaireInterface : MonoBehaviour
     TextMeshProUGUI CompteurTours { get; set; }
     TextMeshProUGUI Messages { get; set; }
     TextMeshProUGUI TitreFinDePartie { get; set; }
-    public EventHandler<TourEventArgs> TourChangé;
 
     void Start()
     {
@@ -27,8 +26,8 @@ public class GestionnaireInterface : MonoBehaviour
     void AssignerCallback()
     {
         // Gestion tour 
-        TourChangé += IncrémenterTourUI;
-        TourChangé += RetirerTexte;
+        GestionnaireJeu.manager.TourChangé += IncrémenterTourUI;
+        GestionnaireJeu.manager.TourChangé += RetirerTexte;
 
         // Gestion messages
         if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
@@ -63,13 +62,17 @@ public class GestionnaireInterface : MonoBehaviour
         Messages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
 
         // Titre de la scène fin de partie
-        //TitreFinDePartie = SceneManager.GetSceneAt(2).GetRootGameObjects().First(x => x.name == "Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TitleTxt");
+        AsyncOperation scene = SceneManager.LoadSceneAsync("FinDePartie", LoadSceneMode.Additive);
+        TitreFinDePartie = SceneManager.GetSceneByName("FinDePartie").GetRootGameObjects().First(x => x.name == "Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TitleTxt");
+        scene.allowSceneActivation = false;
     }
 
     void IncrémenterTourUI(object sender, TourEventArgs e)
     {
         if (GestionnaireJeu.manager.Tour % 2 == 0)
+        {
             CompteurTours.text = GestionnaireJeu.manager.Tour.ToString() + " (Ordinateur)";
+        }
         else if (GestionnaireJeu.manager.Tour % 2 == 1)
             CompteurTours.text = GestionnaireJeu.manager.Tour.ToString() + " (Joueur)";
     }
@@ -100,6 +103,6 @@ public class GestionnaireInterface : MonoBehaviour
 
     void DécrémenterBateauxRestants(object sender, BateauEventArgs e)
     {
-        CompteurBateauxRestants.text = GestionnaireJeu.manager.JoueurActif.BateauxRestants.ToString();
+        CompteurBateauxRestants.text = GestionnaireJeu.manager.AutreJoueur.BateauxRestants.ToString();
     }
 }

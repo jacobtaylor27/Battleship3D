@@ -26,11 +26,11 @@ public class GestionnaireJeu : MonoBehaviour
     public Coordonnées CoordVisée { get; set; }
     public TypeOccupation OccupÀCoordVisée { get; private set; }
     public int Tour { get; private set; }
-    public EventHandler<TourEventArgs> TourChangé;
     TextMeshProUGUI CptBateauxRestants { get; set; }
     TextMeshProUGUI CptTourUI { get; set; }
     TextMeshProUGUI TexteMessages { get; set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
+    public EventHandler<TourEventArgs> TourChangé;
 
     void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);
 
