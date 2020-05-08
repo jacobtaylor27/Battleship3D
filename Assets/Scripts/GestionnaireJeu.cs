@@ -38,7 +38,6 @@ public class GestionnaireJeu : MonoBehaviour
     {
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
 
-
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
         Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;

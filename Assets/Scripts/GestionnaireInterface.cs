@@ -62,9 +62,9 @@ public class GestionnaireInterface : MonoBehaviour
         Messages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
 
         // Titre de la scène fin de partie
-        AsyncOperation scene = SceneManager.LoadSceneAsync("FinDePartie", LoadSceneMode.Additive);
-        TitreFinDePartie = SceneManager.GetSceneByName("FinDePartie").GetRootGameObjects().First(x => x.name == "Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TitleTxt");
-        scene.allowSceneActivation = false;
+        //AsyncOperation scene = SceneManager.LoadSceneAsync("FinDePartie", LoadSceneMode.Additive);
+        //scene.allowSceneActivation = false;
+        //TitreFinDePartie = SceneManager.GetSceneByName("FinDePartie").GetRootGameObjects().First(x => x.name == "Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TitleTxt");
     }
 
     void IncrémenterTourUI(object sender, TourEventArgs e)
