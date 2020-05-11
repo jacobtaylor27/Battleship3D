@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GestionAnimation : MonoBehaviour
 {
@@ -11,10 +12,10 @@ public class GestionAnimation : MonoBehaviour
     const float VitesseInit = 100f;
 
 
-    [SerializeField]Camera animationBot;
-    [SerializeField]Camera animationJoueur;
-    [SerializeField]Camera camTir;
-    [SerializeField]Camera camJoueur;
+    Camera AnimationBot { get; set; }
+    Camera AnimationJoueur { get; set; }
+    Camera CamBot { get; set; }
+    Camera CamJoueur { get; set; }
     GameObject Missile { get; set; }
     public GameObject projectile;
     GameObject[] Canons { get; set; }
@@ -40,9 +41,9 @@ public class GestionAnimation : MonoBehaviour
                 Camera.enabled = false;
             }
             if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
-                animationBot.enabled = true;
+                AnimationBot.enabled = true;
             if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Joueur")
-                animationJoueur.enabled = true;
+                AnimationJoueur.enabled = true;
         }
 
         Affut = GestionnaireJeu.manager.CanonActif;
@@ -94,8 +95,15 @@ public class GestionAnimation : MonoBehaviour
 
     private void Awake()
     {
-        animationBot.enabled = false;
-        animationJoueur.enabled = false;
+        List<Camera> cameras = GameObject.Find("WaterFloor").GetComponentsInChildren<Camera>().ToList();
+
+        CamBot = cameras.Find(c => c.name == "NPCCam");
+        CamJoueur = cameras.Find(c => c.name == "PlayerGridCam");
+        AnimationBot = cameras.Find(c => c.name == "CamAnimationBot");
+        AnimationJoueur = cameras.Find(c => c.name == "CamAnimationJoueur");
+
+        AnimationBot.enabled = false;
+        AnimationJoueur.enabled = false;
         enabled = false;
     }
 
@@ -152,8 +160,8 @@ public class GestionAnimation : MonoBehaviour
         {
             Camera.enabled = false;
         }
-        camJoueur.enabled = true;
-        camTir.enabled = true;
+        CamJoueur.enabled = true;
+        CamBot.enabled = true;
 
         enabled = false;
         Destroy(Missile,0.5f);
