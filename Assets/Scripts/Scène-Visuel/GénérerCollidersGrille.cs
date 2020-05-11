@@ -8,9 +8,9 @@ public class GénérerCollidersGrille : MonoBehaviour
     const float Dimensions = 10f;
     Transform[] CoinsNPC;
     Transform[] CoinsPlayer;
+
     public GameObject Tuile;
 
-    [SerializeField]
     GameObject ListeTuiles;
 
     public float Delta { get; set; }
@@ -20,6 +20,7 @@ public class GénérerCollidersGrille : MonoBehaviour
 
     void Start()
     {
+        ListeTuiles = GameObject.Find("ListeTuiles");
 
         CoinsNPC = GameObject.FindGameObjectsWithTag("NPC").First(x => x.name == "Coins").GetComponentsInChildren<Transform>();
         CoinsPlayer = GameObject.FindGameObjectsWithTag("Player").First(x => x.name == "Coins").GetComponentsInChildren<Transform>();

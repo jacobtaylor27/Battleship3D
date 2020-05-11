@@ -21,12 +21,29 @@ public class Coordonnées
 
     public override string ToString() => $"{Rangée},{Colonne}";
 
-    public static bool operator !=(Coordonnées coord1,Coordonnées coord2)
+
+    public override bool Equals(object obj)
     {
-        return (coord1.Rangée != coord2.Rangée && coord1.Colonne != coord2.Colonne);
+        if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            return false;
+        else
+        {
+            Coordonnées coord = (Coordonnées) obj;
+            return Rangée == coord.Rangée && Colonne == coord.Colonne;
+
+        }
+    }
+    public override int GetHashCode()
+    {
+        return Rangée.GetHashCode() ^ Colonne.GetHashCode();
     }
     public static bool operator ==(Coordonnées coord1, Coordonnées coord2)
     {
-        return (coord1.Rangée == coord2.Rangée && coord1.Colonne == coord2.Colonne);
+        return coord1.Equals(coord2);
     }
+    public static bool operator !=(Coordonnées coord1,Coordonnées coord2)
+    {
+        return !coord1.Equals(coord2);
+    }
+
 }

@@ -7,7 +7,6 @@ using System;
 using UnityEngine.Events;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.WSA;
 
 public class GestionnaireJeu : MonoBehaviour
 {
