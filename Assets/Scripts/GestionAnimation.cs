@@ -33,15 +33,17 @@ public class GestionAnimation : MonoBehaviour
     {
         Debug.Log(GestionnaireJeu.manager.JoueurActif);
         Debug.Log(GestionnaireJeu.manager.Tour);
-
-        foreach (var Camera in Camera.allCameras)
+        if (GetComponent<GestionnaireInterface>().animation)
         {
-            Camera.enabled = false;
+            foreach (var Camera in Camera.allCameras)
+            {
+                Camera.enabled = false;
+            }
+            if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
+                animationBot.enabled = true;
+            if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Joueur")
+                animationJoueur.enabled = true;
         }
-        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
-            animationBot.enabled = true;
-        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Joueur")
-            animationJoueur.enabled = true;
 
         Affut = GestionnaireJeu.manager.CanonActif;
 
@@ -99,38 +101,44 @@ public class GestionAnimation : MonoBehaviour
 
     void Update()
     {
-        if (CptFrame < 60)
+        if (GetComponent<GestionnaireInterface>().animation)
         {
-            Affut.transform.Rotate(Vector3.up, AngleY  / 60f, Space.Self);
-        }
-        else if (CptFrame >= 60 && CptFrame < 120)
-        {
-            Affut.transform.Rotate(Vector3.left, AngleX / 60f, Space.Self);
-        }
-        else if (CptFrame >= 120 && CptFrame < 300)
-        {
-            if (CptFrame == 200)
+            if (CptFrame < 60)
             {
-                Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
-                //Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
-                //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
-                Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
-                //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
-                
+                Affut.transform.Rotate(Vector3.up, AngleY / 60f, Space.Self);
             }
-        }
-        else if (CptFrame >= 300 && CptFrame < 360)
-        {
-            Affut.transform.Rotate(Vector3.left, -AngleX / 60f, Space.Self);
-        }
-        else if (CptFrame >= 360 && CptFrame < 420)
-        {
-            Affut.transform.Rotate(Vector3.up, -AngleY / 60f, Space.Self);
+            else if (CptFrame >= 60 && CptFrame < 120)
+            {
+                Affut.transform.Rotate(Vector3.left, AngleX / 60f, Space.Self);
+            }
+            else if (CptFrame >= 120 && CptFrame < 300)
+            {
+                if (CptFrame == 200)
+                {
+                    Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
+                    //Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
+                    //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
+                    Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
+                    //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
+
+                }
+            }
+            else if (CptFrame >= 300 && CptFrame < 360)
+            {
+                Affut.transform.Rotate(Vector3.left, -AngleX / 60f, Space.Self);
+            }
+            else if (CptFrame >= 360 && CptFrame < 420)
+            {
+                Affut.transform.Rotate(Vector3.up, -AngleY / 60f, Space.Self);
+            }
+            else
+                ExitState();
+
+            CptFrame++;
         }
         else
             ExitState();
 
-        CptFrame++;
     }
 
     public void EnterState()

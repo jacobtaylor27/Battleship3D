@@ -93,12 +93,14 @@ public class GestionnaireJeu : MonoBehaviour
 
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
-        GetComponent<GestionAnimation>().EnterState();
+        //if(GetComponent<GestionnaireInterface>().animation)
+            GetComponent<GestionAnimation>().EnterState();
     }
 
     private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
     {
-        GetComponent<GestionAnimation>().EnterState();
+        //if(GetComponent<GestionnaireInterface>().animation)
+            GetComponent<GestionAnimation>().EnterState();
     }
 
     public void RetirerCollider(object sender, OccupationEventArgs e)
