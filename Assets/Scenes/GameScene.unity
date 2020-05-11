@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 847248071}
   - component: {fileID: 847248070}
   m_Layer: 0
-  m_Name: AnimationJoueur
+  m_Name: CamAnimationJoueur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2631,7 +2631,7 @@ GameObject:
   - component: {fileID: 1750239074}
   - component: {fileID: 1750239073}
   m_Layer: 0
-  m_Name: AnimationBot
+  m_Name: CamAnimationBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

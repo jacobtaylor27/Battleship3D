@@ -92,6 +92,8 @@ public class GestionAnimation : MonoBehaviour
 
     private void Awake()
     {
+        animationBot.enabled = false;
+        animationJoueur.enabled = false;
         enabled = false;
     }
 
