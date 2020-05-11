@@ -45,7 +45,7 @@ public class GestionnaireInterface : MonoBehaviour
 
     void AssignerVariables()
     {
-        ToggleAnimation = GameObject.Find("Canevas").GetComponentsInChildren<Toggle>().First(x=>x.name==)
+        //ToggleAnimation = GameObject.Find("Canevas").GetComponentsInChildren<Toggle>().First(x=>x.name==)
 
         // Bouton commencer
         BoutonCommencerPartie = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
