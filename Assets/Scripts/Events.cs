@@ -24,6 +24,14 @@ public class TourEventArgs : EventArgs
     }
 }
 
+public class PartieEventArgs : EventArgs
+{
+    public PartieEventArgs()
+    {
+
+    }
+}
+
 public class BateauEventArgs : EventArgs
 {
     Bateau Bateau { get; set; }

@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using System;
-using UnityEngine.SceneManagement;
 
 public class GestionnaireInterface : MonoBehaviour
 {
@@ -17,7 +12,6 @@ public class GestionnaireInterface : MonoBehaviour
     TextMeshProUGUI CompteurBateauxRestants { get; set; }
     TextMeshProUGUI CompteurTours { get; set; }
     TextMeshProUGUI Messages { get; set; }
-    //TextMeshProUGUI TitreFinDePartie { get; set; }
 
     void Start()
     {
@@ -28,6 +22,7 @@ public class GestionnaireInterface : MonoBehaviour
 
     void AssignerVariables()
     {
+        // Animation
         ToggleAnimation = GameObject.Find("Canvas").GetComponentsInChildren<Toggle>().First(x => x.name == "ToggleAnimation");
         ToggleAnimation.onValueChanged.AddListener(x => AnimationEstActivée = !AnimationEstActivée);
 
@@ -56,16 +51,9 @@ public class GestionnaireInterface : MonoBehaviour
 
         GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
         GestionnaireJeu.manager.JoueurActif.BateauDétruit += DécrémenterBateauxRestants;
-
-        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
-        //GestionnaireJeu.manager.AutreJoueur.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
-
-        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ModifierBoutonJouer;
-        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
-        GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireDéfaite;
     }
 
-    public void IncrémenterTourUI(object sender, TourEventArgs e)
+    void IncrémenterTourUI(object sender, TourEventArgs e)
     {
         if (GestionnaireJeu.manager.Tour % 2 == 0)
         {
@@ -74,34 +62,10 @@ public class GestionnaireInterface : MonoBehaviour
         else if (GestionnaireJeu.manager.Tour % 2 == 1)
             CompteurTours.text = GestionnaireJeu.manager.Tour.ToString() + " (Joueur)";
     }
+    
+    void RetirerTexte(object sender, TourEventArgs e) => Messages.text = "";
 
-    public void RetirerTexte(object sender, TourEventArgs e)
-    {
-        Messages.text = "";
-    }
+    void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e) => Messages.text = "Touché coulé !";
 
-    void ModifierBoutonJouer(object sender, BateauEventArgs e)
-    {
-        GestionnaireAccueil.accueil.TexteBoutonJouer.text = "Rejouer";
-    }
-
-    void ÉcrireVictoire(object sender, BateauEventArgs e)
-    {
-        GestionnaireAccueil.accueil.TexteTitre.text = "Vous avez gagné !";
-    }
-
-    void ÉcrireDéfaite(object sender, BateauEventArgs e)
-    {
-        GestionnaireAccueil.accueil.TexteTitre.text = "Vous avez perdu :(";
-    }
-
-    public void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e)
-    {
-        Messages.text = "Touché coulé !";
-    }
-
-    public void DécrémenterBateauxRestants(object sender, BateauEventArgs e)
-    {
-        CompteurBateauxRestants.text = GestionnaireJeu.manager.AutreJoueur.BateauxRestants.ToString();
-    }
+    void DécrémenterBateauxRestants(object sender, BateauEventArgs e) => CompteurBateauxRestants.text = GestionnaireJeu.manager.AutreJoueur.BateauxRestants.ToString();
 }

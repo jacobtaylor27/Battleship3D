@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-using UnityEngine.SceneManagement;
 
 public class Joueur
 {
@@ -13,7 +11,7 @@ public class Joueur
     public int BateauxRestants { get; set; }
     bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
     public event EventHandler<BateauEventArgs> BateauDétruit;
-    public event EventHandler<BateauEventArgs> PartieTerminée;
+    public event EventHandler<PartieEventArgs> PartieTerminée;
 
     public Joueur()
     {
@@ -44,7 +42,7 @@ public class Joueur
 
     void onBateauDétruit(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
 
-    void onPartieTerminée(BateauEventArgs dataBateau) => BateauDétruit?.Invoke(this, dataBateau);
+    void onPartieTerminée(PartieEventArgs dataPartie) => PartieTerminée?.Invoke(this, dataPartie);
 
     public void SeFaireToucher(Bateau b)
     {
@@ -53,13 +51,9 @@ public class Joueur
         {
             BateauxRestants--;
             onBateauDétruit(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
-            if (APerdu)
-            {
-                SceneManager.LoadScene("Accueil");
-                GestionnaireAccueil.accueil.TexteTitre.text = "Vous avez gagné !";
-                //onPartieTerminée(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
-            }
 
+            if (APerdu)
+                onPartieTerminée(new PartieEventArgs());
         }
     }
 

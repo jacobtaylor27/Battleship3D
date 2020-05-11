@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -14,18 +10,12 @@ public class GestionnaireAccueil : MonoBehaviour
     Button BoutonJouer { get; set; }
     Button BoutonQuitter { get; set; }
     public TextMeshProUGUI TexteBoutonJouer { get; set; }
-    public TextMeshProUGUI TexteTitre { get; set; }
-    GameObject[] gameObjects { get; set; }
 
-    private void Awake()
+    void Awake() => accueil = this;
+
+    void Start()
     {
-        accueil = this;
         DéfinirValeursParDéfaut();
-        GarderObjets();
-    }
-
-    private void Start()
-    {
         AssignerCallbacks();
     }
 
@@ -37,7 +27,6 @@ public class GestionnaireAccueil : MonoBehaviour
 
         // Texte
         TexteBoutonJouer = BoutonJouer.GetComponentInChildren<TextMeshProUGUI>();
-        TexteTitre = GameObject.Find("CanvasAccueil").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TxtTitre");
     }
 
     void AssignerCallbacks()
@@ -45,20 +34,6 @@ public class GestionnaireAccueil : MonoBehaviour
         // Boutons
         BoutonJouer.onClick.AddListener(Jouer);
         BoutonQuitter.onClick.AddListener(Quitter);
-
-        //// Texte
-        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += ModifierBoutonJouer;
-        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
-        //GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireDéfaite;
-    }
-
-    void GarderObjets()
-    {
-        gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach (GameObject g in gameObjects)
-        {
-            DontDestroyOnLoad(g);
-        }
     }
 
     void Quitter()
@@ -72,17 +47,5 @@ public class GestionnaireAccueil : MonoBehaviour
 #endif
     }
 
-    void CacherMembres()
-    {
-        foreach (GameObject g in gameObjects)
-        {
-            g.SetActive(false);
-        }
-    }
-
-    void Jouer()
-    {
-        SceneManager.LoadScene("GameScene");
-        CacherMembres();
-    }
+    void Jouer() => SceneManager.LoadScene("GameScene");
 }

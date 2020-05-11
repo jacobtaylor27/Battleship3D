@@ -20,14 +20,10 @@ public class GestionnaireJeu : MonoBehaviour
     public GameObject CanonActif { get; private set; }
     public GameObject AutreCanon { get; private set; }
     Button BoutonGameStart { get; set; }
-    Button Button { get; set; }
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
     public TypeOccupation OccupÀCoordVisée { get; private set; }
     public int Tour { get; private set; }
-    TextMeshProUGUI CptBateauxRestants { get; set; }
-    TextMeshProUGUI CptTourUI { get; set; }
-    TextMeshProUGUI TexteMessages { get; set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
     public EventHandler<TourEventArgs> TourChangé;
 
@@ -35,24 +31,29 @@ public class GestionnaireJeu : MonoBehaviour
 
     void Start()
     {
-        BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
+        AssignerValeursBases();
+        AssignerCallbacks();
+    }
 
+    void AssignerValeursBases()
+    {
+        GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
+        CanonBot = GameObject.Find("NPCCanon").GetComponentsInChildren<Transform>()[1].gameObject;
+        CanonJoueur = GameObject.Find("PlayerCanon").GetComponentsInChildren<Transform>()[1].gameObject;
+        BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
+        CanonActif = CanonBot;
+        AutreCanon = CanonJoueur;
+    }
+
+    void AssignerCallbacks()
+    {
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
         Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;
-
         Joueur.BateauDétruit += SignalerBot;
         Bot.BateauDétruit += AfficherBateau;
-        JoueurActif.PartieTerminée += TerminerJeu;
-        AutreJoueur.PartieTerminée += TerminerJeu;
-
-        GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
-
-        CanonBot = GameObject.Find("NPCCanon").GetComponentsInChildren<Transform>()[1].gameObject;
-        CanonJoueur = GameObject.Find("PlayerCanon").GetComponentsInChildren<Transform>()[1].gameObject;
-
-        CanonActif = CanonBot;
-        AutreCanon = CanonJoueur;
+        JoueurActif.PartieTerminée += Victoire;
+        AutreJoueur.PartieTerminée += Défaite;
     }
 
     void Awake()
@@ -86,9 +87,14 @@ public class GestionnaireJeu : MonoBehaviour
 #endif
     }
 
-    public void TerminerJeu(object sender, BateauEventArgs e)
+    void Défaite(object sender, PartieEventArgs e)
     {
-        SceneManager.LoadScene("Accueil");
+        SceneManager.LoadScene("Défaite");
+    }
+
+    void Victoire(object sender, PartieEventArgs e)
+    {
+        SceneManager.LoadScene("Victoire");
     }
 
     public void TirerJoueur()
@@ -98,14 +104,12 @@ public class GestionnaireJeu : MonoBehaviour
 
     private void LancerAnimationBot(object sender, OccupationEventArgs e)
     {
-        //if(GetComponent<GestionnaireInterface>().animation)
-            GetComponent<GestionAnimation>().EnterState();
+        GetComponent<GestionAnimation>().EnterState();
     }
 
     private void LancerAnimationJoueur(object sender, OccupationEventArgs e)
     {
-        //if(GetComponent<GestionnaireInterface>().animation)
-            GetComponent<GestionAnimation>().EnterState();
+        GetComponent<GestionAnimation>().EnterState();
     }
 
     public void RetirerCollider(object sender, OccupationEventArgs e)
@@ -191,7 +195,7 @@ public class GestionnaireJeu : MonoBehaviour
     public Bateau TrouverBateauSurCase(Joueur joueurTouché, Coordonnées coordVoulue)
     {
         // Bateau null, car la fonction sera forcément appellée sur une case occupée.
-        Bateau bateauSurCase = new Bateau(2, null, null); 
+        Bateau bateauSurCase = new Bateau(2, null, null);
         foreach (Bateau b in joueurTouché.Arsenal)
         {
             Case temp = b.CasesOccupées.At(coordVoulue.Rangée, coordVoulue.Colonne);
