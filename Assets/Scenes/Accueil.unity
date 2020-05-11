@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 89396736}
   - component: {fileID: 89396735}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TxtTitre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -354,6 +355,7 @@ GameObject:
   - component: {fileID: 379418165}
   - component: {fileID: 379418164}
   - component: {fileID: 379418167}
+  - component: {fileID: 379418168}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -433,9 +435,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379418163}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8290390ae4da31749a956dc8903ffe62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &379418168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379418163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f1e6425c401b9429650bc064cbe296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &570584723
@@ -450,8 +464,8 @@ GameObject:
   - component: {fileID: 570584727}
   - component: {fileID: 570584726}
   - component: {fileID: 570584725}
-  - component: {fileID: 570584729}
   - component: {fileID: 570584728}
+  - component: {fileID: 570584729}
   m_Layer: 5
   m_Name: BtnQuitter
   m_TagString: Untagged
@@ -521,18 +535,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 570584726}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 379418167}
-        m_MethodName: Quitter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &570584726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +551,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -698,6 +702,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1048,6 +1053,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1121,6 +1127,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1238,8 +1245,8 @@ GameObject:
   - component: {fileID: 1551662424}
   - component: {fileID: 1551662423}
   - component: {fileID: 1551662422}
-  - component: {fileID: 1551662426}
   - component: {fileID: 1551662425}
+  - component: {fileID: 1551662426}
   m_Layer: 5
   m_Name: BtnJouer
   m_TagString: Untagged
@@ -1309,18 +1316,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1551662423}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 379418167}
-        m_MethodName: "ChangerSc\xE8ne"
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: GameScene
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1551662423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1336,6 +1332,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1401,7 +1398,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1551662426}
-          m_MethodName: "R\xE9tr\xE9cirBouton"
+          m_MethodName: ChangerCouleurDefault
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1412,7 +1409,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 1551662426}
-          m_MethodName: ChangerCouleurDefault
+          m_MethodName: "R\xE9tr\xE9cirBouton"
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1486,6 +1483,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.43721077, g: 0.6240814, b: 0.7075472, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
