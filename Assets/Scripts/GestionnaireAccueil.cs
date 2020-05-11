@@ -9,13 +9,15 @@ using UnityEngine.UI;
 
 public class GestionnaireAccueil : MonoBehaviour
 {
+    public static GestionnaireAccueil accueil;
     Button BoutonJouer { get; set; }
     Button BoutonQuitter { get; set; }
     TextMeshProUGUI TexteBoutonJouer { get; set; }
-    TextMeshProUGUI TexteTitre { get; set; }
+    public TextMeshProUGUI TexteTitre { get; set; }
 
-    void Start()
+    private void Awake()
     {
+        accueil = this;
         DéfinirValeursParDéfaut();
         AssignerCallbacks();
         GarderObjets();
@@ -40,14 +42,8 @@ public class GestionnaireAccueil : MonoBehaviour
 
         // Texte
         GestionnaireJeu.manager.JoueurActif.PartieTerminée += ModifierBoutonJouer;
-        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
-        {
-            GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
-        }
-        else
-        {
-            GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireDéfaite;
-        }
+        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
+        GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireDéfaite;
     }
 
     void ModifierBoutonJouer(object sender, BateauEventArgs e)
@@ -67,9 +63,11 @@ public class GestionnaireAccueil : MonoBehaviour
 
     void GarderObjets()
     {
-        DontDestroyOnLoad(BoutonJouer);
-        DontDestroyOnLoad(BoutonQuitter);
-        DontDestroyOnLoad(TexteTitre);
+        GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject g in gameObjects)
+        {
+            DontDestroyOnLoad(g);
+        }
     }
 
     void Quitter()

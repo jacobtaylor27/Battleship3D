@@ -23,26 +23,7 @@ public class GestionnaireInterface : MonoBehaviour
     {
         animation = true;
         AssignerVariables();
-        AssignerCallback();
-    }
-
-    void AssignerCallback()
-    {
-        // Gestion tour 
-        GestionnaireJeu.manager.TourChangé += IncrémenterTourUI;
-        GestionnaireJeu.manager.TourChangé += RetirerTexte;
-
-        // Gestion messages
-        if (GestionnaireJeu.manager.DéterminerJoueurActif() == "Bot")
-        {
-            GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
-            GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageVictoire;
-            GestionnaireJeu.manager.JoueurActif.BateauDétruit += DécrémenterBateauxRestants;
-        }
-        else
-        {
-            GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageDéfaite;
-        }
+        AssignerCallbacks();
     }
 
     void AssignerVariables()
@@ -55,7 +36,7 @@ public class GestionnaireInterface : MonoBehaviour
         BoutonCommencerPartie.onClick.AddListener(GestionnaireJeu.manager.CommencerPartie);
 
         // Bouton quitter
-        BoutonQuitter = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
+        BoutonQuitter = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnQuitter");
         BoutonQuitter.onClick.AddListener(GestionnaireJeu.manager.QuitterPartie);
 
         // Compteur tours
@@ -66,14 +47,24 @@ public class GestionnaireInterface : MonoBehaviour
 
         // Messages 
         Messages = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "MessagesTxt");
-
-        // Titre de la scène fin de partie
-        //AsyncOperation scene = SceneManager.LoadSceneAsync("FinDePartie", LoadSceneMode.Additive);
-        //scene.allowSceneActivation = false;
-        //TitreFinDePartie = SceneManager.GetSceneByName("FinDePartie").GetRootGameObjects().First(x => x.name == "Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TitleTxt");
     }
 
-    void IncrémenterTourUI(object sender, TourEventArgs e)
+    void AssignerCallbacks()
+    {
+        GestionnaireJeu.manager.TourChangé += IncrémenterTourUI;
+        GestionnaireJeu.manager.TourChangé+= RetirerTexte;
+
+        GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
+        GestionnaireJeu.manager.JoueurActif.BateauDétruit += DécrémenterBateauxRestants;
+
+        GestionnaireJeu.manager.JoueurActif.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
+        GestionnaireJeu.manager.AutreJoueur.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
+
+        //GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireMessageDéfaite;
+        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageVictoire;
+    }
+
+    public void IncrémenterTourUI(object sender, TourEventArgs e)
     {
         if (GestionnaireJeu.manager.Tour % 2 == 0)
         {
@@ -83,31 +74,30 @@ public class GestionnaireInterface : MonoBehaviour
             CompteurTours.text = GestionnaireJeu.manager.Tour.ToString() + " (Joueur)";
     }
 
-    void RetirerTexte(object sender, TourEventArgs e)
+    public void RetirerTexte(object sender, TourEventArgs e)
     {
         Messages.text = "";
     }
 
-    void ÉcrireMessageDéfaite(object sender, BateauEventArgs e)
-    {
-        string message = "Vous avez perdu :(";
-        TitreFinDePartie.text = message;
-        Messages.text = message;
-    }
+    //public void ÉcrireMessageDéfaite(object sender, BateauEventArgs e)
+    //{
+    //    string message = "Vous avez perdu :(";
+    //    Messages.text = message;
+    //}
 
-    void ÉcrireMessageVictoire(object sender, BateauEventArgs e)
-    {
-        string message = "Vous avez gagné !";
-        Messages.text = message;
-        TitreFinDePartie.text = message;
-    }
+    //public void ÉcrireMessageVictoire(object sender, BateauEventArgs e)
+    //{
+    //    string message = "Vous avez gagné !";
+    //    Messages.text = message;
+    //    TitreFinDePartie.text = message;
+    //}
 
-    void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e)
+    public void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e)
     {
         Messages.text = "Touché coulé !";
     }
 
-    void DécrémenterBateauxRestants(object sender, BateauEventArgs e)
+    public void DécrémenterBateauxRestants(object sender, BateauEventArgs e)
     {
         CompteurBateauxRestants.text = GestionnaireJeu.manager.AutreJoueur.BateauxRestants.ToString();
     }
