@@ -55,9 +55,9 @@ public class Joueur
             onBateauDétruit(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
             if (APerdu)
             {
-                GestionnaireAccueil.accueil.TexteTitre.text = "Yo";
-                onPartieTerminée(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
                 SceneManager.LoadScene("Accueil");
+                GestionnaireAccueil.accueil.TexteTitre.text = "Vous avez gagné !";
+                //onPartieTerminée(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
             }
 
         }

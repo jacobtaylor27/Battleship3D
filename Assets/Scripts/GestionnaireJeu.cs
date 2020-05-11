@@ -44,6 +44,7 @@ public class GestionnaireJeu : MonoBehaviour
         Joueur.BateauDétruit += SignalerBot;
         Bot.BateauDétruit += AfficherBateau;
         JoueurActif.PartieTerminée += TerminerJeu;
+        AutreJoueur.PartieTerminée += TerminerJeu;
 
         GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
 
@@ -76,7 +77,13 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void QuitterPartie()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBPLAYER
+            Application.OpenURL(webplayerQuitURL);
+#else
+            Application.Quit();
+#endif
     }
 
     public void TerminerJeu(object sender, BateauEventArgs e)

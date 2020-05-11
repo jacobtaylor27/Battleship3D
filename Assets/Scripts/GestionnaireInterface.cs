@@ -17,7 +17,7 @@ public class GestionnaireInterface : MonoBehaviour
     TextMeshProUGUI CompteurBateauxRestants { get; set; }
     TextMeshProUGUI CompteurTours { get; set; }
     TextMeshProUGUI Messages { get; set; }
-    TextMeshProUGUI TitreFinDePartie { get; set; }
+    //TextMeshProUGUI TitreFinDePartie { get; set; }
 
     void Start()
     {
@@ -57,11 +57,12 @@ public class GestionnaireInterface : MonoBehaviour
         GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
         GestionnaireJeu.manager.JoueurActif.BateauDétruit += DécrémenterBateauxRestants;
 
-        GestionnaireJeu.manager.JoueurActif.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
-        GestionnaireJeu.manager.AutreJoueur.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
+        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
+        //GestionnaireJeu.manager.AutreJoueur.PartieTerminée += GestionnaireJeu.manager.TerminerJeu;
 
-        //GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireMessageDéfaite;
-        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireMessageVictoire;
+        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ModifierBoutonJouer;
+        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
+        GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireDéfaite;
     }
 
     public void IncrémenterTourUI(object sender, TourEventArgs e)
@@ -79,18 +80,20 @@ public class GestionnaireInterface : MonoBehaviour
         Messages.text = "";
     }
 
-    //public void ÉcrireMessageDéfaite(object sender, BateauEventArgs e)
-    //{
-    //    string message = "Vous avez perdu :(";
-    //    Messages.text = message;
-    //}
+    void ModifierBoutonJouer(object sender, BateauEventArgs e)
+    {
+        GestionnaireAccueil.accueil.TexteBoutonJouer.text = "Rejouer";
+    }
 
-    //public void ÉcrireMessageVictoire(object sender, BateauEventArgs e)
-    //{
-    //    string message = "Vous avez gagné !";
-    //    Messages.text = message;
-    //    TitreFinDePartie.text = message;
-    //}
+    void ÉcrireVictoire(object sender, BateauEventArgs e)
+    {
+        GestionnaireAccueil.accueil.TexteTitre.text = "Vous avez gagné !";
+    }
+
+    void ÉcrireDéfaite(object sender, BateauEventArgs e)
+    {
+        GestionnaireAccueil.accueil.TexteTitre.text = "Vous avez perdu :(";
+    }
 
     public void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e)
     {

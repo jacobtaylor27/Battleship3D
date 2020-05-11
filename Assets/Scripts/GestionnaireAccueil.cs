@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,26 +13,31 @@ public class GestionnaireAccueil : MonoBehaviour
     public static GestionnaireAccueil accueil;
     Button BoutonJouer { get; set; }
     Button BoutonQuitter { get; set; }
-    TextMeshProUGUI TexteBoutonJouer { get; set; }
+    public TextMeshProUGUI TexteBoutonJouer { get; set; }
     public TextMeshProUGUI TexteTitre { get; set; }
+    GameObject[] gameObjects { get; set; }
 
     private void Awake()
     {
         accueil = this;
         DéfinirValeursParDéfaut();
-        AssignerCallbacks();
         GarderObjets();
+    }
+
+    private void Start()
+    {
+        AssignerCallbacks();
     }
 
     public void DéfinirValeursParDéfaut()
     {
         // Boutons
-        BoutonJouer = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnJouer");
-        BoutonQuitter = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnQuitter");
+        BoutonJouer = GameObject.Find("CanvasAccueil").GetComponentsInChildren<Button>().First(x => x.name == "BtnJouer");
+        BoutonQuitter = GameObject.Find("CanvasAccueil").GetComponentsInChildren<Button>().First(x => x.name == "BtnQuitter");
 
         // Texte
         TexteBoutonJouer = BoutonJouer.GetComponentInChildren<TextMeshProUGUI>();
-        TexteTitre = GameObject.Find("Canvas").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TxtTitre");
+        TexteTitre = GameObject.Find("CanvasAccueil").GetComponentsInChildren<TextMeshProUGUI>().First(x => x.name == "TxtTitre");
     }
 
     void AssignerCallbacks()
@@ -40,30 +46,15 @@ public class GestionnaireAccueil : MonoBehaviour
         BoutonJouer.onClick.AddListener(Jouer);
         BoutonQuitter.onClick.AddListener(Quitter);
 
-        // Texte
-        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ModifierBoutonJouer;
-        GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
-        GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireDéfaite;
-    }
-
-    void ModifierBoutonJouer(object sender, BateauEventArgs e)
-    {
-        TexteBoutonJouer.text = "Rejouer";
-    }
-
-    void ÉcrireVictoire(object sender, BateauEventArgs e)
-    {
-        TexteTitre.text = "Vous avez gagné !";
-    }
-
-    void ÉcrireDéfaite(object sender, BateauEventArgs e)
-    {
-        TexteTitre.text = "Vous avez perdu :(";
+        //// Texte
+        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += ModifierBoutonJouer;
+        //GestionnaireJeu.manager.JoueurActif.PartieTerminée += ÉcrireVictoire;
+        //GestionnaireJeu.manager.AutreJoueur.PartieTerminée += ÉcrireDéfaite;
     }
 
     void GarderObjets()
     {
-        GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+        gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject g in gameObjects)
         {
             DontDestroyOnLoad(g);
@@ -81,5 +72,17 @@ public class GestionnaireAccueil : MonoBehaviour
 #endif
     }
 
-    void Jouer() => SceneManager.LoadScene("GameScene");
+    void CacherMembres()
+    {
+        foreach (GameObject g in gameObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    void Jouer()
+    {
+        SceneManager.LoadScene("GameScene");
+        CacherMembres();
+    }
 }
