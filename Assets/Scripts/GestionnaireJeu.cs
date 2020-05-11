@@ -76,13 +76,12 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void QuitterPartie()
     {
-        UnityEngine.Application.Quit();
+        Application.Quit();
     }
 
     public void TerminerJeu(object sender, BateauEventArgs e)
     {
-        SceneManager.LoadScene("FinDePartie");
-        SceneManager.UnloadSceneAsync("GameScene");
+        SceneManager.LoadScene("Accueil");
     }
 
     public void TirerJoueur()
