@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class GestionnaireInterface : MonoBehaviour
 {
+    Toggle ToggleAnimation { get; set; }
     Button BoutonCommencerPartie { get; set; }
     Button BoutonQuitter { get; set; }
     TextMeshProUGUI CompteurBateauxRestants { get; set; }
@@ -44,6 +45,8 @@ public class GestionnaireInterface : MonoBehaviour
 
     void AssignerVariables()
     {
+        ToggleAnimation = GameObject.Find("Canevas").GetComponentsInChildren<Toggle>().First(x=>x.name==)
+
         // Bouton commencer
         BoutonCommencerPartie = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
         BoutonCommencerPartie.onClick.AddListener(GestionnaireJeu.manager.CommencerPartie);
