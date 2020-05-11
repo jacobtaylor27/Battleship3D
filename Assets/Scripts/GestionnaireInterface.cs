@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class GestionnaireInterface : MonoBehaviour
 {
-    public bool animation { get; set; }
+    public bool AnimationEstActivée { get; set; }
     Toggle ToggleAnimation { get; set; }
     Button BoutonCommencerPartie { get; set; }
     Button BoutonQuitter { get; set; }
@@ -21,7 +21,7 @@ public class GestionnaireInterface : MonoBehaviour
 
     void Start()
     {
-        animation = true;
+        AnimationEstActivée = true;
         AssignerVariables();
         AssignerCallbacks();
     }
@@ -29,7 +29,7 @@ public class GestionnaireInterface : MonoBehaviour
     void AssignerVariables()
     {
         ToggleAnimation = GameObject.Find("Canvas").GetComponentsInChildren<Toggle>().First(x => x.name == "ToggleAnimation");
-        ToggleAnimation.onValueChanged.AddListener(x => animation = !animation);
+        ToggleAnimation.onValueChanged.AddListener(x => AnimationEstActivée = !AnimationEstActivée);
 
         // Bouton commencer
         BoutonCommencerPartie = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
