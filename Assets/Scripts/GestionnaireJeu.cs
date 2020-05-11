@@ -70,7 +70,7 @@ public class GestionnaireJeu : MonoBehaviour
     #region Callbacks
     public void CommencerPartie()
     {
-        BoutonGameStart.onClick.RemoveAllListeners();
+        ModifierBoutonStart();
         Bot.Placer();
         GetComponent<PlacementBateau>().EnterState();
     }
@@ -221,5 +221,15 @@ public class GestionnaireJeu : MonoBehaviour
     }
 
     public string DéterminerJoueurActif() => JoueurActif.ToString();
-#endregion
+
+    void RechargerScène() => SceneManager.LoadScene("GameScene");
+
+    private void ModifierBoutonStart()
+    {
+        BoutonGameStart.onClick.RemoveAllListeners();
+        BoutonGameStart.GetComponentInChildren<Text>().text = "Recommencer";
+        BoutonGameStart.GetComponentInChildren<Text>().fontSize = 23;
+        BoutonGameStart.onClick.AddListener(RechargerScène);
+    }
+    #endregion
 }
