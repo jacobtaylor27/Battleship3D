@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-
+using UnityEngine.SceneManagement;
 
 public class Joueur
 {
@@ -54,7 +54,11 @@ public class Joueur
             BateauxRestants--;
             onBateauDétruit(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
             if (APerdu)
+            {
+                GestionnaireAccueil.accueil.TexteTitre.text = "Yo";
                 onPartieTerminée(new BateauEventArgs(Arsenal[Arsenal.FindIndex(x => x == b)]));
+                SceneManager.LoadScene("Accueil");
+            }
 
         }
     }
