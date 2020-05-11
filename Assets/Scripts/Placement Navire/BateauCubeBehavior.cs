@@ -18,7 +18,6 @@ public class BateauCubeBehavior : MonoBehaviour
         InfoTuile = null;
         return false;
     }
-
     public InformationTuile GetInfoTuile()
     {
         Ray ray = new Ray(transform.position, -transform.up);
@@ -26,10 +25,7 @@ public class BateauCubeBehavior : MonoBehaviour
         {
             Debug.DrawRay(ray.origin, ray.direction, Color.red);
             return hit.collider.GetComponent<InformationTuile>();
-        }
-
+        }  
         return null;
-    }
-
-
+    }   
 }
