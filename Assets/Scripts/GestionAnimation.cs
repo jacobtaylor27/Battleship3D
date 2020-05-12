@@ -71,7 +71,7 @@ public class GestionAnimation : MonoBehaviour
         UpdateMatricesRotation();
         Vector3 tempBoucheCanon2 = RotateVector(tempBoucheCanon, MatriceRotationX);
 
-        portée = new Vector3(VCanonFinal.x - tempBoucheCanon.x + (tempBoucheCanon.x - tempBoucheCanon2.x), 0,VCanonFinal.z - tempBoucheCanon.z + (tempBoucheCanon.z - tempBoucheCanon2.z)).magnitude;
+        portée = new Vector3(VCanonFinal.x - tempBoucheCanon.x + (tempBoucheCanon.x - tempBoucheCanon2.x), 0, VCanonFinal.z - tempBoucheCanon.z + (tempBoucheCanon.z - tempBoucheCanon2.z)).magnitude;
 
         CalculerVitesseEtAngleX(portée);
 
@@ -164,23 +164,23 @@ public class GestionAnimation : MonoBehaviour
         CamBot.enabled = true;
 
         enabled = false;
-        Destroy(Missile,0.5f);
+        Destroy(Missile);
         GestionnaireJeu.manager.PasserAuProchainTour();
     }
 
     private void UpdateMatricesRotation()
     {
         MatriceRotationX = new float[3, 3] { { 1, 0, 0 }, { 0, Mathf.Cos(AngleX * Mathf.Deg2Rad), -Mathf.Sin(AngleX * Mathf.Deg2Rad) }, { 0, Mathf.Sin(AngleX * Mathf.Deg2Rad), Mathf.Cos(AngleX * Mathf.Deg2Rad) } };
-        MatriceRotationY = new float[3, 3] { { Mathf.Cos(AngleY * Mathf.Deg2Rad), 0, Mathf.Sin(AngleY *Mathf.Deg2Rad) }, { 0, 1, 0 }, { -Mathf.Sin(AngleY * Mathf.Deg2Rad), 0, Mathf.Cos(AngleY * Mathf.Deg2Rad) } };
+        MatriceRotationY = new float[3, 3] { { Mathf.Cos(AngleY * Mathf.Deg2Rad), 0, Mathf.Sin(AngleY * Mathf.Deg2Rad) }, { 0, 1, 0 }, { -Mathf.Sin(AngleY * Mathf.Deg2Rad), 0, Mathf.Cos(AngleY * Mathf.Deg2Rad) } };
     }
 
     private Vector3 RotateVector(Vector3 vectorToRotate, float[,] rotationMatrix)
     {
         Vector3 temp = Vector3.zero;
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            for(int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
                 temp[i] += rotationMatrix[i, j] * vectorToRotate[j];
             }

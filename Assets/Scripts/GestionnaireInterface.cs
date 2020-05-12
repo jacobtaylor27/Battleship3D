@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,10 +63,22 @@ public class GestionnaireInterface : MonoBehaviour
         else if (GestionnaireJeu.manager.Tour % 2 == 1)
             CompteurTours.text = GestionnaireJeu.manager.Tour.ToString() + " (Joueur)";
     }
-    
-    void RetirerTexte(object sender, TourEventArgs e) => Messages.text = "";
 
-    void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e) => Messages.text = "Touché coulé !";
+    void RetirerTexte(object sender, TourEventArgs e)
+    {
+        StartCoroutine(Waiter());
+    }
+
+    IEnumerator Waiter()
+    {
+        yield return new WaitForSecondsRealtime(4);
+        Messages.text = "";
+    }
+
+    void ÉcrireMessageTouchéCoulé(object sender, BateauEventArgs e)
+    {
+        Messages.text = "Touché coulé !";
+    }
 
     void DécrémenterBateauxRestants(object sender, BateauEventArgs e) => CompteurBateauxRestants.text = GestionnaireJeu.manager.AutreJoueur.BateauxRestants.ToString();
 }
