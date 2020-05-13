@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BateauCubeBehavior : MonoBehaviour
 {
@@ -25,7 +23,7 @@ public class BateauCubeBehavior : MonoBehaviour
         {
             Debug.DrawRay(ray.origin, ray.direction, Color.red);
             return hit.collider.GetComponent<InformationTuile>();
-        }  
+        }
         return null;
-    }   
+    }
 }

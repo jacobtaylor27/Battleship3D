@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
-using System.Linq;
 
 public class GestionTirs : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class GestionTirs : MonoBehaviour
     Ray ray;
 
     GameObject plane;
+
     private void Start()
     {
         Origine = GetComponent<GénérerCollidersGrille>().OrigineNPC;
@@ -24,7 +23,7 @@ public class GestionTirs : MonoBehaviour
         Tirer = KeyCode.Mouse0;//click gauche
 
         plane = GameObject.Find("WaterFloor");
-        CamBot = Camera.allCameras.ToList<Camera>().Find(x=>x.name == "NPCCam"); 
+        CamBot = Camera.allCameras.ToList().Find(x => x.name == "NPCCam");
 
         // Trouver gameObjectGrille et set la hauteur voulue par rapport à la grille comme étant yAxis
         float zAxis = plane.transform.position.z;
@@ -39,7 +38,6 @@ public class GestionTirs : MonoBehaviour
     void Update()
     {
         ray = CamBot.ScreenPointToRay(Input.mousePosition);
-        //float distance = Mathf.Sqrt(Mathf.Pow(CamBot.transform.position.x, 2) + Mathf.Pow(CamBot.transform.position.y, 2) + Mathf.Pow(CamBot.transform.position.z, 2));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             //Mettre un tag pour tous les colliders et générer procéduralement les colliders
@@ -56,6 +54,7 @@ public class GestionTirs : MonoBehaviour
     {
         enabled = true;
     }
+
     private void ExitState()
     {
         enabled = false;

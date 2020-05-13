@@ -48,7 +48,7 @@ public class GestionnaireInterface : MonoBehaviour
     void AssignerCallbacks()
     {
         GestionnaireJeu.manager.TourChangé += IncrémenterTourUI;
-        GestionnaireJeu.manager.TourChangé+= RetirerTexte;
+        GestionnaireJeu.manager.TourChangé += RetirerTexte;
 
         GestionnaireJeu.manager.JoueurActif.BateauDétruit += ÉcrireMessageTouchéCoulé;
         GestionnaireJeu.manager.JoueurActif.BateauDétruit += DécrémenterBateauxRestants;

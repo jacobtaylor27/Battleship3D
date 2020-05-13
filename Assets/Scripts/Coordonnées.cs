@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Coordonnées
+﻿public class Coordonnées
 {
     public int Rangée { get; set; }
     public int Colonne { get; set; }
@@ -21,14 +17,13 @@ public class Coordonnées
 
     public override string ToString() => $"{Rangée},{Colonne}";
 
-
     public override bool Equals(object obj)
     {
         if ((obj == null) || !this.GetType().Equals(obj.GetType()))
             return false;
         else
         {
-            Coordonnées coord = (Coordonnées) obj;
+            Coordonnées coord = (Coordonnées)obj;
             return Rangée == coord.Rangée && Colonne == coord.Colonne;
 
         }
@@ -41,9 +36,8 @@ public class Coordonnées
     {
         return coord1.Equals(coord2);
     }
-    public static bool operator !=(Coordonnées coord1,Coordonnées coord2)
+    public static bool operator !=(Coordonnées coord1, Coordonnées coord2)
     {
         return !coord1.Equals(coord2);
     }
-
 }

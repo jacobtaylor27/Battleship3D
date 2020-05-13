@@ -1,8 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using System;
 
 
 public class Paneau
@@ -29,13 +27,12 @@ public class Paneau
 
     public void OnOccupationModifiée(OccupationEventArgs dataOccupation)
     {
-        this.OccupationModifiée?.Invoke(this, dataOccupation);
+        OccupationModifiée?.Invoke(this, dataOccupation);
     }
 
     public void ModifierÉtatCase(Coordonnées coord, TypeOccupation occup)
     {
         TrouverCase(coord).TypeOccupation = occup;
         OnOccupationModifiée(new OccupationEventArgs(new Case(coord, occup, TrouverCase(coord).PositionMonde)));
-       
     }
 }

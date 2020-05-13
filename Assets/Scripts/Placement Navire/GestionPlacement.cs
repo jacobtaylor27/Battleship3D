@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Linq;
 
 public class GestionPlacement : MonoBehaviour, IPointerClickHandler
 {
@@ -28,7 +26,7 @@ public class GestionPlacement : MonoBehaviour, IPointerClickHandler
     }
     void InitialiserValeurs()
     {
-        CaméraJoueur = Camera.allCameras.ToList<Camera>().Find(x=>x.name== "PlayerGridCam");
+        CaméraJoueur = Camera.allCameras.ToList<Camera>().Find(x => x.name == "PlayerGridCam");
         Bateaux = GestionnaireJeu.manager.JoueurActif.Arsenal;
         IndiceBateauActuel = 0;
         PeutÊtrePlacé = true;
@@ -39,7 +37,7 @@ public class GestionPlacement : MonoBehaviour, IPointerClickHandler
     {
         ray = CaméraJoueur.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity,LayerMask.GetMask(new string[] { "Tuile" })) && hit.collider.gameObject.layer == Layer)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(new string[] { "Tuile" })) && hit.collider.gameObject.layer == Layer)
         {
             PtCollision = hit.collider.gameObject.transform.position;
             CaseVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case;
@@ -101,8 +99,8 @@ public class GestionPlacement : MonoBehaviour, IPointerClickHandler
     }
     void ChangerDirectionCubes()
     {
-        CubesÀPlacer.transform.Rotate(Vector3.up,90f);
-        
+        CubesÀPlacer.transform.Rotate(Vector3.up, 90f);
+
         Debug.Log(DéterminerOrientation(CubesÀPlacer.transform.localEulerAngles.y).ToString());
     }
     void PlacerBateau(Bateau b)

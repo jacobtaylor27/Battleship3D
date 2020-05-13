@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System;
+using UnityEngine;
 
 public class Joueur
 {
@@ -32,10 +32,8 @@ public class Joueur
     {
         if (val == 0)
             return (GameObject)Resources.Load("Prefabs/PrefabNavires/" + nom);
-
         else if (val == 1)
             return (GameObject)Resources.Load("Prefabs/" + nom);
-
         else
             return null;
     }

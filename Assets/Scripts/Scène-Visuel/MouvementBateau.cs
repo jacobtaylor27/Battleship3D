@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Unity.Collections;
 using UnityEngine;
 
 public class MouvementBateau : MonoBehaviour
@@ -8,9 +7,8 @@ public class MouvementBateau : MonoBehaviour
     float AngleInitial;
     Quaternion RotationInitiale;
     Vector3 PosInitiale;
-    [SerializeField]
+
     float AmplitudeMouvement = 20f;
-    [SerializeField]
     float VitesseExecution = 0.5f;
 
     void Start()

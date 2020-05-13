@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class OccupationEventArgs : EventArgs
 {
@@ -24,13 +22,7 @@ public class TourEventArgs : EventArgs
     }
 }
 
-public class PartieEventArgs : EventArgs
-{
-    public PartieEventArgs()
-    {
-
-    }
-}
+public class PartieEventArgs : EventArgs { public PartieEventArgs() { } }
 
 public class BateauEventArgs : EventArgs
 {

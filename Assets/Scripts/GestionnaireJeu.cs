@@ -1,30 +1,33 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
-using System;
-using UnityEngine.Events;
-using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GestionnaireJeu : MonoBehaviour
 {
     public static GestionnaireJeu manager;
+
     private Joueur Joueur { get; set; }
     private Bot Bot { get; set; }
     public Joueur JoueurActif { get; private set; }
     public Joueur AutreJoueur { get; private set; }
+
     private GameObject CanonJoueur { get; set; }
     private GameObject CanonBot { get; set; }
     public GameObject CanonActif { get; private set; }
     public GameObject AutreCanon { get; private set; }
+
     Button BoutonGameStart { get; set; }
+
     public Vector3 PositionVisée { get; set; }
     public Coordonnées CoordVisée { get; set; }
     public TypeOccupation OccupÀCoordVisée { get; private set; }
+
     public int Tour { get; private set; }
     private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
+
     public EventHandler<TourEventArgs> TourChangé;
 
     void onTourChangé(TourEventArgs dataTour) => TourChangé?.Invoke(this, dataTour);

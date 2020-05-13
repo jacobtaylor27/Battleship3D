@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class GestionAnimation : MonoBehaviour
 {
@@ -11,24 +9,25 @@ public class GestionAnimation : MonoBehaviour
     const float HauteurMax = 500f;
     const float VitesseInit = 100f;
 
-
     Camera AnimationBot { get; set; }
     Camera AnimationJoueur { get; set; }
     Camera CamBot { get; set; }
     Camera CamJoueur { get; set; }
+
     GameObject Missile { get; set; }
     public GameObject projectile;
+
     GameObject[] Canons { get; set; }
     GameObject Affut { get; set; }
     Vector3 VCanonInit { get; set; }
     Vector3 VCanonFinal { get; set; }
+
     float AngleX { get; set; }
     float AngleY { get; set; }
     float VitesseI { get; set; }
     int CptFrame { get; set; }
     float[,] MatriceRotationY { get; set; }
     float[,] MatriceRotationX { get; set; }
-
 
     private void OnEnable()
     {
@@ -52,18 +51,14 @@ public class GestionAnimation : MonoBehaviour
         VCanonInit = new Vector3(VCanonInit.x, 0, VCanonInit.z);
 
         VCanonFinal = GestionnaireJeu.manager.PositionVisée - Affut.transform.position;
-        //VCanonFinal = new Vector3(VCanonFinal.x, 0, VCanonFinal.z);
 
         //Angle pour rotation autour de Y
         AngleY = Vector3.SignedAngle(VCanonInit, VCanonFinal, Vector3.up);
 
         UpdateMatricesRotation();
         Vector3 tempBoucheCanon = RotateVector(VCanonInit, MatriceRotationY);
-        //tempBoucheCanon = new Vector3(tempBoucheCanon.x, 0, tempBoucheCanon.z);
 
-        //float angleTemp = Vector3.SignedAngle(tempBoucheCanon, VCanonFinal, Vector3.up);
-
-        float portée = new Vector3(VCanonFinal.x - tempBoucheCanon.x,0, VCanonFinal.z - tempBoucheCanon.z).magnitude;
+        float portée = new Vector3(VCanonFinal.x - tempBoucheCanon.x, 0, VCanonFinal.z - tempBoucheCanon.z).magnitude;
         float hauteur = Mathf.Abs(VCanonFinal.y - tempBoucheCanon.y);
 
         CalculerVitesseEtAngleX(portée, hauteur);
@@ -76,8 +71,6 @@ public class GestionAnimation : MonoBehaviour
         CalculerVitesseEtAngleX(portée, hauteur);
 
         CptFrame = 0;
-
-
     }
 
     private void CalculerVitesseEtAngleX(float portée, float hauteur)
@@ -167,7 +160,7 @@ public class GestionAnimation : MonoBehaviour
     private void UpdateMatricesRotation()
     {
         MatriceRotationX = new float[3, 3] { { 1, 0, 0 }, { 0, Mathf.Cos(AngleX * Mathf.Deg2Rad), -Mathf.Sin(AngleX * Mathf.Deg2Rad) }, { 0, Mathf.Sin(AngleX * Mathf.Deg2Rad), Mathf.Cos(AngleX * Mathf.Deg2Rad) } };
-        
+
         //Autour de l'axe des Y de Unity (axe des Z en maths)
         MatriceRotationY = new float[3, 3] { { Mathf.Cos(AngleY * Mathf.Deg2Rad), Mathf.Sin(AngleY * Mathf.Deg2Rad), 0 }, { Mathf.Sin(AngleY * Mathf.Deg2Rad), Mathf.Cos(AngleY * Mathf.Deg2Rad), 0 }, { 0, 0, 1 } };
     }
@@ -183,8 +176,6 @@ public class GestionAnimation : MonoBehaviour
                 temp[i] += rotationMatrix[i, j] * vectorToRotate[j];
             }
         }
-
         return temp;
     }
-
 }
