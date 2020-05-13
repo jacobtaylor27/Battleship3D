@@ -18,14 +18,17 @@ public class ControlleurAccueil : MonoBehaviour
 
     public void DéfinirValeursParDéfaut()
     {
+        // Boutons
         BoutonJouer = GameObject.Find("CanvasAccueil").GetComponentsInChildren<Button>().First(x => x.name == "BtnJouer");
         BoutonQuitter = GameObject.Find("CanvasAccueil").GetComponentsInChildren<Button>().First(x => x.name == "BtnQuitter");
 
+        // Texte
         TexteBoutonJouer = BoutonJouer.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void AssignerCallbacks()
     {
+        // Boutons
         BoutonJouer.onClick.AddListener(Jouer);
         BoutonQuitter.onClick.AddListener(Quitter);
     }
