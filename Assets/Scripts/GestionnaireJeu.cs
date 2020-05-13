@@ -73,7 +73,7 @@ public class GestionnaireJeu : MonoBehaviour
     {
         ModifierBoutonStart();
         Bot.Placer();
-        GetComponent<PlacementBateau>().EnterState();
+        GetComponent<GestionPlacement>().EnterState();
     }
 
     public void QuitterPartie()

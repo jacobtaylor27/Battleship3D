@@ -52,38 +52,38 @@ public class GestionAnimation : MonoBehaviour
         VCanonInit = new Vector3(VCanonInit.x, 0, VCanonInit.z);
 
         VCanonFinal = GestionnaireJeu.manager.PositionVisée - Affut.transform.position;
-        VCanonFinal = new Vector3(VCanonFinal.x, 0, VCanonFinal.z);
+        //VCanonFinal = new Vector3(VCanonFinal.x, 0, VCanonFinal.z);
 
         //Angle pour rotation autour de Y
         AngleY = Vector3.SignedAngle(VCanonInit, VCanonFinal, Vector3.up);
 
         UpdateMatricesRotation();
         Vector3 tempBoucheCanon = RotateVector(VCanonInit, MatriceRotationY);
-        tempBoucheCanon = new Vector3(tempBoucheCanon.x, 0, tempBoucheCanon.z);
+        //tempBoucheCanon = new Vector3(tempBoucheCanon.x, 0, tempBoucheCanon.z);
 
-        float angleTemp = Vector3.SignedAngle(tempBoucheCanon, VCanonFinal, Vector3.up);
+        //float angleTemp = Vector3.SignedAngle(tempBoucheCanon, VCanonFinal, Vector3.up);
 
-        float portée = (VCanonFinal - tempBoucheCanon).magnitude;
+        float portée = new Vector3(VCanonFinal.x - tempBoucheCanon.x,0, VCanonFinal.z - tempBoucheCanon.z).magnitude;
+        float hauteur = Mathf.Abs(VCanonFinal.y - tempBoucheCanon.y);
 
-
-        CalculerVitesseEtAngleX(portée);
+        CalculerVitesseEtAngleX(portée, hauteur);
 
         UpdateMatricesRotation();
         Vector3 tempBoucheCanon2 = RotateVector(tempBoucheCanon, MatriceRotationX);
 
         portée = new Vector3(VCanonFinal.x - tempBoucheCanon.x + (tempBoucheCanon.x - tempBoucheCanon2.x), 0, VCanonFinal.z - tempBoucheCanon.z + (tempBoucheCanon.z - tempBoucheCanon2.z)).magnitude;
-
-        CalculerVitesseEtAngleX(portée);
+        hauteur += Mathf.Abs(tempBoucheCanon2.y);
+        CalculerVitesseEtAngleX(portée, hauteur);
 
         CptFrame = 0;
 
 
     }
 
-    private void CalculerVitesseEtAngleX(float portée)
+    private void CalculerVitesseEtAngleX(float portée, float hauteur)
     {
         //Vitesse en angle
-        VitesseI = Mathf.Sqrt(Mathf.Pow((portée / TempsAnimation), 2) + Mathf.Pow((GestionnaireJeu.manager.PositionVisée.y - 0.5f * AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) - Affut.GetComponentsInChildren<Transform>()[4].position.y) / TempsAnimation, 2));
+        VitesseI = Mathf.Sqrt(Mathf.Pow((portée / TempsAnimation), 2) + Mathf.Pow((GestionnaireJeu.manager.PositionVisée.y - 0.5f * AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) - hauteur) / TempsAnimation, 2));
 
         //Angles possible
         float Angle1 = Mathf.Acos(portée / (VitesseI * TempsAnimation));
@@ -124,11 +124,7 @@ public class GestionAnimation : MonoBehaviour
                 if (CptFrame == 200)
                 {
                     Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
-                    //Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(lol.transform.forward*Force),ForceMode.Impulse);
-                    //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward * Force);
                     Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
-                    //Missile.GetComponent<Rigidbody>().velocity = transform.TransformVector(lol.transform.forward )* VitesseI;
-
                 }
             }
             else if (CptFrame >= 300 && CptFrame < 360)
@@ -164,14 +160,16 @@ public class GestionAnimation : MonoBehaviour
         CamBot.enabled = true;
 
         enabled = false;
-        Destroy(Missile);
+        //Destroy(Missile);
         GestionnaireJeu.manager.PasserAuProchainTour();
     }
 
     private void UpdateMatricesRotation()
     {
         MatriceRotationX = new float[3, 3] { { 1, 0, 0 }, { 0, Mathf.Cos(AngleX * Mathf.Deg2Rad), -Mathf.Sin(AngleX * Mathf.Deg2Rad) }, { 0, Mathf.Sin(AngleX * Mathf.Deg2Rad), Mathf.Cos(AngleX * Mathf.Deg2Rad) } };
-        MatriceRotationY = new float[3, 3] { { Mathf.Cos(AngleY * Mathf.Deg2Rad), 0, Mathf.Sin(AngleY * Mathf.Deg2Rad) }, { 0, 1, 0 }, { -Mathf.Sin(AngleY * Mathf.Deg2Rad), 0, Mathf.Cos(AngleY * Mathf.Deg2Rad) } };
+        
+        //Autour de l'axe des Y de Unity (axe des Z en maths)
+        MatriceRotationY = new float[3, 3] { { Mathf.Cos(AngleY * Mathf.Deg2Rad), Mathf.Sin(AngleY * Mathf.Deg2Rad), 0 }, { Mathf.Sin(AngleY * Mathf.Deg2Rad), Mathf.Cos(AngleY * Mathf.Deg2Rad), 0 }, { 0, 0, 1 } };
     }
 
     private Vector3 RotateVector(Vector3 vectorToRotate, float[,] rotationMatrix)
