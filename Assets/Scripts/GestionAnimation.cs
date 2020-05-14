@@ -26,6 +26,7 @@ public class GestionAnimation : MonoBehaviour
     float AngleY { get; set; }
     float VitesseI { get; set; }
     int CptFrame { get; set; }
+    float TempsÉcoulé { get; set; }
     float[,] MatriceRotationY { get; set; }
     float[,] MatriceRotationX { get; set; }
 
@@ -114,8 +115,9 @@ public class GestionAnimation : MonoBehaviour
             }
             else if (CptFrame >= 120 && CptFrame < 300)
             {
-                if (CptFrame == 200)
+                if (CptFrame == 120)
                 {
+                    TempsÉcoulé = 0;
                     Missile = Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
                     Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
                 }
@@ -128,10 +130,11 @@ public class GestionAnimation : MonoBehaviour
             {
                 Affut.transform.Rotate(Vector3.up, -AngleY / 60f, Space.Self);
             }
-            //else
-            //    ExitState();
+            else if(TempsÉcoulé >= TempsAnimation + 0.5f)
+                ExitState();
 
             CptFrame++;
+            TempsÉcoulé += Time.deltaTime;
         }
         else
             ExitState();

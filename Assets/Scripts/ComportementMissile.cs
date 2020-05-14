@@ -8,7 +8,7 @@ public class ComportementMissile : MonoBehaviour
     {
         Destroy(gameObject);
         StartCoroutine(Routine());
-        GestionnaireJeu.manager.GetComponent<GestionAnimation>().ExitState();
+        //GestionnaireJeu.manager.GetComponent<GestionAnimation>().ExitState();
     }
     IEnumerator Routine()
     {
