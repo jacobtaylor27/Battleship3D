@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GestionnaireInterface : MonoBehaviour
 {
-    public bool AnimationEstActivée { get; set; }
+    public bool AnimationEstActivée { get;private set; }
     Toggle ToggleAnimation { get; set; }
     Button BoutonCommencerPartie { get; set; }
     Button BoutonQuitter { get; set; }

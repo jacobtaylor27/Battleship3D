@@ -52,7 +52,7 @@ public class GestionnaireJeu : MonoBehaviour
     {
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
-        //Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;
+        Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;
         Joueur.BateauDétruit += SignalerBot;
         Bot.BateauDétruit += AfficherBateau;
         JoueurActif.PartieTerminée += Victoire;
@@ -115,12 +115,15 @@ public class GestionnaireJeu : MonoBehaviour
         GetComponent<GestionAnimation>().EnterState();
     }
 
-    //public void RetirerCollider(object sender, OccupationEventArgs e)
-    //{
-    //    List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
-    //    Destroy(infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
-    //            .GetComponent<BoxCollider>());
-    //}
+    public void RetirerCollider(object sender, OccupationEventArgs e)
+    {
+        if (!GetComponent<GestionnaireInterface>().AnimationEstActivée)
+        {
+            List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
+            Destroy(infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
+                .GetComponent<BoxCollider>());
+        }
+    }
 
     void AfficherBateau(object sender, BateauEventArgs e)
     {
@@ -169,7 +172,9 @@ public class GestionnaireJeu : MonoBehaviour
             OccupÀCoordVisée = TypeOccupation.Manqué;
 
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
-        //ModifierCouleur();
+        
+        if(!GetComponent<GestionnaireInterface>().AnimationEstActivée)
+            ModifierCouleur();
     }
 
     public void PlacerBateauLogique(int indiceBateau, Vector3 orientation, Case caseVisée)
@@ -222,17 +227,17 @@ public class GestionnaireJeu : MonoBehaviour
         AutreCanon = tempCanon;
     }
 
-    //void ModifierCouleur()
-    //{
-    //    List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
+    void ModifierCouleur()
+    {
+        List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
 
-    //    if (OccupÀCoordVisée == TypeOccupation.Touché)
-    //        infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
-    //            .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/Touché");
-    //    else if (OccupÀCoordVisée == TypeOccupation.Manqué)
-    //        infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
-    //            .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
-    //}
+        if (OccupÀCoordVisée == TypeOccupation.Touché)
+            infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
+                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/Touché");
+        else if (OccupÀCoordVisée == TypeOccupation.Manqué)
+            infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
+                .GetComponent<MeshRenderer>().material = (Material)Resources.Load("Material/noir");
+    }
 
     public string DéterminerJoueurActif() => JoueurActif.ToString();
 
