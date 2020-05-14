@@ -9,10 +9,10 @@ public class GestionAnimation : MonoBehaviour
     const float HauteurMax = 500f;
     const float VitesseInit = 100f;
 
-    Camera AnimationBot { get; set; }
+    Camera AnimationBot {  get; set; }
     Camera AnimationJoueur { get; set; }
-    Camera CamBot { get; set; }
-    Camera CamJoueur { get; set; }
+    public Camera CamBot { get; private set; }
+    public Camera CamJoueur { get; private set; }
 
     GameObject Missile { get; set; }
     public GameObject projectile;
@@ -116,7 +116,7 @@ public class GestionAnimation : MonoBehaviour
             {
                 if (CptFrame == 200)
                 {
-                    Missile = GameObject.Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
+                    Missile = Instantiate(projectile, Affut.GetComponentsInChildren<Transform>()[4].position, Affut.GetComponentsInChildren<Transform>()[4].rotation);
                     Missile.GetComponent<Rigidbody>().AddForce(transform.TransformVector(Missile.transform.forward) * VitesseI, ForceMode.VelocityChange);
                 }
             }
@@ -128,8 +128,8 @@ public class GestionAnimation : MonoBehaviour
             {
                 Affut.transform.Rotate(Vector3.up, -AngleY / 60f, Space.Self);
             }
-            else
-                ExitState();
+            //else
+            //    ExitState();
 
             CptFrame++;
         }
@@ -143,7 +143,7 @@ public class GestionAnimation : MonoBehaviour
         enabled = true;
     }
 
-    private void ExitState()
+    public void ExitState()
     {
         foreach (var Camera in Camera.allCameras)
         {
@@ -153,7 +153,6 @@ public class GestionAnimation : MonoBehaviour
         CamBot.enabled = true;
 
         enabled = false;
-        //Destroy(Missile);
         GestionnaireJeu.manager.PasserAuProchainTour();
     }
 
