@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GestionnaireBoutons : MonoBehaviour
+public class ControllerBoutons : MonoBehaviour
 {
     Vector3 VecteurAgrandi { get; set; }
     Color CouleurDefault { get; set; }
     Vector3 ScaleInitial { get; set; }
 
-    void Start()
+    void Start() => AssignerValeursInitiales();
+
+    void AssignerValeursInitiales()
     {
         VecteurAgrandi = new Vector3(3.5f, 3.5f, 3.5f);
         ScaleInitial = transform.localScale;

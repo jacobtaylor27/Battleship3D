@@ -6,10 +6,14 @@ public class Case
 {
     public TypeOccupation TypeOccupation { get; set; }
     public Coordonnées Coordonnées { get; private set; }
-
     public Vector3 PositionMonde { get; private set; }
-    static public bool EstTiréRaté(Coordonnées coord) => GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
-                                 GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
+    public bool EstOccupé { get { return TypeOccupation == TypeOccupation.Occupé; } }
+
+    static public bool EstTiréRaté(Coordonnées coord)
+    {
+        return GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Touché ||
+               GestionnaireJeu.manager.JoueurActif.PaneauTirs.TrouverCase(coord).TypeOccupation == TypeOccupation.Manqué;
+    }
 
     public Case(int rangée, int colonne)
     {
@@ -27,15 +31,10 @@ public class Case
     public Case ChangerPosition(Vector3 position)
     {
         PositionMonde = position;
-
         return this;
     }
 
-    public bool EstOccupé
-    {
-        get { return TypeOccupation == TypeOccupation.Occupé; }
-    }
-
+    // Pour les tests
     public override string ToString()
     {
         return string.Format("v = ({0}), {1}, {2}", Coordonnées.ToString(), TypeOccupation, PositionMonde.ToString());

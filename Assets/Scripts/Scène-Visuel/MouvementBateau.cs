@@ -3,25 +3,26 @@ using UnityEngine;
 
 public class MouvementBateau : MonoBehaviour
 {
-    Rigidbody RigidbodyPrefab;
-    float AngleInitial;
-    Quaternion RotationInitiale;
-    Vector3 PosInitiale;
+    const float AmplitudeMouvement = 20f;
+    const float VitesseExecution = 0.5f;
+    Rigidbody RigidbodyPrefab { get; set; }
+    float AngleInitial { get; set; }
+    Quaternion RotationInitiale { get; set; }
+    Vector3 PositionInitiale { get; set; }
 
-    float AmplitudeMouvement = 20f;
-    float VitesseExecution = 0.5f;
+    void Start() => AssignerValeursInitiales();
 
-    void Start()
+    void AssignerValeursInitiales()
     {
         RigidbodyPrefab = GetComponent<Rigidbody>();
         RotationInitiale = transform.rotation;
         AngleInitial = Random.Range(-Mathf.PI, Mathf.PI);
-        PosInitiale = transform.position;
+        PositionInitiale = transform.position;
     }
 
     void Update()
     {
-        RigidbodyPrefab.MovePosition(PosInitiale + new Vector3(0, 1, 0) * AmplitudeMouvement / 100 * Mathf.Sin(VitesseExecution * Time.fixedTime + AngleInitial));
+        RigidbodyPrefab.MovePosition(PositionInitiale + new Vector3(0, 1, 0) * AmplitudeMouvement / 100 * Mathf.Sin(VitesseExecution * Time.fixedTime + AngleInitial));
         RigidbodyPrefab.MoveRotation(RotationInitiale * Quaternion.Euler(0, 0, +AmplitudeMouvement * Mathf.Sin(VitesseExecution * Time.fixedTime + AngleInitial)));
     }
 }

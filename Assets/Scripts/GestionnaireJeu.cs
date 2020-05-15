@@ -9,13 +9,13 @@ public class GestionnaireJeu : MonoBehaviour
 {
     public static GestionnaireJeu manager;
 
-    private Joueur Joueur { get; set; }
-    private Bot Bot { get; set; }
+    Joueur Joueur { get; set; }
+    Bot Bot { get; set; }
     public Joueur JoueurActif { get; private set; }
     public Joueur AutreJoueur { get; private set; }
 
-    private GameObject CanonJoueur { get; set; }
-    private GameObject CanonBot { get; set; }
+    GameObject CanonJoueur { get; set; }
+    GameObject CanonBot { get; set; }
     public GameObject CanonActif { get; private set; }
     public GameObject AutreCanon { get; private set; }
 
@@ -26,7 +26,7 @@ public class GestionnaireJeu : MonoBehaviour
     public TypeOccupation OccupÀCoordVisée { get; private set; }
 
     public int Tour { get; private set; }
-    private bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
+    bool EstEnPhaseDeTirs { get { return Tour >= 2; } }
 
     public EventHandler<TourEventArgs> TourChangé;
 
@@ -34,11 +34,11 @@ public class GestionnaireJeu : MonoBehaviour
 
     void Start()
     {
-        AssignerValeursBases();
-        AssignerCallbacks();
+        AssignerValeursInitiales();
+        AssignerFonctionsDeRappel();
     }
 
-    void AssignerValeursBases()
+    void AssignerValeursInitiales()
     {
         GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
         CanonBot = GameObject.Find("NPCCanon").GetComponentsInChildren<Transform>()[1].gameObject;
@@ -48,15 +48,15 @@ public class GestionnaireJeu : MonoBehaviour
         AutreCanon = CanonJoueur;
     }
 
-    void AssignerCallbacks()
+    void AssignerFonctionsDeRappel()
     {
         Joueur.PaneauTirs.OccupationModifiée += LancerAnimationJoueur;
         Bot.PaneauTirs.OccupationModifiée += LancerAnimationBot;
         Joueur.PaneauTirs.OccupationModifiée += RetirerCollider;
         Joueur.BateauDétruit += SignalerBot;
         Bot.BateauDétruit += AfficherBateau;
-        JoueurActif.PartieTerminée += Victoire;
-        AutreJoueur.PartieTerminée += Défaite;
+        JoueurActif.PartieTerminée += AfficherÉcranVictoire;
+        AutreJoueur.PartieTerminée += AfficherÉcranDéfaite;
     }
 
     void Awake()
@@ -71,7 +71,7 @@ public class GestionnaireJeu : MonoBehaviour
         AutreJoueur = Joueur;
     }
 
-    #region Callbacks
+    #region Fonctions de Rappel
     public void CommencerPartie()
     {
         ModifierBoutonStart();
@@ -90,12 +90,12 @@ public class GestionnaireJeu : MonoBehaviour
 #endif
     }
 
-    void Défaite(object sender, PartieEventArgs e)
+    void AfficherÉcranDéfaite(object sender, PartieEventArgs e)
     {
         SceneManager.LoadScene("Défaite");
     }
 
-    void Victoire(object sender, PartieEventArgs e)
+    void AfficherÉcranVictoire(object sender, PartieEventArgs e)
     {
         SceneManager.LoadScene("Victoire");
     }
@@ -117,7 +117,7 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void RetirerCollider(object sender, OccupationEventArgs e)
     {
-        if (!GetComponent<GestionnaireInterface>().AnimationEstActivée)
+        if (!GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
             Destroy(infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
@@ -173,7 +173,7 @@ public class GestionnaireJeu : MonoBehaviour
 
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
         
-        if(!GetComponent<GestionnaireInterface>().AnimationEstActivée)
+        if(!GetComponent<ControlleurInterface>().AnimationEstActivée)
             ModifierCouleur();
     }
 

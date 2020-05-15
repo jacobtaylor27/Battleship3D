@@ -13,7 +13,11 @@ public class Bateau
     public List<Case> CasesOccupées { get; set; }
     public bool EstCoulé { get { return Coups >= Longueur; } }
     public bool EstPlacé { get; set; }
-    public void PerdreVie() => Coups++;
+
+    public void PerdreVie()
+    {
+        Coups++;
+    }
 
     public Bateau(int n, GameObject prefab, GameObject cube)
     {
@@ -22,15 +26,5 @@ public class Bateau
         PrefabCube = cube;
         EstPlacé = false;
         CasesOccupées = new List<Case>(n);
-    }
-
-    public Bateau()
-    {
-        Longueur = 2;
-        Coups = 0;
-        PrefabBateau = null;
-        PrefabCube = null;
-        CasesOccupées = new List<Case>(2);
-        EstPlacé = false;
     }
 }

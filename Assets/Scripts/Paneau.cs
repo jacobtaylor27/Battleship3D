@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
 public class Paneau
 {
     public List<Case> Cases { get; set; }
@@ -12,12 +11,8 @@ public class Paneau
     {
         Cases = new List<Case>();
         for (int i = 0; i < 10; i++)
-        {
             for (int j = 0; j < 10; j++)
-            {
                 Cases.Add(new Case(i, j));
-            }
-        }
     }
 
     public Case TrouverCase(Coordonnées coord)

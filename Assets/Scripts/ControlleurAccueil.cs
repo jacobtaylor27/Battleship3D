@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,7 +7,6 @@ public class ControlleurAccueil : MonoBehaviour
 {
     Button BoutonJouer { get; set; }
     Button BoutonQuitter { get; set; }
-    public TextMeshProUGUI TexteBoutonJouer { get; set; }
 
     void Start()
     {
@@ -21,14 +19,11 @@ public class ControlleurAccueil : MonoBehaviour
         // Boutons
         BoutonJouer = GameObject.Find("CanvasAccueil").GetComponentsInChildren<Button>().First(x => x.name == "BtnJouer");
         BoutonQuitter = GameObject.Find("CanvasAccueil").GetComponentsInChildren<Button>().First(x => x.name == "BtnQuitter");
-
-        // Texte
-        TexteBoutonJouer = BoutonJouer.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void AssignerCallbacks()
     {
-        // Boutons
+        // Fonctions de rappel lors du clique sur les boutons
         BoutonJouer.onClick.AddListener(Jouer);
         BoutonQuitter.onClick.AddListener(Quitter);
     }
@@ -44,5 +39,8 @@ public class ControlleurAccueil : MonoBehaviour
 #endif
     }
 
-    void Jouer() => SceneManager.LoadScene("GameScene");
+    void Jouer()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
 }

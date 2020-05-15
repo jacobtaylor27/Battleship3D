@@ -34,7 +34,7 @@ public class GestionAnimation : MonoBehaviour
     {
         Debug.Log(GestionnaireJeu.manager.JoueurActif);
         Debug.Log(GestionnaireJeu.manager.Tour);
-        if (GetComponent<GestionnaireInterface>().AnimationEstActivée)
+        if (GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             foreach (var Camera in Camera.allCameras)
             {
@@ -103,7 +103,7 @@ public class GestionAnimation : MonoBehaviour
 
     void Update()
     {
-        if (GetComponent<GestionnaireInterface>().AnimationEstActivée)
+        if (GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             if (CptFrame < 60)
             {

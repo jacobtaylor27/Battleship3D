@@ -1,91 +1,67 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class GestionPlacement : MonoBehaviour, IPointerClickHandler
+public class GestionPlacement : MonoBehaviour
 {
-    int Layer = 9;
-    List<Bateau> Bateaux;
-    bool PeutÊtrePlacé;
-    int IndiceBateauActuel;
-    RaycastHit hit;
-    Vector3 PtCollision;
-    Ray ray;
-    GameObject CubesÀPlacer;
-    Case CaseVisée;
+    int Layer { get; set; }
+    List<Bateau> Bateaux { get; set; }
+    bool PeutÊtrePlacé { get; set; }
+    int IndiceBateauActuel { get; set; }
+    Vector3 PtCollision { get; set; }
+    GameObject CubesÀPlacer { get; set; }
+    Case CaseVisée { get; set; }
     Camera CaméraJoueur { get; set; }
-    private void Awake()
+    RaycastHit hit;
+
+    void Awake() => enabled = false;
+
+    void Start() => AssignerValeursInitiales();
+
+    void AssignerValeursInitiales()
     {
-        enabled = false;
-    }
-    void Start()
-    {
-        InitialiserValeurs();
-        CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, PtCollision, Quaternion.identity);
-    }
-    void InitialiserValeurs()
-    {
-        CaméraJoueur = Camera.allCameras.ToList<Camera>().Find(x => x.name == "PlayerGridCam");
+        Layer = 9;
+        CaméraJoueur = Camera.allCameras.ToList().Find(x => x.name == "PlayerGridCam");
         Bateaux = GestionnaireJeu.manager.JoueurActif.Arsenal;
         IndiceBateauActuel = 0;
         PeutÊtrePlacé = true;
         PtCollision = GestionnaireJeu.manager.JoueurActif.PaneauJeu.Cases[0].PositionMonde;
         CaseVisée = GestionnaireJeu.manager.JoueurActif.PaneauJeu.Cases[0];
+        CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, PtCollision, Quaternion.identity);
     }
+
     void Update()
     {
-        ray = CaméraJoueur.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask(new string[] { "Tuile" })) && hit.collider.gameObject.layer == Layer)
+        // Modifier les cases visées par le joueurs en fonctions d'un raycast
+        if (Physics.Raycast(CaméraJoueur.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, LayerMask.GetMask(new string[] { "Tuile" })) && hit.collider.gameObject.layer == Layer)
         {
             PtCollision = hit.collider.gameObject.transform.position;
             CaseVisée = hit.collider.gameObject.GetComponent<InformationTuile>().Case;
         }
         DéplacerCubes();
 
+        // Placer le bateau avec un clique gauche de la souris
         if (Input.GetMouseButtonDown(0) && PeutÊtrePlacé)
-        {
-            Debug.Log("gauche");
             PlacerBateau(Bateaux[IndiceBateauActuel]);
-        }
 
+        // Rotation de 90 degrées du bateau avec un clique droit de la souris
         if (Input.GetMouseButtonDown(1))
-        {
-            Debug.Log("droite");
             ChangerDirectionCubes();
-        }
     }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("pointer");
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            Debug.Log("right");
-            ChangerDirectionCubes();
-        }
 
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            Debug.Log("gauche");
-            if (PeutÊtrePlacé)
-            {
-                PlacerBateau(Bateaux[IndiceBateauActuel]);
-            }
-        }
-    }
     void DéplacerCubes()
     {
         PeutÊtrePlacé = VérifierPlace();
         CubesÀPlacer.transform.position = new Vector3(Mathf.Round(PtCollision.x), 5, Mathf.Round(PtCollision.z));
     }
+
     bool VérifierPlace()
     {
         foreach (MeshRenderer mesh in CubesÀPlacer.GetComponentsInChildren<MeshRenderer>())
         {
-            BateauCubeBehavior bateauCube = mesh.GetComponent<BateauCubeBehavior>();
+            CubeBehavior bateauCube = mesh.GetComponent<CubeBehavior>();
 
-            if (!bateauCube.EstSurTuile() || bateauCube.GetInfoTuile().Case.TypeOccupation == TypeOccupation.Occupé)
+            if (!bateauCube.EstSurTuile() || bateauCube.ChercherInformationsTuile().Case.TypeOccupation == TypeOccupation.Occupé)
             {
                 foreach (MeshRenderer cube in CubesÀPlacer.GetComponentsInChildren<MeshRenderer>())
                     cube.material.color = new Color(255, 0, 0, 250);
@@ -97,27 +73,30 @@ public class GestionPlacement : MonoBehaviour, IPointerClickHandler
         }
         return true;
     }
-    void ChangerDirectionCubes()
-    {
-        CubesÀPlacer.transform.Rotate(Vector3.up, 90f);
 
-        Debug.Log(DéterminerOrientation(CubesÀPlacer.transform.localEulerAngles.y).ToString());
-    }
+    void ChangerDirectionCubes() => CubesÀPlacer.transform.Rotate(Vector3.up, 90f);
+
     void PlacerBateau(Bateau b)
     {
+        // Instantier le bateau à la position et rotation des cubes
         Instantiate(b.PrefabBateau, CubesÀPlacer.transform.position, CubesÀPlacer.transform.rotation);
-        //Changer occupations dans paneaujeu
-        //Ajouter case occupées sur le bateau
+
+        // Placer le bateau sur le paneau de jeu du joueur (grille logique)
         GestionnaireJeu.manager.PlacerBateauLogique(IndiceBateauActuel, DéterminerOrientation(CubesÀPlacer.transform.localEulerAngles.y), CaseVisée);
-        //b.EstPlacé = true;
+
         if (!SontTousPlacés())
         {
             IndiceBateauActuel++;
-            //Crée les cubes du prochain bateau
-            Vector3 temp = new Vector3(CubesÀPlacer.transform.position.x, CubesÀPlacer.transform.position.y, CubesÀPlacer.transform.position.z);
-            Quaternion tempR = new Quaternion(CubesÀPlacer.transform.rotation.x, CubesÀPlacer.transform.rotation.y, CubesÀPlacer.transform.rotation.z, CubesÀPlacer.transform.rotation.w);
+
+            // Définir une position et une rotation temporaire pour le prochain bateau
+            Vector3 positionTemporaire = new Vector3(CubesÀPlacer.transform.position.x, CubesÀPlacer.transform.position.y, CubesÀPlacer.transform.position.z);
+            Quaternion rotationTemporaire = new Quaternion(CubesÀPlacer.transform.rotation.x, CubesÀPlacer.transform.rotation.y, CubesÀPlacer.transform.rotation.z, CubesÀPlacer.transform.rotation.w);
+
+            // Détruire cubes du bateau actuel
             Destroy(CubesÀPlacer);
-            CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, temp, tempR);
+
+            // Instantier les cube du prochain bateau dans la liste
+            CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, positionTemporaire, rotationTemporaire);
         }
         else
         {
@@ -125,10 +104,10 @@ public class GestionPlacement : MonoBehaviour, IPointerClickHandler
             ExitState();
         }
     }
-    private Vector3 DéterminerOrientation(float eulerAngleY)
+
+    Vector3 DéterminerOrientation(float eulerAngleY)
     {
         Vector3 orientation = Vector3.zero;
-
         switch (eulerAngleY)
         {
             case 0f:
@@ -146,15 +125,12 @@ public class GestionPlacement : MonoBehaviour, IPointerClickHandler
         }
         return orientation;
     }
-    bool SontTousPlacés()
-    {
-        return Bateaux.TrueForAll(x => x.EstPlacé);
-    }
-    public void EnterState()
-    {
-        enabled = true;
-    }
-    private void ExitState()
+
+    bool SontTousPlacés() => Bateaux.TrueForAll(x => x.EstPlacé);
+
+    public void EnterState() => enabled = true;
+
+    void ExitState()
     {
         enabled = false;
         GestionnaireJeu.manager.PasserAuProchainTour();

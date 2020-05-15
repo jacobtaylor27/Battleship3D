@@ -10,11 +10,9 @@ public class InformationTuile : MonoBehaviour
 
     public void DéfinirInformationTuile(Case newCase) => Case = newCase;
 
-    void OnMouseOver() => SurlignierTuile(1); // Affiche le réticule
+    // Affiche le réticule
+    void OnMouseOver() => SurlignierTuile(1);
 
-    void OnMouseExit() => SurlignierTuile(0); // Affiche le périmètre
-
-    void OnMouseDown() => Debug.Log(Case.ToString()); // Pour tests seulement
-
-
+    // Affiche le périmètre
+    void OnMouseExit() => SurlignierTuile(0); 
 }
