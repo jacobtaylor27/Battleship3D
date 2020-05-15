@@ -6,8 +6,6 @@ public class GestionAnimation : MonoBehaviour
 {
     const float TempsAnimation = 5f;
     const float AccélérationGravitationnelle = -9.80f;
-    const float HauteurMax = 500f;
-    const float VitesseInit = 100f;
 
     Camera AnimationBot {  get; set; }
     Camera AnimationJoueur { get; set; }
@@ -32,8 +30,6 @@ public class GestionAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(GestionnaireJeu.manager.JoueurActif);
-        Debug.Log(GestionnaireJeu.manager.Tour);
         if (GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             foreach (var Camera in Camera.allCameras)
