@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class Paneau
+public class Panneau
 {
-    public List<Case> Cases { get; set; }
+    public List<Case> Cases { get;private set; }
     public event EventHandler<OccupationEventArgs> OccupationModifiée;
 
-    public Paneau()
+    public Panneau()
     {
         Cases = new List<Case>();
         for (int i = 0; i < 10; i++)

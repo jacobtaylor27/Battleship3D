@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Joueur
 {
-    public Paneau PaneauJeu { get; set; }
-    public Paneau PaneauTirs { get; set; }
+    public Panneau PaneauJeu { get; set; }
+    public Panneau PaneauTirs { get; set; }
     public List<Bateau> Arsenal { get; set; }
     public int BateauxRestants { get; set; }
     bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
@@ -16,8 +16,8 @@ public class Joueur
     public Joueur()
     {
         BateauxRestants = 5;
-        PaneauJeu = new Paneau();
-        PaneauTirs = new Paneau();
+        PaneauJeu = new Panneau();
+        PaneauTirs = new Panneau();
         Arsenal = new List<Bateau>()
         {
             new Bateau(2,ChercherPrefab("Carrier(2)",0),ChercherPrefab("BateauCube2",1)),
