@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Joueur
 {
-    public Panneau PaneauJeu { get; set; }
-    public Panneau PaneauTirs { get; set; }
-    public List<Bateau> Arsenal { get; set; }
-    public int BateauxRestants { get; set; }
+    public Panneau PaneauJeu { get;private set; }
+    public Panneau PaneauTirs { get;private set; }
+    public List<Bateau> Arsenal { get; private set; }
+    public int BateauxRestants { get; private set; }
     bool APerdu { get { return Arsenal.All(x => x.EstCoulé); } }
     public event EventHandler<BateauEventArgs> BateauDétruit;
     public event EventHandler<PartieEventArgs> PartieTerminée;

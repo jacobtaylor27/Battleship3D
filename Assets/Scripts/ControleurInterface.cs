@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ControlleurInterface : MonoBehaviour
+public class ControleurInterface : MonoBehaviour
 {
     public bool AnimationEstActivée { get; private set; }
     Toggle ToggleAnimation { get; set; }

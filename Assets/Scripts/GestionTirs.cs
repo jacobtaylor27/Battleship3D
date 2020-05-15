@@ -4,9 +4,9 @@ using UnityEngine;
 public class GestionTirs : MonoBehaviour
 {
     Coordonnées CoordVisée { get; set; }
-    public Vector3 PositionVisée { get; set; }
     private Camera CamBot { get; set; }
     Vector3 Origine { get; set; }
+    Vector3 PositionVisée { get; set; }
     float Delta { get; set; }
     private KeyCode Tirer { get; set; }
     Vector3 mousePosition;

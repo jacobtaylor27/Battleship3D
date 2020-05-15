@@ -15,22 +15,21 @@ public class GestionAnimation : MonoBehaviour
     GameObject Missile { get; set; }
     public GameObject projectile;
 
-    GameObject[] Canons { get; set; }
     GameObject Affut { get; set; }
     Vector3 VCanonInit { get; set; }
     Vector3 VCanonFinal { get; set; }
 
-    float AngleX { get; set; }
-    float AngleY { get; set; }
+    float AngleX { get; set; } //Angle de rotation autour de l'axe des X
+    float AngleY { get; set; } //Angle de rotation autour de l'axe des Y de Unity
     float VitesseI { get; set; }
     int CptFrame { get; set; }
     float TempsÉcoulé { get; set; }
-    float[,] MatriceRotationY { get; set; }
-    float[,] MatriceRotationX { get; set; }
+    float[,] MatriceRotationY { get; set; } //Matrice de rotation autour de l'axe des Y de Unity (Axe des Z en maths)
+    float[,] MatriceRotationX { get; set; } //Matrice de rotation autour de l'axe des X
 
     private void OnEnable()
     {
-        if (GetComponent<ControlleurInterface>().AnimationEstActivée)
+        if (GetComponent<ControleurInterface>().AnimationEstActivée)
         {
             foreach (var Camera in Camera.allCameras)
             {
@@ -80,7 +79,7 @@ public class GestionAnimation : MonoBehaviour
         float Angle2 = Mathf.Asin((-0.5f * AccélérationGravitationnelle * Mathf.Pow(TempsAnimation, 2) - Affut.transform.position.y) / (VitesseI * TempsAnimation));
 
         //Angle pour rotation autour de X
-        AngleX = Mathf.Min(Angle1, Angle2) * Mathf.Rad2Deg;
+        AngleX = Mathf.Max(Angle1, Angle2) * Mathf.Rad2Deg;
     }
 
     private void Awake()
@@ -99,7 +98,7 @@ public class GestionAnimation : MonoBehaviour
 
     void Update()
     {
-        if (GetComponent<ControlleurInterface>().AnimationEstActivée)
+        if (GetComponent<ControleurInterface>().AnimationEstActivée)
         {
             if (CptFrame < 60)
             {

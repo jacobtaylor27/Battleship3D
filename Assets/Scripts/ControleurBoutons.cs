@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ControllerBoutons : MonoBehaviour
+public class ControleurBoutons : MonoBehaviour
 {
     Vector3 VecteurAgrandi { get; set; }
     Color CouleurDefault { get; set; }
