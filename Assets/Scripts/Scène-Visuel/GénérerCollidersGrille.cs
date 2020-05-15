@@ -4,16 +4,16 @@ using UnityEngine;
 public class GénérerCollidersGrille : MonoBehaviour
 {
     const float Dimensions = 10f;
+
     Transform[] CoinsNPC;
     Transform[] CoinsPlayer;
 
     public GameObject Tuile;
+    GameObject ListeTuiles; //Objet vide où les tuiles sont instanciées
 
-    GameObject ListeTuiles;
-
-    public float Delta { get; set; }
     float Distance { get; set; }
     public Vector3 OrigineNPC { get; set; }
+    public float Delta { get;private set; }
     float Décalage { get { return Delta / 2; } }
 
     void Start()

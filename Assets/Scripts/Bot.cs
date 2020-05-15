@@ -10,6 +10,7 @@ public class Bot : Joueur
     int AxeAuHasard() => UnityEngine.Random.Range(0, 10);
 
     Vector3 OrientationV { get; set; }
+
     public bool dernierTirCoulé = false;
 
     public Bot()

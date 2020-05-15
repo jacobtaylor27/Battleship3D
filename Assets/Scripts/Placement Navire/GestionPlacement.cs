@@ -78,10 +78,10 @@ public class GestionPlacement : MonoBehaviour
 
     void PlacerBateau(Bateau b)
     {
-        // Instantier le bateau à la position et rotation des cubes
+        // Instancier le bateau à la position et rotation des cubes
         Instantiate(b.PrefabBateau, CubesÀPlacer.transform.position, CubesÀPlacer.transform.rotation);
 
-        // Placer le bateau sur le paneau de jeu du joueur (grille logique)
+        // Placer le bateau sur le panneau de jeu du joueur (grille logique)
         GestionnaireJeu.manager.PlacerBateauLogique(IndiceBateauActuel, DéterminerOrientation(CubesÀPlacer.transform.localEulerAngles.y), CaseVisée);
 
         if (!SontTousPlacés())
@@ -95,7 +95,7 @@ public class GestionPlacement : MonoBehaviour
             // Détruire cubes du bateau actuel
             Destroy(CubesÀPlacer);
 
-            // Instantier les cube du prochain bateau dans la liste
+            // Instancier les cube du prochain bateau dans la liste
             CubesÀPlacer = Instantiate(Bateaux[IndiceBateauActuel].PrefabCube, positionTemporaire, rotationTemporaire);
         }
         else

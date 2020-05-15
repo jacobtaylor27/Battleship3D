@@ -5,8 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Bateau
 {
-    public TypeOccupation TypeOccupation { get; set; }
-    public int Longueur { get; set; }
+    public int Longueur { get;private set; }
     public int Coups { get; set; }
     public GameObject PrefabBateau;
     public GameObject PrefabCube;
