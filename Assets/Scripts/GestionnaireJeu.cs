@@ -41,10 +41,15 @@ public class GestionnaireJeu : MonoBehaviour
     void AssignerValeursInitiales()
     {
         GameObject[] Canons = GameObject.FindGameObjectsWithTag("Canon");
+
         CanonBot = GameObject.Find("NPCCanon").GetComponentsInChildren<Transform>()[1].gameObject;
+        
         CanonJoueur = GameObject.Find("PlayerCanon").GetComponentsInChildren<Transform>()[1].gameObject;
+        
         BoutonGameStart = GameObject.Find("Canvas").GetComponentsInChildren<Button>().First(x => x.name == "BtnCommencer");
+        
         CanonActif = CanonBot;
+        
         AutreCanon = CanonJoueur;
     }
 
@@ -195,7 +200,6 @@ public class GestionnaireJeu : MonoBehaviour
         onTourChangé(new TourEventArgs(Tour));
         if (EstEnPhaseDeTirs)
         {
-            //CoordVisée = null;
             JoueurActif.Tirer();
         }
     }
@@ -218,9 +222,9 @@ public class GestionnaireJeu : MonoBehaviour
 
     void InverserJoueursEtCanons()
     {
-        Joueur tempPlayer = JoueurActif;
+        Joueur tempJoueur = JoueurActif;
         JoueurActif = AutreJoueur;
-        AutreJoueur = tempPlayer;
+        AutreJoueur = tempJoueur;
 
         GameObject tempCanon = CanonActif;
         CanonActif = AutreCanon;
