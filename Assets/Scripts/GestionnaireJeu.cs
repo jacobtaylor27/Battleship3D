@@ -122,7 +122,7 @@ public class GestionnaireJeu : MonoBehaviour
 
     public void RetirerCollider(object sender, OccupationEventArgs e)
     {
-        if (!GetComponent<ControleurInterface>().AnimationEstActivée)
+        if (!GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             List<InformationTuile> infoTuile = GameObject.Find("ListeTuiles").GetComponentsInChildren<InformationTuile>().ToList();
             Destroy(infoTuile.FindAll(x => x.Case.Coordonnées == CoordVisée).Find(x => x.Case.PositionMonde == PositionVisée)
@@ -178,7 +178,7 @@ public class GestionnaireJeu : MonoBehaviour
 
         JoueurActif.PaneauTirs.ModifierÉtatCase(CoordVisée, OccupÀCoordVisée);
         
-        if(!GetComponent<ControleurInterface>().AnimationEstActivée)
+        if(!GetComponent<ControlleurInterface>().AnimationEstActivée)
             ModifierCouleur();
     }
 

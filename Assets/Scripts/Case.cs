@@ -41,6 +41,11 @@ public class Case
     }
 
 }
+
+
+
+
+
 public static class CaseExtensions
 {
     public static Case At(this List<Case> paneaux, int rangée, int colonne)

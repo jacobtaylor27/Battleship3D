@@ -42,6 +42,7 @@ public class Joueur
 
     void onPartieTerminée(PartieEventArgs dataPartie) => PartieTerminée?.Invoke(this, dataPartie);
 
+    
     public void SeFaireToucher(Bateau b)
     {
         Arsenal[Arsenal.FindIndex(x => x == b)].PerdreVie();

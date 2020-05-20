@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ControleurInterface : MonoBehaviour
+public class ControlleurInterface : MonoBehaviour
 {
     public bool AnimationEstActivée { get; private set; }
     Toggle ToggleAnimation { get; set; }
@@ -43,6 +43,10 @@ public class ControleurInterface : MonoBehaviour
             CompteurTours.text = GestionnaireJeu.manager.Tour.ToString() + " (Joueur)";
     }
 
+    
+    
+    
+    
     void AssignerValeursInitiales()
     {
         Canvas = GameObject.Find("Canvas");

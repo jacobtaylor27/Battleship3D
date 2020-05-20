@@ -29,7 +29,7 @@ public class GestionAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GetComponent<ControleurInterface>().AnimationEstActivée)
+        if (GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             foreach (var Camera in Camera.allCameras)
             {
@@ -98,7 +98,7 @@ public class GestionAnimation : MonoBehaviour
 
     void Update()
     {
-        if (GetComponent<ControleurInterface>().AnimationEstActivée)
+        if (GetComponent<ControlleurInterface>().AnimationEstActivée)
         {
             if (CptFrame < 60)
             {

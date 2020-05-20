@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ControleurAccueil : MonoBehaviour
+public class ControlleurAccueil : MonoBehaviour
 {
     Button BoutonJouer { get; set; }
     Button BoutonQuitter { get; set; }
